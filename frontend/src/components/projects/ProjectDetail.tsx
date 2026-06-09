@@ -2,7 +2,7 @@
 // Project Detail Page
 // ============================================================
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   Grid,
@@ -45,6 +45,7 @@ export default function ProjectDetail() {
   const [project, setProject] = useState<any | null>(null);
   const [scenes, setScenes] = useState<Scene[]>([]);
   const [loading, setLoading] = useState(true);
+  const playerRef = useRef<any>(null);
 
   // Render configuration dialog states
   const [renderDialogOpen, setRenderDialogOpen] = useState(false);
@@ -52,10 +53,12 @@ export default function ProjectDetail() {
   const [resolution, setResolution] = useState<'720p' | '1080p' | '4k'>('1080p');
   const [progressDialogOpen, setProgressDialogOpen] = useState(false);
 
-  const loadProjectData = async () => {
+  const loadProjectData = async (isInitial: boolean = false) => {
     if (!id) return;
     try {
-      setLoading(true);
+      if (isInitial) {
+        setLoading(true);
+      }
       const data = await api.getProject(id) as any;
       setProject(data);
       if (data.scenes) {
@@ -66,12 +69,14 @@ export default function ProjectDetail() {
       alert('Project not found');
       navigate('/projects');
     } finally {
-      setLoading(false);
+      if (isInitial) {
+        setLoading(false);
+      }
     }
   };
 
   useEffect(() => {
-    loadProjectData();
+    loadProjectData(true);
   }, [id]);
 
   const handleStartRender = async () => {
@@ -150,12 +155,12 @@ export default function ProjectDetail() {
 
       <Grid container spacing={4} sx={{ flexGrow: 1 }}>
         <Grid item xs={12} md={7} lg={8} sx={{ display: 'flex', flexDirection: 'column' }}>
-          <TimelineEditor projectId={project.id} scenes={scenes} onRefresh={loadProjectData} />
+          <TimelineEditor projectId={project.id} scenes={scenes} onRefresh={() => loadProjectData(false)} playerRef={playerRef} />
         </Grid>
 
         <Grid item xs={12} md={5} lg={4}>
           <Box sx={{ position: 'sticky', top: 90 }}>
-            <VideoPreview project={project} scenes={scenes} template={currentTemplate} />
+            <VideoPreview ref={playerRef} project={project} scenes={scenes} template={currentTemplate} />
           </Box>
         </Grid>
       </Grid>

@@ -6,6 +6,7 @@ import {
   CardContent,
   Grid,
   TextField,
+  Menu,
   MenuItem,
   Button,
   Chip,
@@ -26,17 +27,323 @@ import {
   PlayArrow as PlayIcon,
   Pause as PauseIcon,
   CloudUpload as UploadIcon,
+  Whatshot as HookIcon,
+  Code as CodeIcon,
+  Terminal as OutputIcon,
+  Image as ImageIcon,
+  Movie as VideoIcon,
+  EmojiObjects as TipIcon,
+  Campaign as CtaIcon,
+  Subscriptions as SubscribeIcon,
+  NotificationsActive as SubscribeVideoIcon,
+  Flag as OutroIcon,
 } from '@mui/icons-material';
 import * as api from '../../api/client.js';
 import type { Scene, SceneType, AnimationStyle, TransitionStyle } from '../../types/index.js';
+
+// Visual mock preview component for insert blocks
+const ScenePreview = ({ type }: { type: SceneType }) => {
+  const getPreviewConfig = () => {
+    switch (type) {
+      case 'hook':
+        return {
+          title: 'Hook Opener',
+          desc: 'Vibrant animated opener card to grab attention in the first 3 seconds.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, background: 'linear-gradient(135deg, #ff0055, #7000ff)', p: 1.5, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', border: '1px solid rgba(255,255,255,0.25)', boxShadow: '0 8px 20px rgba(112,0,255,0.3)' }}>
+              <Box sx={{ px: 1.2, py: 0.4, borderRadius: 1, bgcolor: 'rgba(0,0,0,0.65)', border: '1px solid rgba(255,255,255,0.2)', backdropFilter: 'blur(4px)' }}>
+                <Typography sx={{ fontSize: 6.5, fontWeight: 900, color: '#ff0055', letterSpacing: 1, lineHeight: 1, textTransform: 'uppercase' }}>🔥 HEY CREATORS!</Typography>
+              </Box>
+              <Typography sx={{ fontSize: 9.5, fontWeight: 900, color: '#fff', textAlign: 'center', lineHeight: 1.25, textShadow: '0 2px 4px rgba(0,0,0,0.5)', px: 0.5 }}>
+                STOP USING LOOPS FOR EVERYTHING!
+              </Typography>
+              <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.8, bgcolor: 'rgba(0,0,0,0.5)', px: 1, py: 0.5, borderRadius: 2, border: '1px solid rgba(255,255,255,0.1)', width: '100%' }}>
+                <Box sx={{ width: 12, height: 12, borderRadius: '50%', bgcolor: '#ff0055', border: '1px solid #fff', flexShrink: 0 }} />
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.2 }}>
+                  <Box sx={{ width: 30, height: 3, bgcolor: '#fff', borderRadius: 0.25 }} />
+                  <Box sx={{ width: 20, height: 2, bgcolor: 'rgba(255,255,255,0.5)', borderRadius: 0.25 }} />
+                </Box>
+              </Box>
+            </Box>
+          )
+        };
+      case 'code':
+        return {
+          title: 'Code Snippet',
+          desc: 'Syntax-highlighted code editor window with typing sound audio-sync.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, bgcolor: '#0b0f19', border: '1px solid rgba(255,255,255,0.1)', p: 1, display: 'flex', flexDirection: 'column', gap: 0.8, boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+              <Box sx={{ display: 'flex', gap: 0.5, alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.06)', pb: 0.8 }}>
+                <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: '#ff5f56' }} />
+                <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: '#ffbd2e' }} />
+                <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: '#27c93f' }} />
+                <Box sx={{ flex: 1, height: 5, bgcolor: 'rgba(255,255,255,0.05)', borderRadius: 0.5, ml: 1, display: 'flex', alignItems: 'center', px: 1 }}>
+                  <Box sx={{ width: 20, height: 2, bgcolor: 'rgba(255,255,255,0.3)', borderRadius: 0.25 }} />
+                </Box>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.6, mt: 0.5, px: 0.5, fontFamily: 'monospace', fontSize: 6.5 }}>
+                <Box sx={{ display: 'flex', gap: 0.4 }}>
+                  <Box sx={{ color: '#ff7b72', fontWeight: 700 }}>const</Box>
+                  <Box sx={{ color: '#79c0ff' }}>data</Box>
+                  <Box sx={{ color: '#ff7b72' }}>=</Box>
+                  <Box sx={{ color: '#a5d6ff' }}>"JS"</Box>
+                </Box>
+                <Box sx={{ display: 'flex', gap: 0.4, pl: 0.8 }}>
+                  <Box sx={{ color: '#ff7b72', fontWeight: 700 }}>function</Box>
+                  <Box sx={{ color: '#d2a8ff' }}>run</Box>
+                  <Box sx={{ color: '#e1e4e8' }}>() {`{`}</Box>
+                </Box>
+                <Box sx={{ display: 'flex', gap: 0.4, pl: 1.6 }}>
+                  <Box sx={{ color: '#79c0ff' }}>console</Box>
+                  <Box sx={{ color: '#e1e4e8' }}>.</Box>
+                  <Box sx={{ color: '#d2a8ff' }}>log</Box>
+                  <Box sx={{ color: '#e1e4e8' }}>(</Box>
+                  <Box sx={{ color: '#79c0ff' }}>data</Box>
+                  <Box sx={{ color: '#e1e4e8' }}>)</Box>
+                </Box>
+                <Box sx={{ display: 'flex', gap: 0.4, pl: 0.8 }}>
+                  <Box sx={{ color: '#e1e4e8' }}>{`}`}</Box>
+                </Box>
+                <Box sx={{ display: 'flex', gap: 0.4, mt: 1 }}>
+                  <Box sx={{ width: 45, height: 4, bgcolor: 'rgba(255,255,255,0.1)', borderRadius: 0.25 }} />
+                </Box>
+              </Box>
+            </Box>
+          )
+        };
+      case 'output':
+        return {
+          title: 'Console Output',
+          desc: 'Visual terminal-style block rendering code output and execution results.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, bgcolor: '#020617', border: '1px solid rgba(16,185,129,0.15)', p: 1.2, display: 'flex', flexDirection: 'column', gap: 0.8, boxShadow: '0 8px 24px rgba(0,0,0,0.5)' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(16,185,129,0.1)', pb: 0.6 }}>
+                <Typography sx={{ fontSize: 6.5, color: '#10b981', fontWeight: 900, letterSpacing: 0.5, fontFamily: 'monospace' }}>▶ TERMINAL</Typography>
+                <Box sx={{ width: 4, height: 4, borderRadius: '50%', bgcolor: '#10b981', boxShadow: '0 0 4px #10b981' }} />
+              </Box>
+              <Box sx={{ flex: 1, border: '1px solid rgba(255,255,255,0.03)', borderRadius: 1.5, p: 1, display: 'flex', flexDirection: 'column', gap: 0.6, bgcolor: 'rgba(0,0,0,0.3)', fontFamily: 'monospace' }}>
+                <Box sx={{ display: 'flex', gap: 0.4, alignItems: 'center' }}>
+                  <Typography sx={{ fontSize: 7, color: '#38bdf8', fontWeight: 800 }}>$</Typography>
+                  <Typography sx={{ fontSize: 7, color: '#e2e8f0' }}>node app.js</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.3, mt: 0.5 }}>
+                  <Typography sx={{ fontSize: 6.5, color: '#10b981', fontWeight: 700 }}>[2, 4, 6]</Typography>
+                  <Typography sx={{ fontSize: 6.5, color: 'rgba(255,255,255,0.4)' }}>Done in 0.05s</Typography>
+                </Box>
+                <Box sx={{ width: 3, height: 6, bgcolor: '#10b981', boxShadow: '0 0 3px #10b981', mt: 0.5 }} />
+              </Box>
+            </Box>
+          )
+        };
+      case 'image':
+        return {
+          title: 'Image Frame',
+          desc: 'Mock browser window with an image display and customizable size/contain mode.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, bgcolor: '#0f172a', border: '1px solid rgba(255,255,255,0.1)', p: 1.2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 8px 24px rgba(0,0,0,0.4)' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.05)', pb: 0.5 }}>
+                <Box sx={{ width: 25, height: 3, bgcolor: 'rgba(255,255,255,0.2)', borderRadius: 0.25 }} />
+                <Box sx={{ px: 0.6, py: 0.2, bgcolor: '#06b6d4', borderRadius: 0.5 }}>
+                  <Typography sx={{ fontSize: 5, fontWeight: 800, color: '#fff' }}>9:16 CROP</Typography>
+                </Box>
+              </Box>
+              <Box sx={{ width: '100%', height: 90, bgcolor: 'rgba(255,255,255,0.03)', border: '1px dashed rgba(6,182,212,0.3)', borderRadius: 1.5, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', color: '#06b6d4', gap: 0.5 }}>
+                <Typography sx={{ fontSize: 16 }}>🖼</Typography>
+                <Typography sx={{ fontSize: 5.5, color: 'rgba(255,255,255,0.4)', fontWeight: 600 }}>IMAGE CONTAINER</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.4, alignItems: 'center', width: '100%', mb: 0.5 }}>
+                <Box sx={{ width: '90%', height: 4, bgcolor: 'rgba(255,255,255,0.5)', borderRadius: 0.25 }} />
+                <Box sx={{ width: '60%', height: 3, bgcolor: 'rgba(255,255,255,0.3)', borderRadius: 0.25 }} />
+              </Box>
+            </Box>
+          )
+        };
+      case 'video':
+        return {
+          title: 'Video Clip',
+          desc: 'Mock browser window displaying an uploaded video clip with play controls.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, bgcolor: '#0b091a', border: '1px solid rgba(99,102,241,0.2)', p: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 8px 24px rgba(99,102,241,0.1)' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.05)', pb: 0.5 }}>
+                <Typography sx={{ fontSize: 5.5, color: '#6366f1', fontWeight: 800 }}>VIDEO DECK</Typography>
+                <Typography sx={{ fontSize: 5, color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace' }}>00:04.2</Typography>
+              </Box>
+              <Box sx={{ flex: 1, my: 1, borderRadius: 1, bgcolor: '#121026', border: '1px solid rgba(255,255,255,0.03)', display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+                <Box sx={{ width: 24, height: 24, borderRadius: '50%', bgcolor: 'rgba(99,102,241,0.25)', border: '1px solid #6366f1', display: 'flex', justifyContent: 'center', alignItems: 'center', color: '#fff', fontSize: 8, boxShadow: '0 0 10px rgba(99,102,241,0.4)' }}>
+                  ▶
+                </Box>
+                <Box sx={{ position: 'absolute', bottom: 4, left: 4, right: 4, height: 2, bgcolor: 'rgba(255,255,255,0.2)', borderRadius: 0.1 }}>
+                  <Box sx={{ width: '40%', height: '100%', bgcolor: '#6366f1' }} />
+                </Box>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.4, alignItems: 'center' }}>
+                <Box sx={{ width: '80%', height: 3, bgcolor: 'rgba(255,255,255,0.5)', borderRadius: 0.25 }} />
+              </Box>
+            </Box>
+          )
+        };
+      case 'tip':
+        return {
+          title: 'Pro Tip',
+          desc: 'Glassmorphic announcement card with glowing border and bulb emoji.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, background: 'linear-gradient(135deg, #130f26, #070510)', border: '1px solid rgba(139,92,246,0.3)', p: 1.5, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 1, boxShadow: '0 8px 25px rgba(139,92,246,0.2)' }}>
+              <Box sx={{ width: 32, height: 32, borderRadius: '50%', bgcolor: 'rgba(139,92,246,0.15)', display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid rgba(139,92,246,0.4)', boxShadow: '0 0 15px rgba(139,92,246,0.3)' }}>
+                <Typography sx={{ fontSize: 16 }}>💡</Typography>
+              </Box>
+              <Typography sx={{ fontSize: 8, fontWeight: 900, color: '#a78bfa', letterSpacing: 1 }}>PRO TIP</Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, width: '100%', alignItems: 'center', mt: 0.5 }}>
+                <Box sx={{ width: '90%', height: 4, bgcolor: 'rgba(255,255,255,0.85)', borderRadius: 0.25 }} />
+                <Box sx={{ width: '70%', height: 3.5, bgcolor: 'rgba(255,255,255,0.5)', borderRadius: 0.25 }} />
+              </Box>
+            </Box>
+          )
+        };
+      case 'cta':
+        return {
+          title: 'CTA Message',
+          desc: 'Encouraging call-to-action block urging viewers to follow/subscribe.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, bgcolor: '#1c1117', border: '1px solid rgba(236,72,153,0.25)', p: 1.5, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 8px 24px rgba(236,72,153,0.15)' }}>
+              <Box sx={{ width: 26, height: 26, borderRadius: '50%', bgcolor: 'rgba(236,72,153,0.15)', display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1px solid rgba(236,72,153,0.3)' }}>
+                <Typography sx={{ fontSize: 12 }}>📢</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.4, width: '100%', alignItems: 'center' }}>
+                <Box sx={{ width: '85%', height: 4, bgcolor: 'rgba(255,255,255,0.85)', borderRadius: 0.25 }} />
+                <Box sx={{ width: '55%', height: 3.5, bgcolor: 'rgba(255,255,255,0.5)', borderRadius: 0.25 }} />
+              </Box>
+              <Box sx={{ px: 2.5, py: 0.6, bgcolor: '#ec4899', borderRadius: 1.5, boxShadow: '0 4px 12px rgba(236,72,153,0.4)', border: '1px solid rgba(255,255,255,0.2)' }}>
+                <Typography sx={{ fontSize: 7, fontWeight: 900, color: '#fff', letterSpacing: 0.5 }}>TAP HERE</Typography>
+              </Box>
+            </Box>
+          )
+        };
+      case 'subscribe':
+        return {
+          title: 'Subscribe Card',
+          desc: 'Renders dynamic YouTuber profile popup with logo and follower counts.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, bgcolor: '#08080c', border: '1px solid rgba(239,68,68,0.2)', p: 1.2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 8px 24px rgba(239,68,68,0.15)' }}>
+              <Box sx={{ width: '100%', height: 35, bgcolor: 'rgba(255,255,255,0.02)', borderRadius: 1.5, display: 'flex', alignItems: 'center', px: 1, gap: 0.8, border: '1px solid rgba(255,255,255,0.05)' }}>
+                <Box sx={{ width: 14, height: 14, borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.2)' }} />
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.2 }}>
+                  <Box sx={{ width: 25, height: 3.5, bgcolor: 'rgba(255,255,255,0.6)', borderRadius: 0.25 }} />
+                  <Box sx={{ width: 15, height: 2.5, bgcolor: 'rgba(255,255,255,0.3)', borderRadius: 0.25 }} />
+                </Box>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.6 }}>
+                <Box sx={{ width: 32, height: 32, borderRadius: '50%', bgcolor: '#ef4444', display: 'flex', justifyContent: 'center', alignItems: 'center', border: '1.5px solid #fff', boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>
+                  <Typography sx={{ fontSize: 14 }}>🎯</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.2 }}>
+                  <Typography sx={{ fontSize: 8, fontWeight: 900, color: '#fff' }}>CodeShorts</Typography>
+                  <Box sx={{ width: 5, height: 5, borderRadius: '50%', bgcolor: '#38bdf8', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 3.5, fontWeight: 900, color: '#fff' }}>✓</Box>
+                </Box>
+                <Typography sx={{ fontSize: 5.5, color: '#94a3b8' }}>100K Subscribers</Typography>
+              </Box>
+              <Box sx={{ width: '100%', px: 1.5, py: 0.6, bgcolor: '#ef4444', borderRadius: 2, display: 'flex', justifyContent: 'center', alignItems: 'center', boxShadow: '0 4px 10px rgba(239,68,68,0.3)', border: '1px solid rgba(255,255,255,0.1)' }}>
+                <Typography sx={{ fontSize: 7, fontWeight: 900, color: '#fff', letterSpacing: 0.5 }}>SUBSCRIBE</Typography>
+              </Box>
+            </Box>
+          )
+        };
+      case 'subscribe_video':
+        return {
+          title: 'Subscribe Video',
+          desc: 'Displays interactive MP4 subscribe animation overlays with feedback bell.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, bgcolor: '#000000', border: '1px solid rgba(239,68,68,0.2)', p: 1.2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 8px 24px rgba(239,68,68,0.1)' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.05)', pb: 0.5 }}>
+                <Typography sx={{ fontSize: 5.5, color: '#ef4444', fontWeight: 800 }}>BELL OVERLAY</Typography>
+                <Box sx={{ width: 4, height: 4, borderRadius: '50%', bgcolor: '#ef4444' }} />
+              </Box>
+              <Box sx={{ width: '100%', height: 95, border: '1px solid rgba(255,255,255,0.05)', borderRadius: 2, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', bgcolor: 'rgba(255,255,255,0.02)', gap: 0.8, p: 1, position: 'relative' }}>
+                <Box sx={{ position: 'relative', width: 28, height: 28, display: 'flex', justifyContent: 'center', alignItems: 'center', bgcolor: 'rgba(255,255,255,0.04)', borderRadius: '50%', border: '1px solid rgba(255,255,255,0.1)' }}>
+                  <Typography sx={{ fontSize: 14 }}>🔔</Typography>
+                  <Box sx={{ position: 'absolute', top: 0, right: 0, width: 7, height: 7, borderRadius: '50%', bgcolor: '#ef4444', border: '1.5px solid #000' }} />
+                </Box>
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.2, alignItems: 'center' }}>
+                  <Box sx={{ width: 40, height: 3.5, bgcolor: '#fff', borderRadius: 0.25 }} />
+                  <Box sx={{ width: 30, height: 2.5, bgcolor: 'rgba(255,255,255,0.5)', borderRadius: 0.25 }} />
+                </Box>
+              </Box>
+              <Typography sx={{ fontSize: 5.5, color: 'rgba(255,255,255,0.4)', textAlign: 'center', mb: 0.5 }}>🔔 Notification Ring On</Typography>
+            </Box>
+          )
+        };
+      case 'end_screen':
+        return {
+          title: 'Outro Screen',
+          desc: 'Renders final socials links, contacts handles, and outro cards.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, bgcolor: '#0a0d16', border: '1px solid rgba(2,132,197,0.2)', p: 1.2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 8px 24px rgba(2,132,197,0.15)' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%', alignItems: 'center', borderBottom: '1px solid rgba(255,255,255,0.05)', pb: 0.5 }}>
+                <Box sx={{ width: 30, height: 3, bgcolor: 'rgba(255,255,255,0.2)', borderRadius: 0.25 }} />
+                <Typography sx={{ fontSize: 5, color: '#0284c7', fontWeight: 800 }}>OUTRO</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.8, alignItems: 'center', my: 1 }}>
+                <Typography sx={{ fontSize: 7, fontWeight: 900, color: '#fff', letterSpacing: 0.5, textAlign: 'center' }}>THANKS FOR WATCHING!</Typography>
+                <Box sx={{ width: 22, height: 2, bgcolor: '#0284c7', borderRadius: 0.25, mt: 0.2 }} />
+              </Box>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.6, width: '100%', mb: 0.5 }}>
+                <Box sx={{ display: 'flex', gap: 0.5, alignItems: 'center', bgcolor: 'rgba(255,255,255,0.03)', px: 0.8, py: 0.4, borderRadius: 1, border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <Typography sx={{ fontSize: 6.5 }}>🐙</Typography>
+                  <Typography sx={{ fontSize: 5.5, color: 'rgba(255,255,255,0.6)', fontFamily: 'monospace' }}>github.com/user</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', gap: 0.5, alignItems: 'center', bgcolor: 'rgba(255,255,255,0.03)', px: 0.8, py: 0.4, borderRadius: 1, border: '1px solid rgba(255,255,255,0.05)' }}>
+                  <Typography sx={{ fontSize: 6.5 }}>🐦</Typography>
+                  <Typography sx={{ fontSize: 5.5, color: 'rgba(255,255,255,0.6)', fontFamily: 'monospace' }}>@twitterhandle</Typography>
+                </Box>
+              </Box>
+            </Box>
+          )
+        };
+      default:
+        return { title: 'Scene Block', desc: '', element: null };
+    }
+  };
+
+  const config = getPreviewConfig();
+
+  return (
+    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1.5, p: 1.5, alignItems: 'center', maxWidth: 170 }}>
+      <Typography variant="body2" sx={{ fontWeight: 800, color: '#a78bfa', textAlign: 'center', textTransform: 'uppercase', fontSize: '0.75rem', letterSpacing: 0.5 }}>
+        {config.title}
+      </Typography>
+      <Box sx={{ boxShadow: '0 10px 25px rgba(0,0,0,0.5)', borderRadius: 2, overflow: 'hidden' }}>
+        {config.element}
+      </Box>
+      <Typography sx={{ fontSize: '0.7rem', color: 'rgba(255,255,255,0.5)', textAlign: 'center', lineHeight: 1.3 }}>
+        {config.desc}
+      </Typography>
+    </Box>
+  );
+};
+
+const getSceneIcon = (type: SceneType) => {
+  switch (type) {
+    case 'hook': return <HookIcon sx={{ fontSize: 18 }} />;
+    case 'code': return <CodeIcon sx={{ fontSize: 18 }} />;
+    case 'output': return <OutputIcon sx={{ fontSize: 18 }} />;
+    case 'image': return <ImageIcon sx={{ fontSize: 18 }} />;
+    case 'video': return <VideoIcon sx={{ fontSize: 18 }} />;
+    case 'tip': return <TipIcon sx={{ fontSize: 18 }} />;
+    case 'cta': return <CtaIcon sx={{ fontSize: 18 }} />;
+    case 'subscribe': return <SubscribeIcon sx={{ fontSize: 18 }} />;
+    case 'subscribe_video': return <SubscribeVideoIcon sx={{ fontSize: 18 }} />;
+    case 'end_screen': return <OutroIcon sx={{ fontSize: 18 }} />;
+    default: return <AddIcon sx={{ fontSize: 18 }} />;
+  }
+};
 
 interface TimelineEditorProps {
   projectId: string;
   scenes: Scene[];
   onRefresh: () => void;
+  playerRef?: React.RefObject<any>;
 }
 
-export default function TimelineEditor({ projectId, scenes, onRefresh }: TimelineEditorProps) {
+export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef }: TimelineEditorProps) {
   const [selectedSceneId, setSelectedSceneId] = useState<string | null>(null);
   const [zoom, setZoom] = useState<number>(3); // pixels per frame (1 to 6) Snaps nicely
   const [saving, setSaving] = useState<boolean>(false);
@@ -90,6 +397,8 @@ export default function TimelineEditor({ projectId, scenes, onRefresh }: Timelin
   const [hookImageSize, setHookImageSize] = useState('medium');
   const [hookImageViewMode, setHookImageViewMode] = useState('contain');
   const [explanation, setExplanation] = useState('');
+  const [insertAnchorEl, setInsertAnchorEl] = useState<null | HTMLElement>(null);
+  const [pendingSceneType, setPendingSceneType] = useState<SceneType | null>(null);
 
   const selectedScene = scenes.find((s) => s.id === selectedSceneId) || null;
 
@@ -131,8 +440,8 @@ export default function TimelineEditor({ projectId, scenes, onRefresh }: Timelin
       setHookImageSize(content.hookImageSize || 'medium');
       setHookImageViewMode(content.hookImageViewMode || 'contain');
       setExplanation(content.explanation || '');
-    } else {
-      setSelectedSceneId(scenes[0]?.id || null);
+    } else if (!selectedSceneId && scenes.length > 0) {
+      setSelectedSceneId(scenes[0].id);
     }
   }, [selectedSceneId, scenes]);
 
@@ -218,10 +527,21 @@ export default function TimelineEditor({ projectId, scenes, onRefresh }: Timelin
   };
 
   // Add new scene
-  const handleAddScene = async (type: SceneType) => {
+  const handleAddScene = async (type: SceneType, position: 'start' | 'after_selected' | 'end') => {
     try {
-      const inserted = await api.addScene(projectId, type, selectedSceneId || undefined);
+      let insertAfterId: string | undefined;
+      if (position === 'start') {
+        insertAfterId = 'START';
+      } else if (position === 'after_selected') {
+        insertAfterId = selectedSceneId || undefined;
+      } else {
+        insertAfterId = undefined;
+      }
+
+      const inserted = await api.addScene(projectId, type, insertAfterId);
+      setSelectedSceneId(inserted.id);
       onRefresh();
+      // Keep selection on the newly inserted scene
       setSelectedSceneId(inserted.id);
     } catch (err) {
       console.error('Failed to add scene:', err);
@@ -374,7 +694,16 @@ export default function TimelineEditor({ projectId, scenes, onRefresh }: Timelin
     const x = e.clientX - rect.left + timelineTrackRef.current.scrollLeft;
     const frame = Math.max(0, Math.min(totalFrames, Math.round(x / zoom)));
     setPlayheadFrame(frame);
-  }, [zoom, totalFrames]);
+    
+    // Seek Remotion Player
+    if (playerRef?.current) {
+      try {
+        playerRef.current.seekTo(frame);
+      } catch (err) {
+        console.warn('Failed to seek player:', err);
+      }
+    }
+  }, [zoom, totalFrames, playerRef]);
 
   useEffect(() => {
     if (!isDraggingPlayhead) return;
@@ -384,6 +713,15 @@ export default function TimelineEditor({ projectId, scenes, onRefresh }: Timelin
       const x = e.clientX - rect.left + timelineTrackRef.current.scrollLeft;
       const frame = Math.max(0, Math.min(totalFrames, Math.round(x / zoom)));
       setPlayheadFrame(frame);
+      
+      // Seek Remotion Player in real time
+      if (playerRef?.current) {
+        try {
+          playerRef.current.seekTo(frame);
+        } catch (err) {
+          // ignore seek errors during fast drag
+        }
+      }
     };
     const handleMouseUp = () => setIsDraggingPlayhead(false);
     window.addEventListener('mousemove', handleMouseMove);
@@ -392,12 +730,59 @@ export default function TimelineEditor({ projectId, scenes, onRefresh }: Timelin
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDraggingPlayhead, zoom, totalFrames]);
+  }, [isDraggingPlayhead, zoom, totalFrames, playerRef]);
 
-  // Play individual scene preview (highlight for 2s then reset)
+  // Sync playhead state from Remotion Player's animation clock
+  useEffect(() => {
+    let attached = false;
+    let playerInstance: any = null;
+
+    const onFrameUpdate = () => {
+      if (!isDraggingPlayhead && playerRef?.current) {
+        try {
+          setPlayheadFrame(playerRef.current.getCurrentFrame());
+        } catch (err) {
+          // ignore frame fetch errors
+        }
+      }
+    };
+
+    const intervalId = setInterval(() => {
+      if (playerRef?.current && !attached) {
+        playerInstance = playerRef.current;
+        try {
+          playerInstance.addEventListener('frameupdate', onFrameUpdate);
+          attached = true;
+          clearInterval(intervalId);
+        } catch (err) {
+          console.warn('Waiting to bind player event listener:', err);
+        }
+      }
+    }, 200);
+
+    return () => {
+      clearInterval(intervalId);
+      if (playerInstance && attached) {
+        try {
+          playerInstance.removeEventListener('frameupdate', onFrameUpdate);
+        } catch (err) {
+          // ignore cleanup errors
+        }
+      }
+    };
+  }, [playerRef, isDraggingPlayhead]);
+
+  // Play individual scene preview (seek to scene start, play, and auto-stop at scene end)
   const handlePlayScene = (sceneId: string) => {
     if (playingSceneId === sceneId) {
       setPlayingSceneId(null);
+      if (playerRef?.current) {
+        try {
+          playerRef.current.pause();
+        } catch (err) {
+          console.warn(err);
+        }
+      }
       return;
     }
     // Move playhead to start of this scene
@@ -406,30 +791,60 @@ export default function TimelineEditor({ projectId, scenes, onRefresh }: Timelin
       if (s.id === sceneId) break;
       frameOffset += s.duration_frames;
     }
+    
     setPlayheadFrame(frameOffset);
     setPlayingSceneId(sceneId);
     setSelectedSceneId(sceneId);
 
-    // Auto-animate playhead across the scene duration
     const scene = scenes.find((s) => s.id === sceneId);
     if (!scene) return;
     const sceneDuration = scene.duration_frames;
-    const durationMs = (sceneDuration / 30) * 1000; // 30fps
-    const startTime = performance.now();
-    const startFrame = frameOffset;
 
-    const animate = (now: number) => {
-      const elapsed = now - startTime;
-      const progress = Math.min(elapsed / durationMs, 1);
-      const currentFrame = startFrame + Math.round(progress * sceneDuration);
-      setPlayheadFrame(currentFrame);
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      } else {
-        setPlayingSceneId(null);
+    if (playerRef?.current) {
+      try {
+        playerRef.current.seekTo(frameOffset);
+        playerRef.current.play();
+
+        const endFrame = frameOffset + sceneDuration;
+        const checkFrame = () => {
+          if (!playerRef.current) return;
+          try {
+            const currentFrame = playerRef.current.getCurrentFrame();
+            const isStillPlaying = playerRef.current.isPlaying();
+            
+            if (currentFrame >= endFrame || !isStillPlaying) {
+              playerRef.current.pause();
+              setPlayingSceneId(null);
+            } else {
+              requestAnimationFrame(checkFrame);
+            }
+          } catch (err) {
+            setPlayingSceneId(null);
+          }
+        };
+        requestAnimationFrame(checkFrame);
+      } catch (err) {
+        console.warn('Playback controller error:', err);
       }
-    };
-    requestAnimationFrame(animate);
+    } else {
+      // Fallback local UI animation if player is not fully loaded
+      const durationMs = (sceneDuration / 30) * 1000;
+      const startTime = performance.now();
+      const startFrame = frameOffset;
+
+      const animate = (now: number) => {
+        const elapsed = now - startTime;
+        const progress = Math.min(elapsed / durationMs, 1);
+        const currentFrame = startFrame + Math.round(progress * sceneDuration);
+        setPlayheadFrame(currentFrame);
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          setPlayingSceneId(null);
+        }
+      };
+      requestAnimationFrame(animate);
+    }
   };
 
   // Get the current scene under the playhead
@@ -1325,27 +1740,63 @@ export default function TimelineEditor({ projectId, scenes, onRefresh }: Timelin
                 { type: 'end_screen' as SceneType, label: 'Outro Screen' },
               ].map((item) => (
                 <Grid item xs={6} key={item.type}>
-                  <Button
-                    variant="outlined"
-                    fullWidth
-                    size="small"
-                    startIcon={<AddIcon />}
-                    onClick={() => handleAddScene(item.type)}
-                    sx={{
-                      borderColor: 'rgba(255, 255, 255, 0.08)',
-                      color: 'text.primary',
-                      justifyContent: 'flex-start',
-                      py: 1.2,
-                      px: 2,
-                      background: 'rgba(255,255,255,0.01)',
-                      '&:hover': {
-                        borderColor: getSceneColor(item.type),
-                        background: `${getSceneColor(item.type)}10`,
+                  <Tooltip
+                    title={<ScenePreview type={item.type} />}
+                    placement="right"
+                    arrow
+                    componentsProps={{
+                      tooltip: {
+                        sx: {
+                          bgcolor: '#090a13',
+                          border: '1px solid rgba(255, 255, 255, 0.08)',
+                          p: 0,
+                          boxShadow: '0 12px 36px rgba(0,0,0,0.6)',
+                          borderRadius: 3,
+                          backdropFilter: 'blur(16px)',
+                        },
+                      },
+                      arrow: {
+                        sx: {
+                          color: '#090a13',
+                        },
                       },
                     }}
                   >
-                    {item.label}
-                  </Button>
+                    <Button
+                      variant="outlined"
+                      fullWidth
+                      size="small"
+                      onClick={(e) => {
+                        setPendingSceneType(item.type);
+                        setInsertAnchorEl(e.currentTarget);
+                      }}
+                      sx={{
+                        borderColor: 'rgba(255, 255, 255, 0.06)',
+                        color: 'text.primary',
+                        justifyContent: 'flex-start',
+                        py: 1.2,
+                        px: 1.8,
+                        fontSize: '0.8rem',
+                        fontWeight: 600,
+                        borderRadius: 2,
+                        background: 'linear-gradient(135deg, rgba(255,255,255,0.01), rgba(255,255,255,0.02))',
+                        transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
+                        '& .MuiButton-startIcon': {
+                          color: getSceneColor(item.type),
+                          mr: 1,
+                        },
+                        '&:hover': {
+                          borderColor: getSceneColor(item.type),
+                          background: `${getSceneColor(item.type)}0a`,
+                          transform: 'translateY(-2px)',
+                          boxShadow: `0 4px 12px ${getSceneColor(item.type)}15`,
+                        },
+                      }}
+                      startIcon={getSceneIcon(item.type)}
+                    >
+                      {item.label}
+                    </Button>
+                  </Tooltip>
                 </Grid>
               ))}
             </Grid>
@@ -1401,32 +1852,52 @@ export default function TimelineEditor({ projectId, scenes, onRefresh }: Timelin
           >
             
             {/* Timeline rulers / ticks */}
-            <Box sx={{ position: 'relative', height: 20, mb: 1, borderBottom: '1px solid rgba(255,255,255,0.04)' }}>
-              {Array.from({ length: Math.ceil(totalFrames / 30) + 1 }).map((_, sIdx) => {
-                const f = sIdx * 30; // frames
+            <Box sx={{ position: 'relative', height: 22, mb: 1, borderBottom: '1px solid rgba(255,255,255,0.06)' }}>
+              {Array.from({ length: Math.ceil(totalFrames / 10) + 1 }).map((_, tickIdx) => {
+                const f = tickIdx * 10; // frame index
+                const isMajor = f % 30 === 0;
                 return (
                   <div
-                    key={sIdx}
+                    key={tickIdx}
                     style={{
                       position: 'absolute',
                       left: f * zoom,
-                      fontSize: 10,
-                      color: 'rgba(255,255,255,0.3)',
+                      fontSize: 9,
+                      color: isMajor ? 'rgba(255,255,255,0.4)' : 'rgba(255,255,255,0.15)',
                       fontFamily: 'monospace',
                       display: 'flex',
                       flexDirection: 'column',
                       alignItems: 'center',
+                      transform: 'translateX(-50%)',
                     }}
                   >
-                    <span>{sIdx}s</span>
-                    <div style={{ width: 1, height: 6, backgroundColor: 'rgba(255,255,255,0.15)', marginTop: 2 }} />
+                    {isMajor ? (
+                      <>
+                        <span>{f / 30}s</span>
+                        <div style={{ width: 1, height: 6, backgroundColor: 'rgba(255,255,255,0.25)', marginTop: 2 }} />
+                      </>
+                    ) : (
+                      <div style={{ width: 1, height: 4, backgroundColor: 'rgba(255,255,255,0.12)', marginTop: 10 }} />
+                    )}
                   </div>
                 );
               })}
             </Box>
 
             {/* Main horizontal tracks container */}
-            <Box sx={{ display: 'flex', position: 'relative', alignItems: 'stretch', height: 74, width: 'fit-content' }}>
+            <Box
+              sx={{
+                display: 'flex',
+                position: 'relative',
+                alignItems: 'stretch',
+                height: 74,
+                width: 'fit-content',
+                bgcolor: 'rgba(255,255,255,0.01)',
+                border: '1px dashed rgba(255,255,255,0.05)',
+                borderRadius: 2.5,
+                p: '2px',
+              }}
+            >
               {scenes.map((scene, index) => {
                 const isSelected = scene.id === selectedSceneId;
                 const isPlaying = playingSceneId === scene.id;
@@ -1458,13 +1929,15 @@ export default function TimelineEditor({ projectId, scenes, onRefresh }: Timelin
                       display: 'flex',
                       alignItems: 'center',
                       px: 1.5,
-                      transition: 'border 0.1s, opacity 0.2s, box-shadow 0.2s',
+                      transition: 'all 0.2s cubic-bezier(0.4, 0, 0.2, 1)',
                       boxShadow: isSelected ? `0 0 15px ${blockBgColor}80` : isPlaying ? `0 0 20px rgba(239, 68, 68, 0.4)` : 'none',
                       opacity: draggedSceneId === scene.id ? 0.3 : 1,
-                      transform: isOver ? 'scale(0.98)' : 'scale(1)',
+                      transform: isOver ? 'scale(0.95)' : 'scale(1)',
                       '&:hover': {
                         borderColor: isSelected ? '#ffffff' : 'rgba(255,255,255,0.4)',
-                        boxShadow: `0 0 10px ${blockBgColor}40`,
+                        boxShadow: isSelected ? `0 0 20px ${blockBgColor}a0` : `0 0 12px ${blockBgColor}60`,
+                        transform: isSelected ? 'scale(1.02)' : 'scale(1.01)',
+                        zIndex: 2,
                       },
                     }}
                   >
@@ -1530,34 +2003,55 @@ export default function TimelineEditor({ projectId, scenes, onRefresh }: Timelin
                 );
               })}
 
-              {/* Playhead indicator - red vertical line */}
+              {/* Playhead indicator - red vertical line with wider interactive handle */}
               <div
                 onMouseDown={handlePlayheadMouseDown}
                 style={{
                   position: 'absolute',
-                  left: playheadFrame * zoom - 1,
-                  top: -28,
+                  left: playheadFrame * zoom - 8,
+                  top: -26,
                   bottom: 0,
-                  width: 2,
-                  backgroundColor: '#ef4444',
+                  width: 16,
                   cursor: 'ew-resize',
                   zIndex: 10,
                   pointerEvents: 'auto',
+                  display: 'flex',
+                  justifyContent: 'center',
                   transition: isDraggingPlayhead ? 'none' : 'left 0.05s ease-out',
                 }}
               >
-                {/* Playhead top triangle handle */}
+                {/* Visual red vertical line */}
+                <div
+                  style={{
+                    width: 2,
+                    height: '100%',
+                    backgroundColor: '#ef4444',
+                    boxShadow: isDraggingPlayhead ? '0 0 8px #ef4444, 0 0 15px #ef4444' : 'none',
+                    transition: 'box-shadow 0.2s',
+                  }}
+                />
+                
+                {/* Visual handle at the top (shield/teardrop design) */}
                 <div
                   style={{
                     position: 'absolute',
                     top: 0,
-                    left: '50%',
-                    transform: 'translateX(-50%)',
+                    width: 14,
+                    height: 10,
+                    borderRadius: '2px 2px 0 0',
+                    backgroundColor: '#ef4444',
+                    boxShadow: '0 2px 6px rgba(0,0,0,0.4)',
+                  }}
+                />
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: 10,
                     width: 0,
                     height: 0,
-                    borderLeft: '6px solid transparent',
-                    borderRight: '6px solid transparent',
-                    borderTop: '8px solid #ef4444',
+                    borderLeft: '7px solid transparent',
+                    borderRight: '7px solid transparent',
+                    borderTop: '6px solid #ef4444',
                   }}
                 />
               </div>
@@ -1565,6 +2059,71 @@ export default function TimelineEditor({ projectId, scenes, onRefresh }: Timelin
           </Box>
         </CardContent>
       </Card>
+
+      {/* Menu for selecting insert position */}
+      <Menu
+        anchorEl={insertAnchorEl}
+        open={Boolean(insertAnchorEl)}
+        onClose={() => {
+          setInsertAnchorEl(null);
+          setPendingSceneType(null);
+        }}
+        PaperProps={{
+          sx: {
+            background: '#121420',
+            border: '1px solid rgba(255, 255, 255, 0.08)',
+            boxShadow: '0 8px 32px rgba(0,0,0,0.5)',
+            '& .MuiMenuItem-root': {
+              fontSize: '0.85rem',
+              color: 'rgba(255,255,255,0.8)',
+              py: 1.2,
+              px: 2.5,
+              '&:hover': {
+                background: 'rgba(255,255,255,0.05)',
+                color: '#fff',
+              },
+              '&.Mui-disabled': {
+                color: 'rgba(255,255,255,0.3)',
+              },
+            },
+          },
+        }}
+      >
+        <MenuItem
+          onClick={() => {
+            if (pendingSceneType) {
+              handleAddScene(pendingSceneType, 'start');
+            }
+            setInsertAnchorEl(null);
+            setPendingSceneType(null);
+          }}
+        >
+          Add at the Beginning
+        </MenuItem>
+        <MenuItem
+          disabled={!selectedSceneId}
+          onClick={() => {
+            if (pendingSceneType) {
+              handleAddScene(pendingSceneType, 'after_selected');
+            }
+            setInsertAnchorEl(null);
+            setPendingSceneType(null);
+          }}
+        >
+          Insert After Selected Block
+        </MenuItem>
+        <MenuItem
+          onClick={() => {
+            if (pendingSceneType) {
+              handleAddScene(pendingSceneType, 'end');
+            }
+            setInsertAnchorEl(null);
+            setPendingSceneType(null);
+          }}
+        >
+          Add to the End
+        </MenuItem>
+      </Menu>
     </Box>
   );
 }

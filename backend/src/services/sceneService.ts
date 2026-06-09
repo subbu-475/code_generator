@@ -476,19 +476,25 @@ export function addScene(projectId: string, type: SceneType, insertAfterId?: str
     let targetOrder = 0;
 
     if (insertAfterId) {
-      const afterScene = db
-        .prepare('SELECT scene_order FROM scenes WHERE id = ? AND project_id = ?')
-        .get(insertAfterId, projectId) as { scene_order: number } | undefined;
-
-      if (afterScene) {
-        targetOrder = afterScene.scene_order + 1;
-        db.prepare('UPDATE scenes SET scene_order = scene_order + 1 WHERE project_id = ? AND scene_order >= ?')
-          .run(projectId, targetOrder);
+      if (insertAfterId === 'START') {
+        targetOrder = 0;
+        db.prepare('UPDATE scenes SET scene_order = scene_order + 1 WHERE project_id = ? AND scene_order >= 0')
+          .run(projectId);
       } else {
-        const maxRow = db
-          .prepare('SELECT MAX(scene_order) AS max_order FROM scenes WHERE project_id = ?')
-          .get(projectId) as { max_order: number | null };
-        targetOrder = maxRow.max_order !== null ? maxRow.max_order + 1 : 0;
+        const afterScene = db
+          .prepare('SELECT scene_order FROM scenes WHERE id = ? AND project_id = ?')
+          .get(insertAfterId, projectId) as { scene_order: number } | undefined;
+
+        if (afterScene) {
+          targetOrder = afterScene.scene_order + 1;
+          db.prepare('UPDATE scenes SET scene_order = scene_order + 1 WHERE project_id = ? AND scene_order >= ?')
+            .run(projectId, targetOrder);
+        } else {
+          const maxRow = db
+            .prepare('SELECT MAX(scene_order) AS max_order FROM scenes WHERE project_id = ?')
+            .get(projectId) as { max_order: number | null };
+          targetOrder = maxRow.max_order !== null ? maxRow.max_order + 1 : 0;
+        }
       }
     } else {
       const maxRow = db

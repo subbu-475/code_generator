@@ -3,7 +3,7 @@
 // ============================================================
 
 import React, { useEffect, useState } from 'react';
-import { Player } from '@remotion/player';
+import { Player, PlayerRef } from '@remotion/player';
 import { Box, Paper, Typography, CircularProgress } from '@mui/material';
 import { CodeShort } from '../../../../renderer/src/compositions/CodeShort.js';
 import type { Project, Scene, Template } from '../../types/index.js';
@@ -14,7 +14,10 @@ interface VideoPreviewProps {
   template: Template | null;
 }
 
-export default function VideoPreview({ project, scenes, template }: VideoPreviewProps) {
+export default React.forwardRef<PlayerRef, VideoPreviewProps>(function VideoPreview(
+  { project, scenes, template },
+  ref
+) {
   const [voiceUrls, setVoiceUrls] = useState<string[]>([]);
   const [audioLoading, setAudioLoading] = useState(false);
 
@@ -145,6 +148,7 @@ export default function VideoPreview({ project, scenes, template }: VideoPreview
         }}
       >
         <Player
+          ref={ref}
           component={CodeShort}
           inputProps={videoProps}
           durationInFrames={totalFrames}
@@ -171,4 +175,4 @@ export default function VideoPreview({ project, scenes, template }: VideoPreview
       </Typography>
     </Box>
   );
-}
+});
