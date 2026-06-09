@@ -93,3 +93,14 @@ export interface TipSceneProps extends SceneComponentProps {
   tipNumber: number;
   text?: string;
 }
+
+/** Props specific to the QuizScene */
+export interface QuizSceneProps extends SceneComponentProps {
+  quizQuestion?: string;
+  quizOptions?: string[];
+  quizCorrectIndex?: number;
+  quizExplanation?: string;
+  quizRevealDelay?: number;
+  backendUrl?: string;
+}
+

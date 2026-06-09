@@ -365,7 +365,7 @@ export function updateScene(sceneId: string, updates: Partial<SceneConfig>): Sce
   const contentKeys = [
     'code', 'text', 'output', 'language', 'channelName', 'channelHandle', 'subscriberCount', 'socials', 'imageUrl', 'videoUrl',
     'hookBadge', 'hookBadgeStyle', 'hookCreatorName', 'hookCreatorHandle', 'hookCreatorAvatar', 'hookShowProgress', 'hookProgressStyle', 'hookLayout', 'hookImage',
-    'hookImageSize', 'hookImageViewMode', 'explanation'
+    'hookImageSize', 'hookImageViewMode', 'explanation', 'quizQuestion', 'quizOptions', 'quizCorrectIndex', 'quizExplanation', 'quizRevealDelay'
   ];
   const hasContentUpdate = contentKeys.some((k) => (updates as any)[k] !== undefined);
 
@@ -436,6 +436,11 @@ export function syncProjectSceneConfig(db: ReturnType<typeof getDb>, projectId: 
       hookImageSize: content.hookImageSize,
       hookImageViewMode: content.hookImageViewMode,
       explanation: content.explanation,
+      quizQuestion: content.quizQuestion,
+      quizOptions: content.quizOptions,
+      quizCorrectIndex: content.quizCorrectIndex,
+      quizExplanation: content.quizExplanation,
+      quizRevealDelay: content.quizRevealDelay,
     };
   });
 
@@ -585,6 +590,17 @@ export function addScene(projectId: string, type: SceneType, insertAfterId?: str
         transition = 'none';
         content.videoUrl = '';
         break;
+      case 'quiz':
+        title = 'Quiz Challenge';
+        duration = 150;
+        animation = 'fade';
+        transition = 'fade';
+        content.quizQuestion = 'What is the output of this code?';
+        content.quizOptions = ['Option A', 'Option B', 'Option C', 'Option D'];
+        content.quizCorrectIndex = 0;
+        content.quizExplanation = 'This is because...';
+        content.quizRevealDelay = 90;
+        break;
     }
 
     db.prepare(`
@@ -700,6 +716,11 @@ function insertScene(
   if (config.hookImageSize) content.hookImageSize = config.hookImageSize;
   if (config.hookImageViewMode) content.hookImageViewMode = config.hookImageViewMode;
   if (config.explanation) content.explanation = config.explanation;
+  if (config.quizQuestion !== undefined) content.quizQuestion = config.quizQuestion;
+  if (config.quizOptions !== undefined) content.quizOptions = config.quizOptions;
+  if (config.quizCorrectIndex !== undefined) content.quizCorrectIndex = config.quizCorrectIndex;
+  if (config.quizExplanation !== undefined) content.quizExplanation = config.quizExplanation;
+  if (config.quizRevealDelay !== undefined) content.quizRevealDelay = config.quizRevealDelay;
 
   db.prepare(`
     INSERT INTO scenes (id, project_id, scene_order, type, title, content, duration_frames, animation, transition_)

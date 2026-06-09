@@ -97,6 +97,11 @@ export interface SceneConfig {
   hookImageSize?: 'small' | 'medium' | 'large';
   hookImageViewMode?: 'cover' | 'contain';
   explanation?: string;
+  quizQuestion?: string;
+  quizOptions?: string[];
+  quizCorrectIndex?: number;
+  quizExplanation?: string;
+  quizRevealDelay?: number;
 }
 
 export interface Template {
@@ -167,7 +172,18 @@ export type ProgrammingLanguage =
   | 'csharp'
   | 'php';
 
-export type SceneType = 'hook' | 'code' | 'output' | 'tip' | 'cta' | 'subscribe' | 'end_screen' | 'image' | 'video' | 'subscribe_video';
+export type SceneType =
+  | 'hook'
+  | 'code'
+  | 'output'
+  | 'tip'
+  | 'cta'
+  | 'subscribe'
+  | 'end_screen'
+  | 'image'
+  | 'video'
+  | 'subscribe_video'
+  | 'quiz';
 
 export type AnimationStyle = 'fade' | 'zoom' | 'slide' | 'pop' | 'bounce';
 

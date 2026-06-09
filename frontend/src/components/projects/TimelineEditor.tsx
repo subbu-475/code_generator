@@ -37,6 +37,7 @@ import {
   Subscriptions as SubscribeIcon,
   NotificationsActive as SubscribeVideoIcon,
   Flag as OutroIcon,
+  LiveHelp as QuizIcon,
 } from '@mui/icons-material';
 import * as api from '../../api/client.js';
 import type { Scene, SceneType, AnimationStyle, TransitionStyle } from '../../types/index.js';
@@ -298,6 +299,37 @@ const ScenePreview = ({ type }: { type: SceneType }) => {
             </Box>
           )
         };
+      case 'quiz':
+        return {
+          title: 'Quiz Challenge',
+          desc: 'Interactive quiz card with countdown timer, correct answer indicator, and slide-in explanation.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, background: 'linear-gradient(135deg, #0f172a, #1e1b4b)', border: '1px solid rgba(139,92,246,0.3)', p: 1.2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 8px 24px rgba(139,92,246,0.2)' }}>
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Box sx={{ px: 0.8, py: 0.2, borderRadius: 1, bgcolor: 'rgba(139,92,246,0.2)', border: '1px solid rgba(139,92,246,0.4)' }}>
+                  <Typography sx={{ fontSize: 5, fontWeight: 900, color: '#a78bfa', textTransform: 'uppercase', letterSpacing: 0.5 }}>⚡ QUIZ CHALLENGE</Typography>
+                </Box>
+              </Box>
+              <Typography sx={{ fontSize: 7, fontWeight: 800, color: '#fff', textAlign: 'center', lineHeight: 1.2 }}>
+                What does [] + [] evaluate to?
+              </Typography>
+              <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.3, width: '100%' }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.3, px: 0.6, py: 0.3, borderRadius: 0.75, border: '1px solid #22c55e', bgcolor: 'rgba(34,197,94,0.1)' }}>
+                  <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: '#22c55e', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 3.5 }}>✓</Box>
+                  <Typography sx={{ fontSize: 5, color: '#fff', fontWeight: 700 }}>"" (Empty String)</Typography>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.3, px: 0.6, py: 0.3, borderRadius: 0.75, border: '1px solid rgba(255,255,255,0.05)', bgcolor: 'rgba(255,255,255,0.02)' }}>
+                  <Box sx={{ width: 6, height: 6, borderRadius: '50%', bgcolor: 'rgba(255,255,255,0.1)', display: 'flex', justifyContent: 'center', alignItems: 'center', fontSize: 3.5 }} />
+                  <Typography sx={{ fontSize: 5, color: 'rgba(255,255,255,0.4)' }}>[]</Typography>
+                </Box>
+              </Box>
+              <Box sx={{ width: '100%', bgcolor: 'rgba(0,0,0,0.4)', p: 0.4, borderRadius: 0.75, border: '1px solid rgba(34,197,94,0.2)' }}>
+                <Typography sx={{ fontSize: 4.5, color: '#22c55e', fontWeight: 800, textTransform: 'uppercase' }}>EXPLANATION</Typography>
+                <Typography sx={{ fontSize: 4, color: 'rgba(255,255,255,0.7)', lineHeight: 1 }}>Implicit coercion converts arrays to strings...</Typography>
+              </Box>
+            </Box>
+          )
+        };
       default:
         return { title: 'Scene Block', desc: '', element: null };
     }
@@ -332,6 +364,7 @@ const getSceneIcon = (type: SceneType) => {
     case 'subscribe': return <SubscribeIcon sx={{ fontSize: 18 }} />;
     case 'subscribe_video': return <SubscribeVideoIcon sx={{ fontSize: 18 }} />;
     case 'end_screen': return <OutroIcon sx={{ fontSize: 18 }} />;
+    case 'quiz': return <QuizIcon sx={{ fontSize: 18 }} />;
     default: return <AddIcon sx={{ fontSize: 18 }} />;
   }
 };
@@ -397,6 +430,11 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
   const [hookImageSize, setHookImageSize] = useState('medium');
   const [hookImageViewMode, setHookImageViewMode] = useState('contain');
   const [explanation, setExplanation] = useState('');
+  const [quizQuestion, setQuizQuestion] = useState('');
+  const [quizOptions, setQuizOptions] = useState<string[]>(['Option A', 'Option B', 'Option C', 'Option D']);
+  const [quizCorrectIndex, setQuizCorrectIndex] = useState<number>(0);
+  const [quizExplanation, setQuizExplanation] = useState('');
+  const [quizRevealDelay, setQuizRevealDelay] = useState<number>(90);
   const [insertAnchorEl, setInsertAnchorEl] = useState<null | HTMLElement>(null);
   const [pendingSceneType, setPendingSceneType] = useState<SceneType | null>(null);
 
@@ -440,6 +478,11 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
       setHookImageSize(content.hookImageSize || 'medium');
       setHookImageViewMode(content.hookImageViewMode || 'contain');
       setExplanation(content.explanation || '');
+      setQuizQuestion(content.quizQuestion || 'What is the output of this code?');
+      setQuizOptions(content.quizOptions || ['Option A', 'Option B', 'Option C', 'Option D']);
+      setQuizCorrectIndex(content.quizCorrectIndex !== undefined ? content.quizCorrectIndex : 0);
+      setQuizExplanation(content.quizExplanation || 'This is because...');
+      setQuizRevealDelay(content.quizRevealDelay !== undefined ? content.quizRevealDelay : 90);
     } else if (!selectedSceneId && scenes.length > 0) {
       setSelectedSceneId(scenes[0].id);
     }
@@ -514,6 +557,12 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
       } else if (selectedScene.type === 'subscribe_video') {
         payload.videoUrl = videoUrl;
         payload.imageUrl = logoUrl;
+      } else if (selectedScene.type === 'quiz') {
+        payload.quizQuestion = quizQuestion;
+        payload.quizOptions = quizOptions;
+        payload.quizCorrectIndex = quizCorrectIndex;
+        payload.quizExplanation = quizExplanation;
+        payload.quizRevealDelay = quizRevealDelay;
       }
 
       await api.updateScene(projectId, selectedSceneId, payload);
@@ -874,6 +923,8 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
         return '#06b6d4'; // Teal/Cyan
       case 'video':
         return '#6366f1'; // Indigo
+      case 'quiz':
+        return '#ec4899'; // Bright Pink
       default:
         return '#6b7280'; // Gray
     }
@@ -1659,6 +1710,81 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
                     </>
                   )}
 
+                  {selectedScene.type === 'quiz' && (
+                    <>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Question"
+                          fullWidth
+                          value={quizQuestion}
+                          onChange={(e) => setQuizQuestion(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                      {[0, 1, 2, 3].map((optIdx) => (
+                        <Grid item xs={12} sm={6} key={optIdx}>
+                          <TextField
+                            label={`Option ${String.fromCharCode(65 + optIdx)}`}
+                            fullWidth
+                            size="small"
+                            value={quizOptions[optIdx] || ''}
+                            onChange={(e) => {
+                              const copy = [...quizOptions];
+                              copy[optIdx] = e.target.value;
+                              setQuizOptions(copy);
+                            }}
+                            sx={{ mb: 1 }}
+                          />
+                        </Grid>
+                      ))}
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          select
+                          label="Correct Answer"
+                          fullWidth
+                          size="small"
+                          value={quizCorrectIndex}
+                          onChange={(e) => setQuizCorrectIndex(Number(e.target.value))}
+                          sx={{ mb: 2 }}
+                        >
+                          {[0, 1, 2, 3].map((idx) => (
+                            <MenuItem key={idx} value={idx}>
+                              Option {String.fromCharCode(65 + idx)}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          select
+                          label="Reveal Answer Delay"
+                          fullWidth
+                          size="small"
+                          value={quizRevealDelay}
+                          onChange={(e) => setQuizRevealDelay(Number(e.target.value))}
+                          sx={{ mb: 2 }}
+                        >
+                          {[30, 45, 60, 75, 90, 105, 120, 135].map((frames) => (
+                            <MenuItem key={frames} value={frames}>
+                              {Math.round((frames / 30) * 10) / 10}s ({frames} frames)
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Explanation (Shown after reveal)"
+                          fullWidth
+                          multiline
+                          rows={2}
+                          value={quizExplanation}
+                          onChange={(e) => setQuizExplanation(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                    </>
+                  )}
+
                   {/* Transition parameters */}
                   <Grid item xs={6} sx={{ mt: 2 }}>
                     <TextField
@@ -1730,6 +1856,7 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
               {[
                 { type: 'hook' as SceneType, label: 'Hook Opener' },
                 { type: 'code' as SceneType, label: 'Code Snippet' },
+                { type: 'quiz' as SceneType, label: 'Quiz Challenge' },
                 { type: 'output' as SceneType, label: 'Console Output' },
                 { type: 'image' as SceneType, label: 'Image Frame' },
                 { type: 'video' as SceneType, label: 'Video Clip' },

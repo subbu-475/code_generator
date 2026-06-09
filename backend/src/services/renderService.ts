@@ -150,6 +150,10 @@ async function doRender(
         scene.type === 'cta'
       ) {
         textToSpeak = scene.text || '';
+      } else if (scene.type === 'quiz') {
+        const question = scene.quizQuestion || '';
+        const options = scene.quizOptions || [];
+        textToSpeak = `${question}. ${options.join('. ')}`;
       }
 
       if (textToSpeak.trim()) {

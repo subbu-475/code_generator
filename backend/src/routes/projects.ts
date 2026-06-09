@@ -68,10 +68,27 @@ const SceneUpdateSchema = z.object({
   hookImageSize: z.enum(['small', 'medium', 'large']).optional(),
   hookImageViewMode: z.enum(['cover', 'contain']).optional(),
   explanation: z.string().optional(),
+  quizQuestion: z.string().optional(),
+  quizOptions: z.array(z.string()).optional(),
+  quizCorrectIndex: z.number().int().min(0).max(3).optional(),
+  quizExplanation: z.string().optional(),
+  quizRevealDelay: z.number().int().min(0).optional(),
 });
 
 const SceneCreateSchema = z.object({
-  type: z.enum(['hook', 'code', 'output', 'tip', 'cta', 'subscribe', 'end_screen', 'image', 'video', 'subscribe_video']),
+  type: z.enum([
+    'hook',
+    'code',
+    'output',
+    'tip',
+    'cta',
+    'subscribe',
+    'end_screen',
+    'image',
+    'video',
+    'subscribe_video',
+    'quiz',
+  ]),
   insertAfterId: z.string().optional(),
 });
 
@@ -135,6 +152,10 @@ router.get('/:id/preview-audio', async (req, res, next) => {
         scene.type === 'cta'
       ) {
         textToSpeak = content.text || '';
+      } else if (scene.type === 'quiz') {
+        const question = content.quizQuestion || '';
+        const options = content.quizOptions || [];
+        textToSpeak = `${question}. ${options.join('. ')}`;
       }
 
       if (textToSpeak.trim()) {

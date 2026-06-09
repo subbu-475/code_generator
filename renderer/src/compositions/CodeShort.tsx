@@ -17,6 +17,7 @@ import { EndScreenScene } from '../components/EndScreenScene';
 import { ImageScene } from '../components/ImageScene';
 import { SubscribeVideoScene } from '../components/SubscribeVideoScene';
 import { VideoScene } from '../components/VideoScene';
+import { QuizScene } from '../components/QuizScene';
 import { FontReady } from '../components/FontReady';
 import { withFontFallback } from '../utils/fontFallback';
 
@@ -164,6 +165,19 @@ export const CodeShort: React.FC<VideoProps> = ({
           <SubscribeVideoScene
             videoUrl={resolveUrl(scene.videoUrl)}
             imageUrl={resolveUrl(scene.imageUrl)}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'quiz':
+        return (
+          <QuizScene
+            title={scene.title}
+            quizQuestion={scene.quizQuestion}
+            quizOptions={scene.quizOptions}
+            quizCorrectIndex={scene.quizCorrectIndex}
+            quizExplanation={scene.quizExplanation}
+            quizRevealDelay={scene.quizRevealDelay}
             template={resolvedTemplate}
             durationInFrames={scene.duration_frames}
           />

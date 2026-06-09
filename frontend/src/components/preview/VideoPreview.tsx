@@ -91,6 +91,11 @@ export default React.forwardRef<PlayerRef, VideoPreviewProps>(function VideoPrev
       hookImageSize: content.hookImageSize,
       hookImageViewMode: content.hookImageViewMode,
       explanation: content.explanation,
+      quizQuestion: content.quizQuestion,
+      quizOptions: content.quizOptions,
+      quizCorrectIndex: content.quizCorrectIndex,
+      quizExplanation: content.quizExplanation,
+      quizRevealDelay: content.quizRevealDelay,
     };
   });
 
