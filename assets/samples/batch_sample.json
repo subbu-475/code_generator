@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Map Helper",
+    "hook": "Stop using loops for simple mapping",
+    "code": "const doubled = [1, 2, 3].map(x => x * 2);\nconsole.log(doubled);",
+    "output": "[2, 4, 6]",
+    "cta": "Subscribe for more JS!",
+    "language": "javascript",
+    "template": "Coding Dark"
+  },
+  {
+    "title": "Filter Helper",
+    "hook": "How to clean up arrays easily",
+    "code": "const evens = [1, 2, 3, 4].filter(x => x % 2 === 0);\nconsole.log(evens);",
+    "output": "[2, 4]",
+    "cta": "Join our community!",
+    "language": "javascript",
+    "template": "VSCode Theme"
+  },
+  {
+    "title": "Python Generator",
+    "hook": "Master list comprehensions in 3 seconds",
+    "code": "evens = [x for x in range(10) if x % 2 == 0]\nprint(evens)",
+    "output": "[0, 2, 4, 6, 8]",
+    "cta": "Follow for daily Python!",
+    "language": "python",
+    "template": "Cyberpunk"
+  }
+]

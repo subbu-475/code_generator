@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+dist/
+build/
+*.tsbuildinfo
+
+# Generated content
+generated/code-images/*
+generated/audio/*
+generated/videos/*
+!generated/*/.gitkeep
+
+# Database
+database/*.db
+database/*.db-journal
+database/*.db-wal
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Remotion
+remotion-bundle/
+
+# Logs
+*.log
+npm-debug.log*
+
+# Piper TTS models (large files)
+assets/piper/*.onnx
+assets/piper/*.onnx.json
+
+# Scratch scripts
+scratch/

@@ -1,0 +1,7 @@
+title,hook,code,output,cta,language,template
+"Map Helper","Stop using loops for simple mapping","const doubled = [1, 2, 3].map(x => x * 2);
+console.log(doubled);","[2, 4, 6]","Subscribe for more JS!","javascript","Coding Dark"
+"Filter Helper","How to clean up arrays easily","const evens = [1, 2, 3, 4].filter(x => x % 2 === 0);
+console.log(evens);","[2, 4]","Join our community!","javascript","VSCode Theme"
+"Python Generator","Master list comprehensions in 3 seconds","evens = [x for x in range(10) if x % 2 == 0]
+print(evens)","[0, 2, 4, 6, 8]","Follow for daily Python!","python","Cyberpunk"
