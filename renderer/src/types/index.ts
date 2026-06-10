@@ -104,3 +104,54 @@ export interface QuizSceneProps extends SceneComponentProps {
   backendUrl?: string;
 }
 
+/** Props specific to the GuessOutputScene */
+export interface GuessOutputSceneProps extends SceneComponentProps {
+  guessCode?: string;
+  guessLanguage?: ProgrammingLanguage;
+  guessAnswer?: string;
+  guessRevealDelay?: number;
+}
+
+/** Props specific to the InterviewQuestionScene */
+export interface InterviewQuestionSceneProps extends SceneComponentProps {
+  text?: string;
+  interviewDifficulty?: 'easy' | 'medium' | 'hard';
+  interviewCategory?: string;
+  interviewAnswer?: string;
+}
+
+/** Props specific to the BugFixScene */
+export interface BugFixSceneProps extends SceneComponentProps {
+  buggyCode?: string;
+  fixedCode?: string;
+  bugLanguage?: ProgrammingLanguage;
+  bugExplanation?: string;
+}
+
+/** Props specific to the OneLinerScene */
+export interface OneLinerSceneProps extends SceneComponentProps {
+  onelinerCode?: string;
+  onelinerLanguage?: ProgrammingLanguage;
+  onelinerExplanation?: string;
+}
+
+/** Props specific to the ComparisonScene */
+export interface ComparisonSceneProps extends SceneComponentProps {
+  comparisonLeftTitle?: string;
+  comparisonRightTitle?: string;
+  comparisonLeftCode?: string;
+  comparisonRightCode?: string;
+  comparisonLeftLanguage?: ProgrammingLanguage;
+  comparisonRightLanguage?: ProgrammingLanguage;
+  comparisonVerdict?: string;
+}
+
+/** Props specific to the RoadmapStepScene */
+export interface RoadmapStepSceneProps extends SceneComponentProps {
+  roadmapStepNumber?: number;
+  roadmapTotalSteps?: number;
+  roadmapIcon?: string;
+  roadmapDescription?: string;
+  text?: string;
+}
+

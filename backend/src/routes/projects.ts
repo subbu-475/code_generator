@@ -14,11 +14,55 @@ const router = Router();
 const CodeSnippetSchema = z.object({
   id: z.string().optional(),
   title: z.string().optional(),
-  code: z.string(),
+  code: z.string().optional().default(''),
   language: z.enum(['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php']),
   output: z.string().optional(),
   hook: z.string().optional(),
   explanation: z.string().optional(),
+  
+  // Quiz
+  quizQuestion: z.string().optional(),
+  quizOptions: z.array(z.string()).optional(),
+  quizCorrectIndex: z.number().int().optional(),
+  quizExplanation: z.string().optional(),
+  quizRevealDelay: z.number().int().optional(),
+
+  // Guess The Output
+  guessCode: z.string().optional(),
+  guessLanguage: z.enum(['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php']).optional(),
+  guessAnswer: z.string().optional(),
+  guessRevealDelay: z.number().int().optional(),
+
+  // Interview Question
+  interviewDifficulty: z.enum(['easy', 'medium', 'hard']).optional(),
+  interviewCategory: z.string().optional(),
+  interviewAnswer: z.string().optional(),
+
+  // Bug Fix
+  buggyCode: z.string().optional(),
+  fixedCode: z.string().optional(),
+  bugLanguage: z.enum(['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php']).optional(),
+  bugExplanation: z.string().optional(),
+
+  // One-Liner
+  onelinerCode: z.string().optional(),
+  onelinerLanguage: z.enum(['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php']).optional(),
+  onelinerExplanation: z.string().optional(),
+
+  // Comparison
+  comparisonLeftTitle: z.string().optional(),
+  comparisonRightTitle: z.string().optional(),
+  comparisonLeftCode: z.string().optional(),
+  comparisonRightCode: z.string().optional(),
+  comparisonLeftLanguage: z.enum(['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php']).optional(),
+  comparisonRightLanguage: z.enum(['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php']).optional(),
+  comparisonVerdict: z.string().optional(),
+
+  // Roadmap Step
+  roadmapStepNumber: z.number().int().optional(),
+  roadmapTotalSteps: z.number().int().optional(),
+  roadmapIcon: z.string().optional(),
+  roadmapDescription: z.string().optional(),
 });
 
 const ProjectInputSchema = z.object({
@@ -31,7 +75,7 @@ const ProjectInputSchema = z.object({
   template_id: z.string().optional().nullable(),
   audio_mode: z.enum(['none', 'music', 'voice_music']).default('none'),
   music_file: z.string().optional().nullable(),
-  explanation_template: z.enum(['none', 'step_by_step', 'refactor', 'spotlight']).default('none').optional(),
+  explanation_template: z.enum(['none', 'step_by_step', 'refactor', 'spotlight', 'quiz_generator', 'guess_output', 'interview_question', 'bugfix', 'oneliner', 'comparison', 'roadmap']).default('none').optional(),
   sfx_whoosh: z.boolean().default(true).optional(),
   sfx_typing: z.boolean().default(true).optional(),
   sfx_achievement: z.boolean().default(true).optional(),
@@ -73,6 +117,43 @@ const SceneUpdateSchema = z.object({
   quizCorrectIndex: z.number().int().min(0).max(3).optional(),
   quizExplanation: z.string().optional(),
   quizRevealDelay: z.number().int().min(0).optional(),
+
+  // Guess The Output
+  guessCode: z.string().optional(),
+  guessLanguage: z.enum(['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php']).optional(),
+  guessAnswer: z.string().optional(),
+  guessRevealDelay: z.number().int().optional(),
+
+  // Interview Question
+  interviewDifficulty: z.enum(['easy', 'medium', 'hard']).optional(),
+  interviewCategory: z.string().optional(),
+  interviewAnswer: z.string().optional(),
+
+  // Bug Fix
+  buggyCode: z.string().optional(),
+  fixedCode: z.string().optional(),
+  bugLanguage: z.enum(['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php']).optional(),
+  bugExplanation: z.string().optional(),
+
+  // One-Liner
+  onelinerCode: z.string().optional(),
+  onelinerLanguage: z.enum(['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php']).optional(),
+  onelinerExplanation: z.string().optional(),
+
+  // Comparison
+  comparisonLeftTitle: z.string().optional(),
+  comparisonRightTitle: z.string().optional(),
+  comparisonLeftCode: z.string().optional(),
+  comparisonRightCode: z.string().optional(),
+  comparisonLeftLanguage: z.enum(['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php']).optional(),
+  comparisonRightLanguage: z.enum(['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php']).optional(),
+  comparisonVerdict: z.string().optional(),
+
+  // Roadmap Step
+  roadmapStepNumber: z.number().int().optional(),
+  roadmapTotalSteps: z.number().int().optional(),
+  roadmapIcon: z.string().optional(),
+  roadmapDescription: z.string().optional(),
 });
 
 const SceneCreateSchema = z.object({
@@ -88,6 +169,12 @@ const SceneCreateSchema = z.object({
     'video',
     'subscribe_video',
     'quiz',
+    'guess_output',
+    'interview_question',
+    'bugfix',
+    'oneliner',
+    'comparison',
+    'roadmap_step',
   ]),
   insertAfterId: z.string().optional(),
 });
@@ -156,6 +243,26 @@ router.get('/:id/preview-audio', async (req, res, next) => {
         const question = content.quizQuestion || '';
         const options = content.quizOptions || [];
         textToSpeak = `${question}. ${options.join('. ')}`;
+      } else if (scene.type === 'guess_output') {
+        const question = content.text || 'What does this code output?';
+        const answer = content.guessAnswer || '';
+        textToSpeak = `${question}. ${answer}`;
+      } else if (scene.type === 'interview_question') {
+        const question = content.text || '';
+        const answer = content.interviewAnswer || '';
+        textToSpeak = `${question}. ${answer}`;
+      } else if (scene.type === 'bugfix') {
+        const question = content.text || 'Can you spot the bug?';
+        const explanation = content.bugExplanation || '';
+        textToSpeak = `${question}. ${explanation}`;
+      } else if (scene.type === 'oneliner') {
+        textToSpeak = content.onelinerExplanation || '';
+      } else if (scene.type === 'comparison') {
+        textToSpeak = content.comparisonVerdict || '';
+      } else if (scene.type === 'roadmap_step') {
+        const title = content.text || '';
+        const description = content.roadmapDescription || '';
+        textToSpeak = `${title}. ${description}`;
       }
 
       if (textToSpeak.trim()) {

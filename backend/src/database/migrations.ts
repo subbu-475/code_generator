@@ -32,6 +32,14 @@ export function runMigrations(): void {
       background_gradient TEXT DEFAULT NULL,
       container_style TEXT NOT NULL DEFAULT 'rounded',
       glow_effect     INTEGER NOT NULL DEFAULT 1,
+      hook_font_size  INTEGER NOT NULL DEFAULT 64,
+      hook_color      TEXT NOT NULL DEFAULT '#ffffff',
+      code_font_size  INTEGER NOT NULL DEFAULT 16,
+      code_color      TEXT NOT NULL DEFAULT '#ffffff',
+      explanation_font_size INTEGER NOT NULL DEFAULT 26,
+      explanation_color TEXT NOT NULL DEFAULT '#ffffff',
+      cta_font_size   INTEGER NOT NULL DEFAULT 24,
+      cta_color       TEXT NOT NULL DEFAULT '#ffffff',
       created_at      TEXT NOT NULL DEFAULT (datetime('now'))
     );
   `);
@@ -56,6 +64,54 @@ export function runMigrations(): void {
 
   try {
     db.exec("ALTER TABLE templates ADD COLUMN glow_effect INTEGER DEFAULT 1");
+  } catch (err) {
+    // Column already exists
+  }
+
+  try {
+    db.exec("ALTER TABLE templates ADD COLUMN hook_font_size INTEGER DEFAULT 64");
+  } catch (err) {
+    // Column already exists
+  }
+
+  try {
+    db.exec("ALTER TABLE templates ADD COLUMN hook_color TEXT DEFAULT '#ffffff'");
+  } catch (err) {
+    // Column already exists
+  }
+
+  try {
+    db.exec("ALTER TABLE templates ADD COLUMN code_font_size INTEGER DEFAULT 16");
+  } catch (err) {
+    // Column already exists
+  }
+
+  try {
+    db.exec("ALTER TABLE templates ADD COLUMN code_color TEXT DEFAULT '#ffffff'");
+  } catch (err) {
+    // Column already exists
+  }
+
+  try {
+    db.exec("ALTER TABLE templates ADD COLUMN explanation_font_size INTEGER DEFAULT 26");
+  } catch (err) {
+    // Column already exists
+  }
+
+  try {
+    db.exec("ALTER TABLE templates ADD COLUMN explanation_color TEXT DEFAULT '#ffffff'");
+  } catch (err) {
+    // Column already exists
+  }
+
+  try {
+    db.exec("ALTER TABLE templates ADD COLUMN cta_font_size INTEGER DEFAULT 24");
+  } catch (err) {
+    // Column already exists
+  }
+
+  try {
+    db.exec("ALTER TABLE templates ADD COLUMN cta_color TEXT DEFAULT '#ffffff'");
   } catch (err) {
     // Column already exists
   }
@@ -223,8 +279,8 @@ function seedDefaultTemplates(): void {
   if (count.cnt > 0) return; // already seeded
 
   const insert = db.prepare(`
-    INSERT INTO templates (id, name, background_color, font_family, font_size, accent_color, text_color, animation_style, transition_style, code_theme, background_effect, is_default, background_gradient, container_style, glow_effect)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?)
+    INSERT INTO templates (id, name, background_color, font_family, font_size, accent_color, text_color, animation_style, transition_style, code_theme, background_effect, is_default, background_gradient, container_style, glow_effect, hook_font_size, hook_color, code_font_size, code_color, explanation_font_size, explanation_color, cta_font_size, cta_color)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 1, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `);
 
   const defaults = [
@@ -322,6 +378,14 @@ function seedDefaultTemplates(): void {
         t.bgGradient,
         t.containerStyle,
         t.glowEffect,
+        64,          // hook_font_size
+        t.textColor, // hook_color
+        16,          // code_font_size
+        t.textColor, // code_color
+        26,          // explanation_font_size
+        t.textColor, // explanation_color
+        24,          // cta_font_size
+        t.textColor, // cta_color
       );
     }
   });

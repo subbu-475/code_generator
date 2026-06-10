@@ -7,6 +7,7 @@ interface CaptionProps {
   template: VideoTheme;
   durationInFrames: number;
   fontSize?: number;
+  color?: string;
 }
 
 export const Caption: React.FC<CaptionProps> = ({
@@ -14,6 +15,7 @@ export const Caption: React.FC<CaptionProps> = ({
   template,
   durationInFrames,
   fontSize = 54,
+  color,
 }) => {
   const frame = useCurrentFrame();
   const words = text ? text.trim().split(/\s+/) : [];
@@ -51,7 +53,7 @@ export const Caption: React.FC<CaptionProps> = ({
               fontFamily: template.fontFamily,
               fontSize: fontSize,
               fontWeight: isActive ? 900 : 700,
-              color: isActive ? template.accentColor : template.textColor,
+              color: isActive ? template.accentColor : (color || template.textColor),
               opacity: isActive ? 1 : 0.4,
               transform: isActive ? 'scale(1.18)' : 'scale(1)',
               textShadow: isActive && template.glowEffect

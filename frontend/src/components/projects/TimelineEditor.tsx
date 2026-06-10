@@ -330,6 +330,153 @@ const ScenePreview = ({ type }: { type: SceneType }) => {
             </Box>
           )
         };
+      case 'guess_output':
+        return {
+          title: 'Guess The Output',
+          desc: 'Shows code with countdown timer then reveals the answer with glow animation.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, background: 'linear-gradient(135deg, #1a1505, #0f172a)', border: '1px solid rgba(245,158,11,0.3)', p: 1.2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 8px 24px rgba(245,158,11,0.15)' }}>
+              <Box sx={{ px: 0.8, py: 0.2, borderRadius: 1, bgcolor: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)', alignSelf: 'center' }}>
+                <Typography sx={{ fontSize: 5, fontWeight: 900, color: '#f59e0b', letterSpacing: 0.5 }}>🤔 GUESS OUTPUT</Typography>
+              </Box>
+              <Box sx={{ bgcolor: 'rgba(0,0,0,0.5)', p: 0.8, borderRadius: 1, border: '1px solid rgba(255,255,255,0.08)' }}>
+                <Typography sx={{ fontSize: 5.5, color: '#e2e8f0', fontFamily: 'monospace' }}>typeof null</Typography>
+              </Box>
+              <Box sx={{ width: '100%', height: 3, bgcolor: 'rgba(255,255,255,0.08)', borderRadius: 0.5, overflow: 'hidden' }}>
+                <Box sx={{ width: '60%', height: '100%', background: 'linear-gradient(90deg, #f59e0b, #ef4444)' }} />
+              </Box>
+              <Box sx={{ bgcolor: 'rgba(34,197,94,0.1)', border: '1px solid #22c55e', p: 0.6, borderRadius: 1, textAlign: 'center' }}>
+                <Typography sx={{ fontSize: 4.5, color: '#22c55e', fontWeight: 800 }}>✅ OUTPUT</Typography>
+                <Typography sx={{ fontSize: 8, color: '#22c55e', fontWeight: 900, fontFamily: 'monospace' }}>"object"</Typography>
+              </Box>
+            </Box>
+          )
+        };
+      case 'interview_question':
+        return {
+          title: 'Interview Question',
+          desc: 'Professional interview card with difficulty badge and timed answer reveal.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, background: 'linear-gradient(135deg, #0f172a, #1e293b)', border: '1px solid rgba(59,130,246,0.25)', p: 1.2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 8px 24px rgba(59,130,246,0.15)' }}>
+              <Box sx={{ px: 0.8, py: 0.2, borderRadius: 1, bgcolor: 'rgba(59,130,246,0.15)', border: '1px solid rgba(59,130,246,0.3)' }}>
+                <Typography sx={{ fontSize: 5, fontWeight: 900, color: '#3b82f6', letterSpacing: 0.5 }}>💼 INTERVIEW Q</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', gap: 0.5 }}>
+                <Box sx={{ px: 0.5, py: 0.2, borderRadius: 0.5, bgcolor: 'rgba(245,158,11,0.15)', border: '1px solid rgba(245,158,11,0.3)' }}>
+                  <Typography sx={{ fontSize: 4, color: '#f59e0b', fontWeight: 800 }}>🟡 MEDIUM</Typography>
+                </Box>
+                <Box sx={{ px: 0.5, py: 0.2, borderRadius: 0.5, bgcolor: 'rgba(255,255,255,0.05)' }}>
+                  <Typography sx={{ fontSize: 4, color: 'rgba(255,255,255,0.5)' }}>JavaScript</Typography>
+                </Box>
+              </Box>
+              <Typography sx={{ fontSize: 7, fontWeight: 700, color: '#fff', textAlign: 'center', lineHeight: 1.2 }}>What is a closure?</Typography>
+              <Box sx={{ width: '100%', bgcolor: 'rgba(0,0,0,0.4)', p: 0.5, borderRadius: 0.75, border: '1px solid rgba(245,158,11,0.2)' }}>
+                <Typography sx={{ fontSize: 4, color: '#f59e0b', fontWeight: 800 }}>✅ ANSWER</Typography>
+                <Typography sx={{ fontSize: 4, color: 'rgba(255,255,255,0.6)', lineHeight: 1 }}>A function retaining outer scope...</Typography>
+              </Box>
+            </Box>
+          )
+        };
+      case 'bugfix':
+        return {
+          title: 'Bug Fix Challenge',
+          desc: 'Spot-the-bug scene: buggy code with red stripe transitions to fixed code with green glow.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, background: 'linear-gradient(135deg, #1a0505, #0f172a)', border: '1px solid rgba(239,68,68,0.3)', p: 1.2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 8px 24px rgba(239,68,68,0.15)' }}>
+              <Box sx={{ px: 0.8, py: 0.2, borderRadius: 1, bgcolor: 'rgba(239,68,68,0.15)', border: '1px solid rgba(239,68,68,0.3)', alignSelf: 'center' }}>
+                <Typography sx={{ fontSize: 5, fontWeight: 900, color: '#ef4444', letterSpacing: 0.5 }}>🐛 SPOT THE BUG</Typography>
+              </Box>
+              <Box sx={{ bgcolor: 'rgba(239,68,68,0.05)', border: '1px solid rgba(239,68,68,0.3)', p: 0.6, borderRadius: 0.75, borderLeft: '3px solid #ef4444' }}>
+                <Typography sx={{ fontSize: 4, color: '#ef4444', fontWeight: 800 }}>BUGGY CODE</Typography>
+                <Typography sx={{ fontSize: 5, color: '#e2e8f0', fontFamily: 'monospace' }}>if (x = 5) {'{'}</Typography>
+              </Box>
+              <Box sx={{ bgcolor: 'rgba(34,197,94,0.05)', border: '1px solid rgba(34,197,94,0.3)', p: 0.6, borderRadius: 0.75, borderLeft: '3px solid #22c55e' }}>
+                <Typography sx={{ fontSize: 4, color: '#22c55e', fontWeight: 800 }}>✅ FIXED</Typography>
+                <Typography sx={{ fontSize: 5, color: '#e2e8f0', fontFamily: 'monospace' }}>if (x === 5) {'{'}</Typography>
+              </Box>
+              <Box sx={{ width: '100%', bgcolor: 'rgba(0,0,0,0.3)', p: 0.4, borderRadius: 0.5, border: '1px solid rgba(34,197,94,0.15)' }}>
+                <Typography sx={{ fontSize: 3.5, color: 'rgba(255,255,255,0.5)', lineHeight: 1 }}>💡 Use === for comparison</Typography>
+              </Box>
+            </Box>
+          )
+        };
+      case 'oneliner':
+        return {
+          title: 'One-Line Trick',
+          desc: 'Flashy one-liner showcase with typewriter animation and neon glow effect.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, background: 'linear-gradient(135deg, #0a0a2e, #1a1a2e)', border: '1px solid rgba(124,58,237,0.3)', p: 1.2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 8px 24px rgba(124,58,237,0.2)' }}>
+              <Box sx={{ px: 1, py: 0.3, borderRadius: 1.5, background: 'linear-gradient(135deg, rgba(124,58,237,0.2), rgba(245,158,11,0.15))', border: '1px solid rgba(124,58,237,0.4)' }}>
+                <Typography sx={{ fontSize: 5, fontWeight: 900, color: '#a78bfa', letterSpacing: 0.5 }}>⚡ ONE-LINER</Typography>
+              </Box>
+              <Box sx={{ px: 0.5, py: 0.2, borderRadius: 0.5, bgcolor: 'rgba(255,255,255,0.05)' }}>
+                <Typography sx={{ fontSize: 4, color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace' }}>JAVASCRIPT</Typography>
+              </Box>
+              <Box sx={{ width: '100%', bgcolor: 'rgba(0,0,0,0.5)', border: '1.5px solid rgba(124,58,237,0.5)', p: 0.8, borderRadius: 1, textAlign: 'center', boxShadow: '0 0 15px rgba(124,58,237,0.2)' }}>
+                <Typography sx={{ fontSize: 5.5, color: '#e2e8f0', fontFamily: 'monospace', fontWeight: 700 }}>[...new Set(arr)]</Typography>
+              </Box>
+              <Box sx={{ width: '100%', bgcolor: 'rgba(0,0,0,0.3)', p: 0.5, borderRadius: 0.5 }}>
+                <Typography sx={{ fontSize: 3.5, color: '#a78bfa', fontWeight: 800 }}>💡 HOW IT WORKS</Typography>
+                <Typography sx={{ fontSize: 3.5, color: 'rgba(255,255,255,0.5)', lineHeight: 1 }}>Set removes duplicates...</Typography>
+              </Box>
+            </Box>
+          )
+        };
+      case 'comparison':
+        return {
+          title: 'Comparison',
+          desc: 'Side-by-side code comparison with VS badge and animated verdict reveal.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, background: 'linear-gradient(135deg, #0f172a, #1e1b4b)', border: '1px solid rgba(99,102,241,0.2)', p: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '0 8px 24px rgba(99,102,241,0.15)' }}>
+              <Box sx={{ px: 0.8, py: 0.2, borderRadius: 1, bgcolor: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)', alignSelf: 'center' }}>
+                <Typography sx={{ fontSize: 5, fontWeight: 900, color: '#818cf8', letterSpacing: 0.5 }}>⚔️ COMPARE</Typography>
+              </Box>
+              <Box sx={{ display: 'flex', gap: 0.5, width: '100%', position: 'relative' }}>
+                <Box sx={{ flex: 1, bgcolor: 'rgba(59,130,246,0.08)', border: '1px solid rgba(59,130,246,0.25)', p: 0.4, borderRadius: 0.75 }}>
+                  <Typography sx={{ fontSize: 4, color: '#3b82f6', fontWeight: 800 }}>REST</Typography>
+                  <Typography sx={{ fontSize: 3.5, color: 'rgba(255,255,255,0.5)', fontFamily: 'monospace' }}>fetch('/api')</Typography>
+                </Box>
+                <Box sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 14, height: 14, borderRadius: '50%', background: 'linear-gradient(135deg, #ef4444, #f59e0b)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1, border: '1px solid rgba(255,255,255,0.3)' }}>
+                  <Typography sx={{ fontSize: 4, fontWeight: 900, color: '#fff' }}>VS</Typography>
+                </Box>
+                <Box sx={{ flex: 1, bgcolor: 'rgba(245,158,11,0.08)', border: '1px solid rgba(245,158,11,0.25)', p: 0.4, borderRadius: 0.75 }}>
+                  <Typography sx={{ fontSize: 4, color: '#f59e0b', fontWeight: 800 }}>GQL</Typography>
+                  <Typography sx={{ fontSize: 3.5, color: 'rgba(255,255,255,0.5)', fontFamily: 'monospace' }}>{"query { }"}</Typography>
+                </Box>
+              </Box>
+              <Box sx={{ width: '100%', bgcolor: 'rgba(0,0,0,0.3)', p: 0.4, borderRadius: 0.5, textAlign: 'center' }}>
+                <Typography sx={{ fontSize: 3.5, color: '#818cf8', fontWeight: 800 }}>⚡ VERDICT</Typography>
+                <Typography sx={{ fontSize: 3.5, color: 'rgba(255,255,255,0.5)', lineHeight: 1 }}>Both have their merits!</Typography>
+              </Box>
+            </Box>
+          )
+        };
+      case 'roadmap_step':
+        return {
+          title: 'Roadmap Step',
+          desc: 'Animated milestone card with progress ring, icon, and timeline dots.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, background: 'linear-gradient(135deg, #0f172a, #1e293b)', border: '1px solid rgba(34,197,94,0.2)', p: 1.2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 8px 24px rgba(34,197,94,0.1)' }}>
+              <Box sx={{ px: 0.8, py: 0.2, borderRadius: 1, bgcolor: 'rgba(34,197,94,0.12)', border: '1px solid rgba(34,197,94,0.3)' }}>
+                <Typography sx={{ fontSize: 5, fontWeight: 900, color: '#22c55e', letterSpacing: 0.5 }}>🗺️ ROADMAP</Typography>
+              </Box>
+              <Box sx={{ width: 30, height: 30, borderRadius: '50%', border: '2px solid #22c55e', display: 'flex', justifyContent: 'center', alignItems: 'center', bgcolor: 'rgba(34,197,94,0.08)' }}>
+                <Typography sx={{ fontSize: 14 }}>📚</Typography>
+              </Box>
+              <Box sx={{ px: 0.5, py: 0.2, borderRadius: 0.5, bgcolor: 'rgba(34,197,94,0.1)', border: '1px solid rgba(34,197,94,0.2)' }}>
+                <Typography sx={{ fontSize: 4.5, color: '#22c55e', fontWeight: 800 }}>STEP 1 OF 5</Typography>
+              </Box>
+              <Typography sx={{ fontSize: 7, fontWeight: 800, color: '#fff', textAlign: 'center', lineHeight: 1.2 }}>Learn Basics</Typography>
+              <Box sx={{ display: 'flex', gap: 0.3, alignItems: 'center' }}>
+                <Box sx={{ width: 12, height: 3, borderRadius: 0.5, bgcolor: '#22c55e' }} />
+                <Box sx={{ width: 3, height: 3, borderRadius: 0.5, bgcolor: 'rgba(255,255,255,0.15)' }} />
+                <Box sx={{ width: 3, height: 3, borderRadius: 0.5, bgcolor: 'rgba(255,255,255,0.15)' }} />
+                <Box sx={{ width: 3, height: 3, borderRadius: 0.5, bgcolor: 'rgba(255,255,255,0.15)' }} />
+                <Box sx={{ width: 3, height: 3, borderRadius: 0.5, bgcolor: 'rgba(255,255,255,0.15)' }} />
+              </Box>
+            </Box>
+          )
+        };
       default:
         return { title: 'Scene Block', desc: '', element: null };
     }
@@ -365,6 +512,12 @@ const getSceneIcon = (type: SceneType) => {
     case 'subscribe_video': return <SubscribeVideoIcon sx={{ fontSize: 18 }} />;
     case 'end_screen': return <OutroIcon sx={{ fontSize: 18 }} />;
     case 'quiz': return <QuizIcon sx={{ fontSize: 18 }} />;
+    case 'guess_output': return <QuizIcon sx={{ fontSize: 18 }} />;
+    case 'interview_question': return <TipIcon sx={{ fontSize: 18 }} />;
+    case 'bugfix': return <CodeIcon sx={{ fontSize: 18 }} />;
+    case 'oneliner': return <CodeIcon sx={{ fontSize: 18 }} />;
+    case 'comparison': return <CodeIcon sx={{ fontSize: 18 }} />;
+    case 'roadmap_step': return <OutroIcon sx={{ fontSize: 18 }} />;
     default: return <AddIcon sx={{ fontSize: 18 }} />;
   }
 };
@@ -438,6 +591,43 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
   const [insertAnchorEl, setInsertAnchorEl] = useState<null | HTMLElement>(null);
   const [pendingSceneType, setPendingSceneType] = useState<SceneType | null>(null);
 
+  // Guess The Output states
+  const [guessCode, setGuessCode] = useState('');
+  const [guessLanguage, setGuessLanguage] = useState('javascript');
+  const [guessAnswer, setGuessAnswer] = useState('');
+  const [guessRevealDelay, setGuessRevealDelay] = useState<number>(90);
+
+  // Interview Question states
+  const [interviewDifficulty, setInterviewDifficulty] = useState<'easy' | 'medium' | 'hard'>('medium');
+  const [interviewCategory, setInterviewCategory] = useState('');
+  const [interviewAnswer, setInterviewAnswer] = useState('');
+
+  // Bug Fix states
+  const [buggyCode, setBuggyCode] = useState('');
+  const [fixedCode, setFixedCode] = useState('');
+  const [bugLanguage, setBugLanguage] = useState('javascript');
+  const [bugExplanation, setBugExplanation] = useState('');
+
+  // One-Liner states
+  const [onelinerCode, setOnelinerCode] = useState('');
+  const [onelinerLanguage, setOnelinerLanguage] = useState('javascript');
+  const [onelinerExplanation, setOnelinerExplanation] = useState('');
+
+  // Comparison states
+  const [comparisonLeftTitle, setComparisonLeftTitle] = useState('');
+  const [comparisonRightTitle, setComparisonRightTitle] = useState('');
+  const [comparisonLeftCode, setComparisonLeftCode] = useState('');
+  const [comparisonRightCode, setComparisonRightCode] = useState('');
+  const [comparisonLeftLanguage, setComparisonLeftLanguage] = useState('javascript');
+  const [comparisonRightLanguage, setComparisonRightLanguage] = useState('javascript');
+  const [comparisonVerdict, setComparisonVerdict] = useState('');
+
+  // Roadmap Step states
+  const [roadmapStepNumber, setRoadmapStepNumber] = useState<number>(1);
+  const [roadmapTotalSteps, setRoadmapTotalSteps] = useState<number>(5);
+  const [roadmapIcon, setRoadmapIcon] = useState('📚');
+  const [roadmapDescription, setRoadmapDescription] = useState('');
+
   const selectedScene = scenes.find((s) => s.id === selectedSceneId) || null;
 
   // Sync form state when selected scene changes
@@ -483,6 +673,43 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
       setQuizCorrectIndex(content.quizCorrectIndex !== undefined ? content.quizCorrectIndex : 0);
       setQuizExplanation(content.quizExplanation || 'This is because...');
       setQuizRevealDelay(content.quizRevealDelay !== undefined ? content.quizRevealDelay : 90);
+
+      // Guess The Output
+      setGuessCode(content.guessCode || '');
+      setGuessLanguage(content.guessLanguage || 'javascript');
+      setGuessAnswer(content.guessAnswer || '');
+      setGuessRevealDelay(content.guessRevealDelay !== undefined ? content.guessRevealDelay : 90);
+
+      // Interview Question
+      setInterviewDifficulty(content.interviewDifficulty || 'medium');
+      setInterviewCategory(content.interviewCategory || '');
+      setInterviewAnswer(content.interviewAnswer || '');
+
+      // Bug Fix
+      setBuggyCode(content.buggyCode || '');
+      setFixedCode(content.fixedCode || '');
+      setBugLanguage(content.bugLanguage || 'javascript');
+      setBugExplanation(content.bugExplanation || '');
+
+      // One-Liner
+      setOnelinerCode(content.onelinerCode || '');
+      setOnelinerLanguage(content.onelinerLanguage || 'javascript');
+      setOnelinerExplanation(content.onelinerExplanation || '');
+
+      // Comparison
+      setComparisonLeftTitle(content.comparisonLeftTitle || '');
+      setComparisonRightTitle(content.comparisonRightTitle || '');
+      setComparisonLeftCode(content.comparisonLeftCode || '');
+      setComparisonRightCode(content.comparisonRightCode || '');
+      setComparisonLeftLanguage(content.comparisonLeftLanguage || 'javascript');
+      setComparisonRightLanguage(content.comparisonRightLanguage || 'javascript');
+      setComparisonVerdict(content.comparisonVerdict || '');
+
+      // Roadmap Step
+      setRoadmapStepNumber(content.roadmapStepNumber || 1);
+      setRoadmapTotalSteps(content.roadmapTotalSteps || 5);
+      setRoadmapIcon(content.roadmapIcon || '📚');
+      setRoadmapDescription(content.roadmapDescription || '');
     } else if (!selectedSceneId && scenes.length > 0) {
       setSelectedSceneId(scenes[0].id);
     }
@@ -563,6 +790,39 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
         payload.quizCorrectIndex = quizCorrectIndex;
         payload.quizExplanation = quizExplanation;
         payload.quizRevealDelay = quizRevealDelay;
+      } else if (selectedScene.type === 'guess_output') {
+        payload.guessCode = guessCode;
+        payload.guessLanguage = guessLanguage;
+        payload.guessAnswer = guessAnswer;
+        payload.guessRevealDelay = guessRevealDelay;
+      } else if (selectedScene.type === 'interview_question') {
+        payload.text = text;
+        payload.interviewDifficulty = interviewDifficulty;
+        payload.interviewCategory = interviewCategory;
+        payload.interviewAnswer = interviewAnswer;
+      } else if (selectedScene.type === 'bugfix') {
+        payload.buggyCode = buggyCode;
+        payload.fixedCode = fixedCode;
+        payload.bugLanguage = bugLanguage;
+        payload.bugExplanation = bugExplanation;
+      } else if (selectedScene.type === 'oneliner') {
+        payload.onelinerCode = onelinerCode;
+        payload.onelinerLanguage = onelinerLanguage;
+        payload.onelinerExplanation = onelinerExplanation;
+      } else if (selectedScene.type === 'comparison') {
+        payload.comparisonLeftTitle = comparisonLeftTitle;
+        payload.comparisonRightTitle = comparisonRightTitle;
+        payload.comparisonLeftCode = comparisonLeftCode;
+        payload.comparisonRightCode = comparisonRightCode;
+        payload.comparisonLeftLanguage = comparisonLeftLanguage;
+        payload.comparisonRightLanguage = comparisonRightLanguage;
+        payload.comparisonVerdict = comparisonVerdict;
+      } else if (selectedScene.type === 'roadmap_step') {
+        payload.text = text;
+        payload.roadmapStepNumber = roadmapStepNumber;
+        payload.roadmapTotalSteps = roadmapTotalSteps;
+        payload.roadmapIcon = roadmapIcon;
+        payload.roadmapDescription = roadmapDescription;
       }
 
       await api.updateScene(projectId, selectedSceneId, payload);
@@ -925,6 +1185,18 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
         return '#6366f1'; // Indigo
       case 'quiz':
         return '#ec4899'; // Bright Pink
+      case 'guess_output':
+        return '#f59e0b'; // Amber
+      case 'interview_question':
+        return '#3b82f6'; // Blue
+      case 'bugfix':
+        return '#ef4444'; // Red
+      case 'oneliner':
+        return '#a855f7'; // Purple
+      case 'comparison':
+        return '#6366f1'; // Indigo
+      case 'roadmap_step':
+        return '#22c55e'; // Green
       default:
         return '#6b7280'; // Gray
     }
@@ -1785,6 +2057,359 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
                     </>
                   )}
 
+                  {selectedScene.type === 'guess_output' && (
+                    <>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Code Snippet"
+                          fullWidth
+                          multiline
+                          rows={5}
+                          value={guessCode}
+                          onChange={(e) => setGuessCode(e.target.value)}
+                          sx={{ mb: 2, fontFamily: 'monospace' }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <TextField
+                          select
+                          label="Language"
+                          fullWidth
+                          size="small"
+                          value={guessLanguage}
+                          onChange={(e) => setGuessLanguage(e.target.value)}
+                          sx={{ mb: 2 }}
+                        >
+                          {['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php'].map((lang) => (
+                            <MenuItem key={lang} value={lang}>
+                              {lang.toUpperCase()}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <TextField
+                          label="Answer Output"
+                          fullWidth
+                          size="small"
+                          value={guessAnswer}
+                          onChange={(e) => setGuessAnswer(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <TextField
+                          select
+                          label="Reveal Answer Delay"
+                          fullWidth
+                          size="small"
+                          value={guessRevealDelay}
+                          onChange={(e) => setGuessRevealDelay(Number(e.target.value))}
+                          sx={{ mb: 2 }}
+                        >
+                          {[30, 45, 60, 75, 90, 105, 120, 135].map((frames) => (
+                            <MenuItem key={frames} value={frames}>
+                              {Math.round((frames / 30) * 10) / 10}s ({frames} frames)
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                    </>
+                  )}
+
+                  {selectedScene.type === 'interview_question' && (
+                    <>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          select
+                          label="Difficulty"
+                          fullWidth
+                          size="small"
+                          value={interviewDifficulty}
+                          onChange={(e) => setInterviewDifficulty(e.target.value as any)}
+                          sx={{ mb: 2 }}
+                        >
+                          <MenuItem value="easy">Easy</MenuItem>
+                          <MenuItem value="medium">Medium</MenuItem>
+                          <MenuItem value="hard">Hard</MenuItem>
+                        </TextField>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label="Category (e.g. JavaScript, Algorithms)"
+                          fullWidth
+                          size="small"
+                          value={interviewCategory}
+                          onChange={(e) => setInterviewCategory(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Question Text"
+                          fullWidth
+                          multiline
+                          rows={2}
+                          value={text}
+                          onChange={(e) => setText(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Answer Description"
+                          fullWidth
+                          multiline
+                          rows={3}
+                          value={interviewAnswer}
+                          onChange={(e) => setInterviewAnswer(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                    </>
+                  )}
+
+                  {selectedScene.type === 'bugfix' && (
+                    <>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Buggy Code"
+                          fullWidth
+                          multiline
+                          rows={4}
+                          value={buggyCode}
+                          onChange={(e) => setBuggyCode(e.target.value)}
+                          sx={{ mb: 2, fontFamily: 'monospace' }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Fixed Code"
+                          fullWidth
+                          multiline
+                          rows={4}
+                          value={fixedCode}
+                          onChange={(e) => setFixedCode(e.target.value)}
+                          sx={{ mb: 2, fontFamily: 'monospace' }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          select
+                          label="Language"
+                          fullWidth
+                          size="small"
+                          value={bugLanguage}
+                          onChange={(e) => setBugLanguage(e.target.value)}
+                          sx={{ mb: 2 }}
+                        >
+                          {['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php'].map((lang) => (
+                            <MenuItem key={lang} value={lang}>
+                              {lang.toUpperCase()}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Fix Explanation"
+                          fullWidth
+                          multiline
+                          rows={2}
+                          value={bugExplanation}
+                          onChange={(e) => setBugExplanation(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                    </>
+                  )}
+
+                  {selectedScene.type === 'oneliner' && (
+                    <>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="One-Liner Code"
+                          fullWidth
+                          multiline
+                          rows={3}
+                          value={onelinerCode}
+                          onChange={(e) => setOnelinerCode(e.target.value)}
+                          sx={{ mb: 2, fontFamily: 'monospace' }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          select
+                          label="Language"
+                          fullWidth
+                          size="small"
+                          value={onelinerLanguage}
+                          onChange={(e) => setOnelinerLanguage(e.target.value)}
+                          sx={{ mb: 2 }}
+                        >
+                          {['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php'].map((lang) => (
+                            <MenuItem key={lang} value={lang}>
+                              {lang.toUpperCase()}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Explanation"
+                          fullWidth
+                          multiline
+                          rows={2}
+                          value={onelinerExplanation}
+                          onChange={(e) => setOnelinerExplanation(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                    </>
+                  )}
+
+                  {selectedScene.type === 'comparison' && (
+                    <>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label="Left Side Title (e.g. Approach A)"
+                          fullWidth
+                          size="small"
+                          value={comparisonLeftTitle}
+                          onChange={(e) => setComparisonLeftTitle(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                        <TextField
+                          label="Left Side Code"
+                          fullWidth
+                          multiline
+                          rows={4}
+                          value={comparisonLeftCode}
+                          onChange={(e) => setComparisonLeftCode(e.target.value)}
+                          sx={{ mb: 2, fontFamily: 'monospace' }}
+                        />
+                        <TextField
+                          select
+                          label="Left Language"
+                          fullWidth
+                          size="small"
+                          value={comparisonLeftLanguage}
+                          onChange={(e) => setComparisonLeftLanguage(e.target.value)}
+                          sx={{ mb: 2 }}
+                        >
+                          {['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php'].map((lang) => (
+                            <MenuItem key={lang} value={lang}>
+                              {lang.toUpperCase()}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          label="Right Side Title (e.g. Approach B)"
+                          fullWidth
+                          size="small"
+                          value={comparisonRightTitle}
+                          onChange={(e) => setComparisonRightTitle(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                        <TextField
+                          label="Right Side Code"
+                          fullWidth
+                          multiline
+                          rows={4}
+                          value={comparisonRightCode}
+                          onChange={(e) => setComparisonRightCode(e.target.value)}
+                          sx={{ mb: 2, fontFamily: 'monospace' }}
+                        />
+                        <TextField
+                          select
+                          label="Right Language"
+                          fullWidth
+                          size="small"
+                          value={comparisonRightLanguage}
+                          onChange={(e) => setComparisonRightLanguage(e.target.value)}
+                          sx={{ mb: 2 }}
+                        >
+                          {['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php'].map((lang) => (
+                            <MenuItem key={lang} value={lang}>
+                              {lang.toUpperCase()}
+                            </MenuItem>
+                          ))}
+                        </TextField>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Verdict Explanation"
+                          fullWidth
+                          multiline
+                          rows={2}
+                          value={comparisonVerdict}
+                          onChange={(e) => setComparisonVerdict(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                    </>
+                  )}
+
+                  {selectedScene.type === 'roadmap_step' && (
+                    <>
+                      <Grid item xs={12} sm={4}>
+                        <TextField
+                          label="Step Number"
+                          fullWidth
+                          type="number"
+                          size="small"
+                          value={roadmapStepNumber}
+                          onChange={(e) => setRoadmapStepNumber(Number(e.target.value))}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <TextField
+                          label="Total Steps"
+                          fullWidth
+                          type="number"
+                          size="small"
+                          value={roadmapTotalSteps}
+                          onChange={(e) => setRoadmapTotalSteps(Number(e.target.value))}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={4}>
+                        <TextField
+                          label="Icon (Emoji)"
+                          fullWidth
+                          size="small"
+                          value={roadmapIcon}
+                          onChange={(e) => setRoadmapIcon(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Step Title"
+                          fullWidth
+                          size="small"
+                          value={text}
+                          onChange={(e) => setText(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                      <Grid item xs={12}>
+                        <TextField
+                          label="Description"
+                          fullWidth
+                          multiline
+                          rows={3}
+                          value={roadmapDescription}
+                          onChange={(e) => setRoadmapDescription(e.target.value)}
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                    </>
+                  )}
+
                   {/* Transition parameters */}
                   <Grid item xs={6} sx={{ mt: 2 }}>
                     <TextField
@@ -1865,6 +2490,12 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
                 { type: 'subscribe' as SceneType, label: 'Subscribe Card' },
                 { type: 'subscribe_video' as SceneType, label: 'Subscribe Video' },
                 { type: 'end_screen' as SceneType, label: 'Outro Screen' },
+                { type: 'guess_output' as SceneType, label: 'Guess Output' },
+                { type: 'interview_question' as SceneType, label: 'Interview Q' },
+                { type: 'bugfix' as SceneType, label: 'Bug Fix' },
+                { type: 'oneliner' as SceneType, label: 'One-Liner' },
+                { type: 'comparison' as SceneType, label: 'Comparison' },
+                { type: 'roadmap_step' as SceneType, label: 'Roadmap Step' },
               ].map((item) => (
                 <Grid item xs={6} key={item.type}>
                   <Tooltip

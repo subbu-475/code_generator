@@ -17,7 +17,7 @@ export interface Project {
   audio_mode: AudioMode;
   music_file: string | null;
   status: ProjectStatus;
-  explanation_template: 'none' | 'step_by_step' | 'refactor' | 'spotlight';
+  explanation_template: 'none' | 'step_by_step' | 'refactor' | 'spotlight' | 'quiz_generator' | 'guess_output' | 'interview_question' | 'bugfix' | 'oneliner' | 'comparison' | 'roadmap';
   sfx_whoosh: boolean;
   sfx_typing: boolean;
   sfx_achievement: boolean;
@@ -36,7 +36,7 @@ export interface ProjectInput {
   template_id?: string;
   audio_mode?: AudioMode;
   music_file?: string;
-  explanation_template?: 'none' | 'step_by_step' | 'refactor' | 'spotlight';
+  explanation_template?: 'none' | 'step_by_step' | 'refactor' | 'spotlight' | 'quiz_generator' | 'guess_output' | 'interview_question' | 'bugfix' | 'oneliner' | 'comparison' | 'roadmap';
   sfx_whoosh?: boolean;
   sfx_typing?: boolean;
   sfx_achievement?: boolean;
@@ -49,6 +49,52 @@ export interface CodeSnippet {
   code: string;
   language: ProgrammingLanguage;
   output?: string;
+  hook?: string;
+  explanation?: string;
+
+  // Quiz
+  quizQuestion?: string;
+  quizOptions?: string[];
+  quizCorrectIndex?: number;
+  quizExplanation?: string;
+  quizRevealDelay?: number;
+
+  // Guess The Output
+  guessCode?: string;
+  guessLanguage?: ProgrammingLanguage;
+  guessAnswer?: string;
+  guessRevealDelay?: number;
+
+  // Interview Question
+  interviewDifficulty?: 'easy' | 'medium' | 'hard';
+  interviewCategory?: string;
+  interviewAnswer?: string;
+
+  // Bug Fix
+  buggyCode?: string;
+  fixedCode?: string;
+  bugLanguage?: ProgrammingLanguage;
+  bugExplanation?: string;
+
+  // One-Liner
+  onelinerCode?: string;
+  onelinerLanguage?: ProgrammingLanguage;
+  onelinerExplanation?: string;
+
+  // Comparison
+  comparisonLeftTitle?: string;
+  comparisonRightTitle?: string;
+  comparisonLeftCode?: string;
+  comparisonRightCode?: string;
+  comparisonLeftLanguage?: ProgrammingLanguage;
+  comparisonRightLanguage?: ProgrammingLanguage;
+  comparisonVerdict?: string;
+
+  // Roadmap Step
+  roadmapStepNumber?: number;
+  roadmapTotalSteps?: number;
+  roadmapIcon?: string;
+  roadmapDescription?: string;
 }
 
 export interface Scene {
@@ -98,6 +144,43 @@ export interface SceneConfig {
   quizCorrectIndex?: number;
   quizExplanation?: string;
   quizRevealDelay?: number;
+
+  // Guess The Output
+  guessCode?: string;
+  guessLanguage?: ProgrammingLanguage;
+  guessAnswer?: string;
+  guessRevealDelay?: number;
+
+  // Interview Question
+  interviewDifficulty?: 'easy' | 'medium' | 'hard';
+  interviewCategory?: string;
+  interviewAnswer?: string;
+
+  // Bug Fix
+  buggyCode?: string;
+  fixedCode?: string;
+  bugLanguage?: ProgrammingLanguage;
+  bugExplanation?: string;
+
+  // One-Line Trick
+  onelinerCode?: string;
+  onelinerLanguage?: ProgrammingLanguage;
+  onelinerExplanation?: string;
+
+  // Comparison
+  comparisonLeftTitle?: string;
+  comparisonRightTitle?: string;
+  comparisonLeftCode?: string;
+  comparisonRightCode?: string;
+  comparisonLeftLanguage?: ProgrammingLanguage;
+  comparisonRightLanguage?: ProgrammingLanguage;
+  comparisonVerdict?: string;
+
+  // Roadmap Step
+  roadmapStepNumber?: number;
+  roadmapTotalSteps?: number;
+  roadmapIcon?: string;
+  roadmapDescription?: string;
 }
 
 export interface Template {
@@ -118,6 +201,14 @@ export interface Template {
   container_style: 'rounded' | 'sharp' | 'floating';
   glow_effect: number;
   created_at: string;
+  hook_font_size: number;
+  hook_color: string;
+  code_font_size: number;
+  code_color: string;
+  explanation_font_size: number;
+  explanation_color: string;
+  cta_font_size: number;
+  cta_color: string;
 }
 
 export interface TemplateInput {
@@ -135,6 +226,14 @@ export interface TemplateInput {
   background_gradient?: string | null;
   container_style?: 'rounded' | 'sharp' | 'floating';
   glow_effect?: boolean;
+  hook_font_size?: number;
+  hook_color?: string;
+  code_font_size?: number;
+  code_color?: string;
+  explanation_font_size?: number;
+  explanation_color?: string;
+  cta_font_size?: number;
+  cta_color?: string;
 }
 
 export interface ExportRecord {
@@ -179,7 +278,13 @@ export type SceneType =
   | 'image'
   | 'video'
   | 'subscribe_video'
-  | 'quiz';
+  | 'quiz'
+  | 'guess_output'
+  | 'interview_question'
+  | 'bugfix'
+  | 'oneliner'
+  | 'comparison'
+  | 'roadmap_step';
 
 export type AnimationStyle = 'fade' | 'zoom' | 'slide' | 'pop' | 'bounce';
 
@@ -283,6 +388,14 @@ export interface VideoTheme {
   containerStyle: 'rounded' | 'sharp' | 'floating';
   glowEffect: boolean;
   backgroundEffect?: 'none' | 'particles' | 'matrix' | 'grid';
+  hookFontSize: number;
+  hookColor: string;
+  codeFontSize: number;
+  codeColor: string;
+  explanationFontSize: number;
+  explanationColor: string;
+  ctaFontSize: number;
+  ctaColor: string;
 }
 
 // ---- Resolution Config ----

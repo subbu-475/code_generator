@@ -18,6 +18,12 @@ import { ImageScene } from '../components/ImageScene';
 import { SubscribeVideoScene } from '../components/SubscribeVideoScene';
 import { VideoScene } from '../components/VideoScene';
 import { QuizScene } from '../components/QuizScene';
+import { GuessOutputScene } from '../components/GuessOutputScene';
+import { InterviewQuestionScene } from '../components/InterviewQuestionScene';
+import { BugFixScene } from '../components/BugFixScene';
+import { OneLinerScene } from '../components/OneLinerScene';
+import { ComparisonScene } from '../components/ComparisonScene';
+import { RoadmapStepScene } from '../components/RoadmapStepScene';
 import { FontReady } from '../components/FontReady';
 import { withFontFallback } from '../utils/fontFallback';
 
@@ -178,6 +184,81 @@ export const CodeShort: React.FC<VideoProps> = ({
             quizCorrectIndex={scene.quizCorrectIndex}
             quizExplanation={scene.quizExplanation}
             quizRevealDelay={scene.quizRevealDelay}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'guess_output':
+        return (
+          <GuessOutputScene
+            title={scene.title}
+            guessCode={scene.guessCode}
+            guessLanguage={scene.guessLanguage}
+            guessAnswer={scene.guessAnswer}
+            guessRevealDelay={scene.guessRevealDelay}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'interview_question':
+        return (
+          <InterviewQuestionScene
+            title={scene.title}
+            text={scene.text}
+            interviewDifficulty={scene.interviewDifficulty}
+            interviewCategory={scene.interviewCategory}
+            interviewAnswer={scene.interviewAnswer}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'bugfix':
+        return (
+          <BugFixScene
+            title={scene.title}
+            buggyCode={scene.buggyCode}
+            fixedCode={scene.fixedCode}
+            bugLanguage={scene.bugLanguage}
+            bugExplanation={scene.bugExplanation}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'oneliner':
+        return (
+          <OneLinerScene
+            title={scene.title}
+            onelinerCode={scene.onelinerCode}
+            onelinerLanguage={scene.onelinerLanguage}
+            onelinerExplanation={scene.onelinerExplanation}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'comparison':
+        return (
+          <ComparisonScene
+            title={scene.title}
+            comparisonLeftTitle={scene.comparisonLeftTitle}
+            comparisonRightTitle={scene.comparisonRightTitle}
+            comparisonLeftCode={scene.comparisonLeftCode}
+            comparisonRightCode={scene.comparisonRightCode}
+            comparisonLeftLanguage={scene.comparisonLeftLanguage}
+            comparisonRightLanguage={scene.comparisonRightLanguage}
+            comparisonVerdict={scene.comparisonVerdict}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'roadmap_step':
+        return (
+          <RoadmapStepScene
+            title={scene.title}
+            text={scene.text}
+            roadmapStepNumber={scene.roadmapStepNumber}
+            roadmapTotalSteps={scene.roadmapTotalSteps}
+            roadmapIcon={scene.roadmapIcon}
+            roadmapDescription={scene.roadmapDescription}
             template={resolvedTemplate}
             durationInFrames={scene.duration_frames}
           />

@@ -6,7 +6,7 @@ import React, { useEffect, useState } from 'react';
 import { Player, PlayerRef } from '@remotion/player';
 import { Box, Paper, Typography, CircularProgress } from '@mui/material';
 import { CodeShort } from '../../../../renderer/src/compositions/CodeShort.js';
-import type { Project, Scene, Template } from '../../types/index.js';
+import type { Project, Scene, Template, SceneConfig, VideoTheme } from '../../types/index.js';
 
 interface VideoPreviewProps {
   project: Project;
@@ -54,7 +54,7 @@ export default React.forwardRef<PlayerRef, VideoPreviewProps>(function VideoPrev
   }, [project.id, project.audio_mode, project.tts_explanation]);
 
   // Reconstruct scene configs for Remotion composition
-  const sceneConfigs = scenes.map((s) => {
+  const sceneConfigs: SceneConfig[] = scenes.map((s) => {
     let content: any = {};
     try {
       content = JSON.parse(s.content);
@@ -102,7 +102,7 @@ export default React.forwardRef<PlayerRef, VideoPreviewProps>(function VideoPrev
   const totalFrames = sceneConfigs.reduce((sum, s) => sum + (s.duration_frames || 90), 0);
 
   // Build videoTheme mirroring renderService.ts exactly — so preview === download
-  const videoTheme = {
+  const videoTheme: VideoTheme = {
     backgroundColor: template?.background_color ?? '#1a1a2e',
     fontFamily: template?.font_family ?? 'JetBrains Mono',
     fontSize: template?.font_size ?? 16,
@@ -113,6 +113,14 @@ export default React.forwardRef<PlayerRef, VideoPreviewProps>(function VideoPrev
     glowEffect: template?.glow_effect !== 0,
     backgroundEffect: (template?.background_effect ?? 'none') as any,
     backgroundGradient: template?.background_gradient || undefined,
+    hookFontSize: template?.hook_font_size ?? 64,
+    hookColor: template?.hook_color ?? '#ffffff',
+    codeFontSize: template?.code_font_size ?? 16,
+    codeColor: template?.code_color ?? '#ffffff',
+    explanationFontSize: template?.explanation_font_size ?? 26,
+    explanationColor: template?.explanation_color ?? '#ffffff',
+    ctaFontSize: template?.cta_font_size ?? 24,
+    ctaColor: template?.cta_color ?? '#ffffff',
   };
 
   const videoProps = {

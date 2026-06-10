@@ -255,6 +255,265 @@ export function generateScenes(
       transition: 'none',
     }));
 
+  } else if (explanationTemplate === 'quiz_generator') {
+    // Quiz Generator: hook → code snippets → quiz for each → cta
+    addSceneHelper(createSceneConfig('hook', 'Hook', {
+      text: hookText || '🧠 Can you answer these?',
+      duration_frames: HOOK_DURATION_SECS * FPS,
+      animation: 'pop',
+      transition: 'fade',
+    }));
+
+    for (const snippet of codeSnippets) {
+      addSceneHelper(createSceneConfig('code', snippet.title || 'Code', {
+        code: snippet.code,
+        language: snippet.language,
+        output: snippet.output,
+        duration_frames: CODE_DURATION_SECS * FPS,
+        animation: 'fade',
+        transition: 'slide',
+      }));
+
+      addSceneHelper(createSceneConfig('quiz', snippet.title ? `Quiz: ${snippet.title}` : 'Quiz Challenge', {
+        text: snippet.quizQuestion || snippet.explanation || 'What is the output?',
+        duration_frames: 150,
+        animation: 'fade',
+        transition: 'fade',
+        quizQuestion: snippet.quizQuestion || snippet.explanation || 'What is the output?',
+        quizOptions: snippet.quizOptions || ['Option A', 'Option B', 'Option C', 'Option D'],
+        quizCorrectIndex: snippet.quizCorrectIndex !== undefined ? snippet.quizCorrectIndex : 0,
+        quizExplanation: snippet.quizExplanation || 'This is because...',
+        quizRevealDelay: snippet.quizRevealDelay !== undefined ? snippet.quizRevealDelay : 90,
+      }));
+    }
+
+    addSceneHelper(createSceneConfig('cta', 'CTA', {
+      text: cta || 'How many did you get right? 🏆',
+      duration_frames: CTA_DURATION_SECS * FPS,
+      animation: 'bounce',
+      transition: 'none',
+    }));
+
+  } else if (explanationTemplate === 'guess_output') {
+    // Guess The Output: hook → guess_output scenes → cta
+    addSceneHelper(createSceneConfig('hook', 'Hook', {
+      text: hookText || '🤔 Guess The Output!',
+      duration_frames: HOOK_DURATION_SECS * FPS,
+      animation: 'pop',
+      transition: 'fade',
+    }));
+
+    for (const snippet of codeSnippets) {
+      const guessConfig = createSceneConfig('guess_output', snippet.title || 'Guess The Output', {
+        text: 'What does this code output?',
+        duration_frames: 180,
+        animation: 'fade',
+        transition: 'fade',
+        guessCode: snippet.guessCode || snippet.code,
+        guessLanguage: snippet.guessLanguage || snippet.language,
+        guessAnswer: snippet.guessAnswer || snippet.output || '???',
+        guessRevealDelay: snippet.guessRevealDelay !== undefined ? snippet.guessRevealDelay : 90,
+      });
+      addSceneHelper(guessConfig);
+    }
+
+    if (output) {
+      addSceneHelper(createSceneConfig('tip', 'Key Takeaway', {
+        text: output,
+        duration_frames: 120,
+        animation: 'fade',
+        transition: 'slide',
+      }));
+    }
+
+    addSceneHelper(createSceneConfig('cta', 'CTA', {
+      text: cta || 'Did you guess right? Follow for more! 🎯',
+      duration_frames: CTA_DURATION_SECS * FPS,
+      animation: 'bounce',
+      transition: 'none',
+    }));
+
+  } else if (explanationTemplate === 'interview_question') {
+    // Interview Question: hook → interview_question → code (answer) → tip → cta
+    addSceneHelper(createSceneConfig('hook', 'Hook', {
+      text: hookText || '💼 Interview Question',
+      duration_frames: HOOK_DURATION_SECS * FPS,
+      animation: 'pop',
+      transition: 'fade',
+    }));
+
+    for (const snippet of codeSnippets) {
+      const iqConfig = createSceneConfig('interview_question', snippet.title || 'Interview Question', {
+        text: snippet.hook || snippet.title || 'Explain this concept...',
+        duration_frames: 180,
+        animation: 'fade',
+        transition: 'fade',
+        interviewDifficulty: snippet.interviewDifficulty || 'medium',
+        interviewCategory: snippet.interviewCategory || (snippet.language ? snippet.language.charAt(0).toUpperCase() + snippet.language.slice(1) : ''),
+        interviewAnswer: snippet.interviewAnswer || snippet.explanation || 'The answer is...',
+      });
+      addSceneHelper(iqConfig);
+
+      if (snippet.code && snippet.code.trim()) {
+        addSceneHelper(createSceneConfig('code', 'Code Example', {
+          code: snippet.code,
+          language: snippet.language,
+          output: snippet.output,
+          duration_frames: CODE_DURATION_SECS * FPS,
+          animation: 'fade',
+          transition: 'slide',
+        }));
+      }
+    }
+
+    addSceneHelper(createSceneConfig('cta', 'CTA', {
+      text: cta || 'Ace your next interview! Follow for more 🚀',
+      duration_frames: CTA_DURATION_SECS * FPS,
+      animation: 'bounce',
+      transition: 'none',
+    }));
+
+  } else if (explanationTemplate === 'bugfix') {
+    // Bug Fix: hook → bugfix scene → tip → cta
+    addSceneHelper(createSceneConfig('hook', 'Hook', {
+      text: hookText || '🐛 Can You Spot The Bug?',
+      duration_frames: HOOK_DURATION_SECS * FPS,
+      animation: 'pop',
+      transition: 'fade',
+    }));
+
+    const buggySnippet = codeSnippets[0];
+    if (buggySnippet) {
+      const fixedSnippet = codeSnippets[1] || buggySnippet;
+      const bugConfig = createSceneConfig('bugfix', buggySnippet.title || 'Spot The Bug', {
+        text: '',
+        duration_frames: 210,
+        animation: 'fade',
+        transition: 'fade',
+        buggyCode: buggySnippet.buggyCode || buggySnippet.code,
+        fixedCode: buggySnippet.fixedCode || fixedSnippet.code,
+        bugLanguage: buggySnippet.bugLanguage || buggySnippet.language,
+        bugExplanation: buggySnippet.bugExplanation || buggySnippet.explanation || 'The fix involves...',
+      });
+      addSceneHelper(bugConfig);
+
+      if (fixedSnippet.output || output) {
+        addSceneHelper(createSceneConfig('output', 'Output', {
+          text: fixedSnippet.output || output,
+          duration_frames: OUTPUT_DURATION_SECS * FPS,
+          animation: 'zoom',
+          transition: 'fade',
+        }));
+      }
+    }
+
+    addSceneHelper(createSceneConfig('cta', 'CTA', {
+      text: cta || 'Follow for more debugging challenges! 🔍',
+      duration_frames: CTA_DURATION_SECS * FPS,
+      animation: 'bounce',
+      transition: 'none',
+    }));
+
+  } else if (explanationTemplate === 'oneliner') {
+    // One-Liner Trick: hook → oneliner scenes → cta
+    addSceneHelper(createSceneConfig('hook', 'Hook', {
+      text: hookText || '⚡ One-Line Tricks!',
+      duration_frames: HOOK_DURATION_SECS * FPS,
+      animation: 'pop',
+      transition: 'fade',
+    }));
+
+    for (let i = 0; i < codeSnippets.length; i++) {
+      const snippet = codeSnippets[i];
+      const olConfig = createSceneConfig('oneliner', snippet.title || `Trick #${i + 1}`, {
+        text: '',
+        duration_frames: 150,
+        animation: 'fade',
+        transition: 'slide',
+        onelinerCode: snippet.onelinerCode || snippet.code,
+        onelinerLanguage: snippet.onelinerLanguage || snippet.language,
+        onelinerExplanation: snippet.onelinerExplanation || snippet.explanation || snippet.output || '',
+      });
+      addSceneHelper(olConfig);
+    }
+
+    addSceneHelper(createSceneConfig('cta', 'CTA', {
+      text: cta || 'Save this for later! Follow for daily tricks ⚡',
+      duration_frames: CTA_DURATION_SECS * FPS,
+      animation: 'bounce',
+      transition: 'none',
+    }));
+
+  } else if (explanationTemplate === 'comparison') {
+    // Comparison Video: hook → comparison scene → tip (verdict) → cta
+    addSceneHelper(createSceneConfig('hook', 'Hook', {
+      text: hookText || '⚔️ Which One Is Better?',
+      duration_frames: HOOK_DURATION_SECS * FPS,
+      animation: 'pop',
+      transition: 'fade',
+    }));
+
+    const leftSnippet = codeSnippets[0];
+    const rightSnippet = codeSnippets[1] || codeSnippets[0];
+
+    if (leftSnippet) {
+      const compConfig = createSceneConfig('comparison', 'Comparison', {
+        text: '',
+        duration_frames: 210,
+        animation: 'fade',
+        transition: 'fade',
+        comparisonLeftTitle: leftSnippet.comparisonLeftTitle || leftSnippet.title || 'Approach A',
+        comparisonRightTitle: leftSnippet.comparisonRightTitle || (rightSnippet ? rightSnippet.title : 'Approach B'),
+        comparisonLeftCode: leftSnippet.comparisonLeftCode || leftSnippet.code,
+        comparisonRightCode: leftSnippet.comparisonRightCode || (rightSnippet ? rightSnippet.code : leftSnippet.code),
+        comparisonLeftLanguage: leftSnippet.comparisonLeftLanguage || leftSnippet.language,
+        comparisonRightLanguage: leftSnippet.comparisonRightLanguage || (rightSnippet ? rightSnippet.language : leftSnippet.language),
+        comparisonVerdict: leftSnippet.comparisonVerdict || output || leftSnippet.explanation || 'Both have their use cases!',
+      });
+      addSceneHelper(compConfig);
+    }
+
+    addSceneHelper(createSceneConfig('cta', 'CTA', {
+      text: cta || 'Which do you prefer? Comment below! 💬',
+      duration_frames: CTA_DURATION_SECS * FPS,
+      animation: 'bounce',
+      transition: 'none',
+    }));
+
+  } else if (explanationTemplate === 'roadmap') {
+    // Roadmap: hook → roadmap_step scenes → cta
+    addSceneHelper(createSceneConfig('hook', 'Hook', {
+      text: hookText || '🗺️ Your Learning Roadmap',
+      duration_frames: HOOK_DURATION_SECS * FPS,
+      animation: 'pop',
+      transition: 'fade',
+    }));
+
+    const totalSteps = codeSnippets.length;
+    const icons = ['📚', '⚙️', '🧩', '🚀', '🏆', '💎', '🔥', '🌟'];
+
+    for (let i = 0; i < codeSnippets.length; i++) {
+      const snippet = codeSnippets[i];
+      const rmConfig = createSceneConfig('roadmap_step', snippet.title || `Step ${i + 1}`, {
+        text: snippet.title || '',
+        duration_frames: 150,
+        animation: 'fade',
+        transition: 'slide',
+        roadmapStepNumber: snippet.roadmapStepNumber || i + 1,
+        roadmapTotalSteps: snippet.roadmapTotalSteps || totalSteps,
+        roadmapIcon: snippet.roadmapIcon || icons[i % icons.length],
+        roadmapDescription: snippet.roadmapDescription || snippet.explanation || snippet.output || snippet.code || '',
+      });
+      addSceneHelper(rmConfig);
+    }
+
+    addSceneHelper(createSceneConfig('cta', 'CTA', {
+      text: cta || 'Save this roadmap! Follow for more 🗺️',
+      duration_frames: CTA_DURATION_SECS * FPS,
+      animation: 'bounce',
+      transition: 'none',
+    }));
+
   } else {
     // default/none template
     const hasGlobalHook = !!hookText && hookText.trim().length > 0;
@@ -365,7 +624,13 @@ export function updateScene(sceneId: string, updates: Partial<SceneConfig>): Sce
   const contentKeys = [
     'code', 'text', 'output', 'language', 'channelName', 'channelHandle', 'subscriberCount', 'socials', 'imageUrl', 'videoUrl',
     'hookBadge', 'hookBadgeStyle', 'hookCreatorName', 'hookCreatorHandle', 'hookCreatorAvatar', 'hookShowProgress', 'hookProgressStyle', 'hookLayout', 'hookImage',
-    'hookImageSize', 'hookImageViewMode', 'explanation', 'quizQuestion', 'quizOptions', 'quizCorrectIndex', 'quizExplanation', 'quizRevealDelay'
+    'hookImageSize', 'hookImageViewMode', 'explanation', 'quizQuestion', 'quizOptions', 'quizCorrectIndex', 'quizExplanation', 'quizRevealDelay',
+    'guessCode', 'guessLanguage', 'guessAnswer', 'guessRevealDelay',
+    'interviewDifficulty', 'interviewCategory', 'interviewAnswer',
+    'buggyCode', 'fixedCode', 'bugLanguage', 'bugExplanation',
+    'onelinerCode', 'onelinerLanguage', 'onelinerExplanation',
+    'comparisonLeftTitle', 'comparisonRightTitle', 'comparisonLeftCode', 'comparisonRightCode', 'comparisonLeftLanguage', 'comparisonRightLanguage', 'comparisonVerdict',
+    'roadmapStepNumber', 'roadmapTotalSteps', 'roadmapIcon', 'roadmapDescription'
   ];
   const hasContentUpdate = contentKeys.some((k) => (updates as any)[k] !== undefined);
 
@@ -441,6 +706,31 @@ export function syncProjectSceneConfig(db: ReturnType<typeof getDb>, projectId: 
       quizCorrectIndex: content.quizCorrectIndex,
       quizExplanation: content.quizExplanation,
       quizRevealDelay: content.quizRevealDelay,
+      guessCode: content.guessCode,
+      guessLanguage: content.guessLanguage,
+      guessAnswer: content.guessAnswer,
+      guessRevealDelay: content.guessRevealDelay,
+      interviewDifficulty: content.interviewDifficulty,
+      interviewCategory: content.interviewCategory,
+      interviewAnswer: content.interviewAnswer,
+      buggyCode: content.buggyCode,
+      fixedCode: content.fixedCode,
+      bugLanguage: content.bugLanguage,
+      bugExplanation: content.bugExplanation,
+      onelinerCode: content.onelinerCode,
+      onelinerLanguage: content.onelinerLanguage,
+      onelinerExplanation: content.onelinerExplanation,
+      comparisonLeftTitle: content.comparisonLeftTitle,
+      comparisonRightTitle: content.comparisonRightTitle,
+      comparisonLeftCode: content.comparisonLeftCode,
+      comparisonRightCode: content.comparisonRightCode,
+      comparisonLeftLanguage: content.comparisonLeftLanguage,
+      comparisonRightLanguage: content.comparisonRightLanguage,
+      comparisonVerdict: content.comparisonVerdict,
+      roadmapStepNumber: content.roadmapStepNumber,
+      roadmapTotalSteps: content.roadmapTotalSteps,
+      roadmapIcon: content.roadmapIcon,
+      roadmapDescription: content.roadmapDescription,
     };
   });
 
@@ -601,6 +891,68 @@ export function addScene(projectId: string, type: SceneType, insertAfterId?: str
         content.quizExplanation = 'This is because...';
         content.quizRevealDelay = 90;
         break;
+      case 'guess_output':
+        title = 'Guess The Output';
+        duration = 180;
+        animation = 'fade';
+        transition = 'fade';
+        content.guessCode = 'console.log(typeof null);';
+        content.guessLanguage = 'javascript';
+        content.guessAnswer = '"object"';
+        content.guessRevealDelay = 90;
+        break;
+      case 'interview_question':
+        title = 'Interview Question';
+        duration = 180;
+        animation = 'fade';
+        transition = 'fade';
+        content.text = 'What is a closure in JavaScript?';
+        content.interviewDifficulty = 'medium';
+        content.interviewCategory = 'JavaScript';
+        content.interviewAnswer = 'A closure is a function that retains access to its outer scope variables.';
+        break;
+      case 'bugfix':
+        title = 'Spot The Bug';
+        duration = 210;
+        animation = 'fade';
+        transition = 'fade';
+        content.buggyCode = 'if (x = 5) { /* ... */ }';
+        content.fixedCode = 'if (x === 5) { /* ... */ }';
+        content.bugLanguage = 'javascript';
+        content.bugExplanation = 'Use === for comparison, not = which is assignment.';
+        break;
+      case 'oneliner':
+        title = 'One-Line Trick';
+        duration = 150;
+        animation = 'fade';
+        transition = 'slide';
+        content.onelinerCode = 'const unique = [...new Set(arr)];';
+        content.onelinerLanguage = 'javascript';
+        content.onelinerExplanation = 'Set removes duplicates, spread converts back to array.';
+        break;
+      case 'comparison':
+        title = 'Comparison';
+        duration = 210;
+        animation = 'fade';
+        transition = 'fade';
+        content.comparisonLeftTitle = 'Approach A';
+        content.comparisonRightTitle = 'Approach B';
+        content.comparisonLeftCode = '// First approach';
+        content.comparisonRightCode = '// Second approach';
+        content.comparisonLeftLanguage = 'javascript';
+        content.comparisonRightLanguage = 'javascript';
+        content.comparisonVerdict = 'Both have their merits!';
+        break;
+      case 'roadmap_step':
+        title = 'Roadmap Step';
+        duration = 150;
+        animation = 'fade';
+        transition = 'slide';
+        content.roadmapStepNumber = 1;
+        content.roadmapTotalSteps = 5;
+        content.roadmapIcon = '📚';
+        content.roadmapDescription = 'Start learning the fundamentals';
+        break;
     }
 
     db.prepare(`
@@ -670,20 +1022,34 @@ function createSceneConfig(
     duration_frames: number;
     animation: AnimationStyle;
     transition: TransitionStyle;
+    [key: string]: any;
   },
 ): SceneConfig {
+  const {
+    text,
+    code,
+    language,
+    output,
+    explanation,
+    duration_frames,
+    animation,
+    transition,
+    ...extraOpts
+  } = opts;
+
   return {
     id: uuidv4(),
     type,
     title,
-    code: opts.code,
-    language: opts.language as SceneConfig['language'],
-    output: opts.output,
-    text: opts.text,
-    explanation: opts.explanation,
-    duration_frames: opts.duration_frames,
-    animation: opts.animation,
-    transition: opts.transition,
+    code,
+    language: language as SceneConfig['language'],
+    output,
+    text,
+    explanation,
+    duration_frames,
+    animation,
+    transition,
+    ...extraOpts,
   };
 }
 
@@ -721,6 +1087,31 @@ function insertScene(
   if (config.quizCorrectIndex !== undefined) content.quizCorrectIndex = config.quizCorrectIndex;
   if (config.quizExplanation !== undefined) content.quizExplanation = config.quizExplanation;
   if (config.quizRevealDelay !== undefined) content.quizRevealDelay = config.quizRevealDelay;
+  if (config.guessCode !== undefined) content.guessCode = config.guessCode;
+  if (config.guessLanguage !== undefined) content.guessLanguage = config.guessLanguage;
+  if (config.guessAnswer !== undefined) content.guessAnswer = config.guessAnswer;
+  if (config.guessRevealDelay !== undefined) content.guessRevealDelay = config.guessRevealDelay;
+  if (config.interviewDifficulty !== undefined) content.interviewDifficulty = config.interviewDifficulty;
+  if (config.interviewCategory !== undefined) content.interviewCategory = config.interviewCategory;
+  if (config.interviewAnswer !== undefined) content.interviewAnswer = config.interviewAnswer;
+  if (config.buggyCode !== undefined) content.buggyCode = config.buggyCode;
+  if (config.fixedCode !== undefined) content.fixedCode = config.fixedCode;
+  if (config.bugLanguage !== undefined) content.bugLanguage = config.bugLanguage;
+  if (config.bugExplanation !== undefined) content.bugExplanation = config.bugExplanation;
+  if (config.onelinerCode !== undefined) content.onelinerCode = config.onelinerCode;
+  if (config.onelinerLanguage !== undefined) content.onelinerLanguage = config.onelinerLanguage;
+  if (config.onelinerExplanation !== undefined) content.onelinerExplanation = config.onelinerExplanation;
+  if (config.comparisonLeftTitle !== undefined) content.comparisonLeftTitle = config.comparisonLeftTitle;
+  if (config.comparisonRightTitle !== undefined) content.comparisonRightTitle = config.comparisonRightTitle;
+  if (config.comparisonLeftCode !== undefined) content.comparisonLeftCode = config.comparisonLeftCode;
+  if (config.comparisonRightCode !== undefined) content.comparisonRightCode = config.comparisonRightCode;
+  if (config.comparisonLeftLanguage !== undefined) content.comparisonLeftLanguage = config.comparisonLeftLanguage;
+  if (config.comparisonRightLanguage !== undefined) content.comparisonRightLanguage = config.comparisonRightLanguage;
+  if (config.comparisonVerdict !== undefined) content.comparisonVerdict = config.comparisonVerdict;
+  if (config.roadmapStepNumber !== undefined) content.roadmapStepNumber = config.roadmapStepNumber;
+  if (config.roadmapTotalSteps !== undefined) content.roadmapTotalSteps = config.roadmapTotalSteps;
+  if (config.roadmapIcon !== undefined) content.roadmapIcon = config.roadmapIcon;
+  if (config.roadmapDescription !== undefined) content.roadmapDescription = config.roadmapDescription;
 
   db.prepare(`
     INSERT INTO scenes (id, project_id, scene_order, type, title, content, duration_frames, animation, transition_)

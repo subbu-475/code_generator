@@ -155,8 +155,8 @@ export const EndScreenScene: React.FC<EndScreenSceneProps> = ({
           <h2
             style={{
               fontFamily: template.fontFamily,
-              color: template.textColor,
-              fontSize: 42,
+              color: template.ctaColor || template.textColor,
+              fontSize: template.ctaFontSize || 42,
               fontWeight: 900,
               margin: '0 0 16px 0',
               letterSpacing: -1,
@@ -167,8 +167,8 @@ export const EndScreenScene: React.FC<EndScreenSceneProps> = ({
           <p
             style={{
               fontFamily: template.fontFamily,
-              color: 'rgba(255, 255, 255, 0.4)',
-              fontSize: 20,
+              color: template.explanationColor || 'rgba(255, 255, 255, 0.4)',
+              fontSize: template.explanationFontSize ? Math.min(template.explanationFontSize, 20) : 20,
               margin: 0,
             }}
           >
@@ -219,7 +219,7 @@ export const EndScreenScene: React.FC<EndScreenSceneProps> = ({
                   <span
                     style={{
                       fontFamily: template.fontFamily,
-                      color: 'rgba(255, 255, 255, 0.3)',
+                      color: template.explanationColor || 'rgba(255, 255, 255, 0.3)',
                       fontSize: 12,
                       fontWeight: 700,
                       textTransform: 'uppercase',
@@ -230,8 +230,8 @@ export const EndScreenScene: React.FC<EndScreenSceneProps> = ({
                   <span
                     style={{
                       fontFamily: template.fontFamily,
-                      color: template.textColor,
-                      fontSize: 20,
+                      color: template.ctaColor || template.textColor,
+                      fontSize: template.ctaFontSize ? Math.min(template.ctaFontSize, 20) : 20,
                       fontWeight: 600,
                     }}
                   >

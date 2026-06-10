@@ -326,7 +326,8 @@ export const HookScene: React.FC<HookSceneProps> = ({
                 text={title}
                 template={template}
                 durationInFrames={durationInFrames}
-                fontSize={64}
+                fontSize={template.hookFontSize || 64}
+                color={template.hookColor}
               />
             </div>
           ) : isThumbnail ? (
@@ -352,7 +353,8 @@ export const HookScene: React.FC<HookSceneProps> = ({
                   accentColor: '#ffff00', // yellow accent
                 }}
                 durationInFrames={durationInFrames}
-                fontSize={64}
+                fontSize={template.hookFontSize || 64}
+                color={template.hookColor}
               />
             </div>
           ) : (
@@ -361,7 +363,8 @@ export const HookScene: React.FC<HookSceneProps> = ({
                 text={title}
                 template={template}
                 durationInFrames={durationInFrames}
-                fontSize={76}
+                fontSize={template.hookFontSize || 76}
+                color={template.hookColor}
               />
               <div
                 style={{

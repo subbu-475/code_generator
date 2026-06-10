@@ -50,6 +50,16 @@ export default function TemplateEditor() {
   const [backgroundEffect, setBackgroundEffect] = useState<string>('none');
   const [bgType, setBgType] = useState<'solid' | 'gradient'>('solid');
 
+  // Category-specific typography states
+  const [hookFontSize, setHookFontSize] = useState(64);
+  const [hookColor, setHookColor] = useState('#ffffff');
+  const [codeFontSize, setCodeFontSize] = useState(16);
+  const [codeColor, setCodeColor] = useState('#e2e8f0');
+  const [explanationFontSize, setExplanationFontSize] = useState(26);
+  const [explanationColor, setExplanationColor] = useState('#ffffff');
+  const [ctaFontSize, setCtaFontSize] = useState(24);
+  const [ctaColor, setCtaColor] = useState('#ffffff');
+
   const presets = [
     {
       name: 'Cyberpunk Neon 🌐',
@@ -64,6 +74,14 @@ export default function TemplateEditor() {
       bgEffect: 'particles',
       containerStyle: 'floating' as const,
       glowEffect: true,
+      hookFontSize: 72,
+      hookColor: '#ff007f',
+      codeFontSize: 16,
+      codeColor: '#00f5d4',
+      explanationFontSize: 28,
+      explanationColor: '#00f5d4',
+      ctaFontSize: 32,
+      ctaColor: '#ff007f',
     },
     {
       name: 'Tokyo Midnight 🗼',
@@ -78,6 +96,14 @@ export default function TemplateEditor() {
       bgEffect: 'grid',
       containerStyle: 'rounded' as const,
       glowEffect: true,
+      hookFontSize: 68,
+      hookColor: '#00f5d4',
+      codeFontSize: 16,
+      codeColor: '#ffffff',
+      explanationFontSize: 26,
+      explanationColor: '#a3a3a3',
+      ctaFontSize: 28,
+      ctaColor: '#00f5d4',
     },
     {
       name: 'Matrix Terminal 📟',
@@ -92,6 +118,14 @@ export default function TemplateEditor() {
       bgEffect: 'matrix',
       containerStyle: 'sharp' as const,
       glowEffect: true,
+      hookFontSize: 64,
+      hookColor: '#39ff14',
+      codeFontSize: 16,
+      codeColor: '#39ff14',
+      explanationFontSize: 24,
+      explanationColor: '#a3e635',
+      ctaFontSize: 28,
+      ctaColor: '#39ff14',
     },
     {
       name: 'Matte Minimalist ♠️',
@@ -106,12 +140,20 @@ export default function TemplateEditor() {
       bgEffect: 'none',
       containerStyle: 'sharp' as const,
       glowEffect: false,
+      hookFontSize: 60,
+      hookColor: '#ffffff',
+      codeFontSize: 16,
+      codeColor: '#e0e0e0',
+      explanationFontSize: 24,
+      explanationColor: '#a3a3a3',
+      ctaFontSize: 26,
+      ctaColor: '#ffffff',
     },
     {
       name: 'Coding Dark (Classic) 🟣',
       bgType: 'gradient' as const,
       bg: '#1a1a2e',
-      bgGradient: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+      bgGradient: 'linear-gradient(135deg, #1a1a2e 0%, #7c3aed 100%)',
       accent: '#7c3aed',
       text: '#ffffff',
       font: 'JetBrains Mono',
@@ -120,6 +162,14 @@ export default function TemplateEditor() {
       bgEffect: 'none',
       containerStyle: 'rounded' as const,
       glowEffect: true,
+      hookFontSize: 64,
+      hookColor: '#ffffff',
+      codeFontSize: 16,
+      codeColor: '#e2e8f0',
+      explanationFontSize: 26,
+      explanationColor: '#ffffff',
+      ctaFontSize: 24,
+      ctaColor: '#ffffff',
     },
   ];
 
@@ -135,6 +185,14 @@ export default function TemplateEditor() {
     setBackgroundEffect(p.bgEffect);
     setContainerStyle(p.containerStyle);
     setGlowEffect(p.glowEffect);
+    setHookFontSize(p.hookFontSize);
+    setHookColor(p.hookColor);
+    setCodeFontSize(p.codeFontSize);
+    setCodeColor(p.codeColor);
+    setExplanationFontSize(p.explanationFontSize);
+    setExplanationColor(p.explanationColor);
+    setCtaFontSize(p.ctaFontSize);
+    setCtaColor(p.ctaColor);
   };
 
   useEffect(() => {
@@ -158,6 +216,14 @@ export default function TemplateEditor() {
           setGlowEffect(t.glow_effect !== 0);
           setBackgroundEffect(t.background_effect || 'none');
           setBgType(t.background_gradient ? 'gradient' : 'solid');
+          setHookFontSize(t.hook_font_size ?? 64);
+          setHookColor(t.hook_color ?? '#ffffff');
+          setCodeFontSize(t.code_font_size ?? 16);
+          setCodeColor(t.code_color ?? '#e2e8f0');
+          setExplanationFontSize(t.explanation_font_size ?? 26);
+          setExplanationColor(t.explanation_color ?? '#ffffff');
+          setCtaFontSize(t.cta_font_size ?? 24);
+          setCtaColor(t.cta_color ?? '#ffffff');
         } catch (err) {
           console.error(err);
           alert('Template not found');
@@ -191,6 +257,14 @@ export default function TemplateEditor() {
         background_gradient: bgType === 'gradient' ? (backgroundGradient || 'linear-gradient(135deg, #1a1a2e 0%, #7c3aed 100%)') : null,
         container_style: containerStyle,
         glow_effect: glowEffect,
+        hook_font_size: hookFontSize,
+        hook_color: hookColor,
+        code_font_size: codeFontSize,
+        code_color: codeColor,
+        explanation_font_size: explanationFontSize,
+        explanation_color: explanationColor,
+        cta_font_size: ctaFontSize,
+        cta_color: ctaColor,
       };
 
       if (id) {
@@ -495,6 +569,135 @@ export default function TemplateEditor() {
               </CardContent>
             </Card>
 
+            <Card sx={{ p: 3, mb: 3 }}>
+              <CardContent sx={{ p: 0 }}>
+                <Typography variant="h6" sx={{ fontWeight: 700, mb: 3 }}>
+                  Category Typography Settings
+                </Typography>
+                <Grid container spacing={3}>
+                  {/* Hook Scene Settings */}
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: 'primary.main' }}>
+                      🪝 Hook Category (Intro / Badges / Headers)
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography id="hook-font-size-slider" gutterBottom sx={{ fontSize: 13, fontWeight: 600, color: 'text.secondary' }}>
+                      Hook Font Size ({hookFontSize}px)
+                    </Typography>
+                    <Slider
+                      value={hookFontSize}
+                      min={10}
+                      max={120}
+                      step={1}
+                      onChange={(_, val) => setHookFontSize(val as number)}
+                      valueLabelDisplay="auto"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      type="color"
+                      label="Hook Text Color"
+                      fullWidth
+                      value={hookColor}
+                      onChange={(e) => setHookColor(e.target.value)}
+                      InputLabelProps={{ shrink: true }}
+                    />
+                  </Grid>
+
+                  {/* Code Scene Settings */}
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: 'primary.main', mt: 1 }}>
+                      💻 Code Category (IDE Snippets)
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography id="code-font-size-slider" gutterBottom sx={{ fontSize: 13, fontWeight: 600, color: 'text.secondary' }}>
+                      Code Font Size ({codeFontSize}px)
+                    </Typography>
+                    <Slider
+                      value={codeFontSize}
+                      min={10}
+                      max={48}
+                      step={1}
+                      onChange={(_, val) => setCodeFontSize(val as number)}
+                      valueLabelDisplay="auto"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      type="color"
+                      label="Code Default Color"
+                      fullWidth
+                      value={codeColor}
+                      onChange={(e) => setCodeColor(e.target.value)}
+                      InputLabelProps={{ shrink: true }}
+                    />
+                  </Grid>
+
+                  {/* Explanation Scene Settings */}
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: 'primary.main', mt: 1 }}>
+                      📖 Explanation Category (Descriptions / Subtitles / Captions)
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography id="explanation-font-size-slider" gutterBottom sx={{ fontSize: 13, fontWeight: 600, color: 'text.secondary' }}>
+                      Explanation Font Size ({explanationFontSize}px)
+                    </Typography>
+                    <Slider
+                      value={explanationFontSize}
+                      min={10}
+                      max={80}
+                      step={1}
+                      onChange={(_, val) => setExplanationFontSize(val as number)}
+                      valueLabelDisplay="auto"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      type="color"
+                      label="Explanation Text Color"
+                      fullWidth
+                      value={explanationColor}
+                      onChange={(e) => setExplanationColor(e.target.value)}
+                      InputLabelProps={{ shrink: true }}
+                    />
+                  </Grid>
+
+                  {/* CTA Scene Settings */}
+                  <Grid item xs={12}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 700, mb: 1, color: 'primary.main', mt: 1 }}>
+                      📣 CTA Category (End Screens / Subscribe / Socials)
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <Typography id="cta-font-size-slider" gutterBottom sx={{ fontSize: 13, fontWeight: 600, color: 'text.secondary' }}>
+                      CTA Font Size ({ctaFontSize}px)
+                    </Typography>
+                    <Slider
+                      value={ctaFontSize}
+                      min={10}
+                      max={80}
+                      step={1}
+                      onChange={(_, val) => setCtaFontSize(val as number)}
+                      valueLabelDisplay="auto"
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <TextField
+                      type="color"
+                      label="CTA Text Color"
+                      fullWidth
+                      value={ctaColor}
+                      onChange={(e) => setCtaColor(e.target.value)}
+                      InputLabelProps={{ shrink: true }}
+                    />
+                  </Grid>
+                </Grid>
+              </CardContent>
+            </Card>
+
             <Button
               variant="contained"
               color="primary"
@@ -596,8 +799,8 @@ export default function TemplateEditor() {
               <Typography
                 sx={{
                   fontFamily,
-                  fontSize: fontSize + 6,
-                  color: textColor,
+                  fontSize: hookFontSize * 0.4,
+                  color: hookColor,
                   fontWeight: 900,
                   textAlign: 'center',
                   mb: 3,
@@ -631,14 +834,30 @@ export default function TemplateEditor() {
                   <Box sx={{ width: 8, height: 8, borderRadius: '50%', bgcolor: '#27c93f' }} />
                 </Box>
                 {/* Code area */}
-                <Box sx={{ p: 2.5, fontFamily, fontSize, color: textColor, opacity: 0.9 }}>
+                <Box sx={{ p: 2.5, fontFamily, fontSize: codeFontSize, color: codeColor, opacity: 0.9 }}>
                   <span style={{ color: '#c792ea' }}>const</span> <span style={{ color: '#82aaff' }}>add</span> = (<span style={{ color: accentColor }}>a</span>, <span style={{ color: accentColor }}>b</span>) =&gt; &#123;
-                  <Box sx={{ pl: 2 }}>
+                  <Box sx={{ pl: 2, fontSize: codeFontSize }}>
                     <span style={{ color: '#c792ea' }}>return</span> a + b;
                   </Box>
                   &#125;;
                 </Box>
               </Box>
+
+              {/* Explanation Captions Preview */}
+              <Typography
+                sx={{
+                  fontFamily,
+                  fontSize: explanationFontSize * 0.5,
+                  color: explanationColor,
+                  fontWeight: 700,
+                  textAlign: 'center',
+                  mt: 3,
+                  zIndex: 1,
+                  opacity: 0.9,
+                }}
+              >
+                Sample explanation caption text shown here
+              </Typography>
 
               <Box
                 sx={{
@@ -647,8 +866,8 @@ export default function TemplateEditor() {
                   py: 1,
                   borderRadius: containerStyle === 'sharp' ? 0 : 50,
                   bgcolor: accentColor,
-                  color: '#fff',
-                  fontSize: 12,
+                  color: ctaColor,
+                  fontSize: ctaFontSize ? Math.min(ctaFontSize - 10, 16) : 12,
                   fontWeight: 900,
                   boxShadow: glowEffect ? `0 4px 18px ${accentColor}60` : 'none',
                   zIndex: 1,

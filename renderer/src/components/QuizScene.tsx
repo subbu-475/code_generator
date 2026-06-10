@@ -139,9 +139,9 @@ export const QuizScene: React.FC<QuizSceneProps> = ({
           <h2
             style={{
               fontFamily: template.fontFamily,
-              fontSize: 34,
+              fontSize: template.explanationFontSize ? template.explanationFontSize + 8 : 34,
               fontWeight: 800,
-              color: template.textColor,
+              color: template.explanationColor || template.textColor,
               margin: '10px 0 20px 0',
               lineHeight: 1.3,
               textShadow: template.glowEffect
@@ -264,8 +264,8 @@ export const QuizScene: React.FC<QuizSceneProps> = ({
                 {/* Option text */}
                 <span
                   style={{
-                    fontSize: 22,
-                    color: isRevealed && !isCorrect ? 'rgba(255,255,255,0.4)' : template.textColor,
+                    fontSize: template.explanationFontSize || 22,
+                    color: isRevealed && !isCorrect ? 'rgba(255,255,255,0.4)' : (template.explanationColor || template.textColor),
                     fontWeight: textWeight,
                     fontFamily: template.fontFamily,
                     transition: 'color 0.4s ease',
@@ -340,9 +340,9 @@ export const QuizScene: React.FC<QuizSceneProps> = ({
               <p
                 style={{
                   margin: 0,
-                  fontSize: 20,
+                  fontSize: template.explanationFontSize || 20,
                   lineHeight: 1.5,
-                  color: 'rgba(255, 255, 255, 0.85)',
+                  color: template.explanationColor || 'rgba(255, 255, 255, 0.85)',
                   fontFamily: template.fontFamily,
                 }}
               >

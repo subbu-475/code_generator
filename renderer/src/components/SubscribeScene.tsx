@@ -141,8 +141,8 @@ export const SubscribeScene: React.FC<SubscribeSceneProps> = ({
           <h2
             style={{
               fontFamily: template.fontFamily,
-              color: template.textColor,
-              fontSize: 38,
+              color: template.ctaColor || template.textColor,
+              fontSize: template.ctaFontSize || 38,
               fontWeight: 800,
               margin: '0 0 8px 0',
             }}
@@ -152,8 +152,8 @@ export const SubscribeScene: React.FC<SubscribeSceneProps> = ({
           <p
             style={{
               fontFamily: template.fontFamily,
-              color: 'rgba(255, 255, 255, 0.5)',
-              fontSize: 22,
+              color: template.explanationColor || 'rgba(255, 255, 255, 0.5)',
+              fontSize: template.explanationFontSize ? Math.min(template.explanationFontSize, 22) : 22,
               margin: 0,
             }}
           >
@@ -178,7 +178,7 @@ export const SubscribeScene: React.FC<SubscribeSceneProps> = ({
               border: 'none',
               borderRadius: 50,
               padding: '16px 48px',
-              fontSize: 24,
+              fontSize: template.ctaFontSize ? Math.min(template.ctaFontSize, 24) : 24,
               fontWeight: 700,
               cursor: 'pointer',
               boxShadow: !isSubscribed ? '0 10px 25px rgba(239, 68, 68, 0.4)' : 'none',

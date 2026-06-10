@@ -24,6 +24,14 @@ const TemplateInputSchema = z.object({
   background_gradient: z.string().optional().nullable(),
   container_style: z.enum(['rounded', 'sharp', 'floating']).default('rounded'),
   glow_effect: z.boolean().default(true),
+  hook_font_size: z.number().int().min(10).max(120).default(64).optional(),
+  hook_color: z.string().default('#ffffff').optional(),
+  code_font_size: z.number().int().min(10).max(48).default(16).optional(),
+  code_color: z.string().default('#ffffff').optional(),
+  explanation_font_size: z.number().int().min(10).max(80).default(26).optional(),
+  explanation_color: z.string().default('#ffffff').optional(),
+  cta_font_size: z.number().int().min(10).max(80).default(24).optional(),
+  cta_color: z.string().default('#ffffff').optional(),
 });
 
 const TemplateUpdateSchema = TemplateInputSchema.partial();

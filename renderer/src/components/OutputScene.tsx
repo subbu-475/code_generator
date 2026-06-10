@@ -133,9 +133,9 @@ export const OutputScene: React.FC<OutputSceneProps> = ({
         <span
           style={{
             fontFamily: template.fontFamily,
-            fontSize: 36,
+            fontSize: template.explanationFontSize ? template.explanationFontSize + 10 : 36,
             fontWeight: 700,
-            color: template.textColor,
+            color: template.explanationColor || template.textColor,
             textTransform: 'uppercase',
             letterSpacing: 3,
           }}
@@ -218,7 +218,7 @@ export const OutputScene: React.FC<OutputSceneProps> = ({
               alignItems: 'flex-start',
               gap: 12,
               fontFamily: template.fontFamily,
-              fontSize: template.fontSize + 2,
+              fontSize: (template.codeFontSize || template.fontSize) + 2,
               lineHeight: 1.8,
             }}
           >
@@ -236,7 +236,7 @@ export const OutputScene: React.FC<OutputSceneProps> = ({
             </span>
             <span
               style={{
-                color: '#27c93f',
+                color: template.codeColor || '#27c93f',
                 whiteSpace: 'pre-wrap',
                 wordBreak: 'break-word',
                 textShadow: template.glowEffect
@@ -307,9 +307,9 @@ export const OutputScene: React.FC<OutputSceneProps> = ({
             style={{
               margin: 0,
               fontFamily: template.fontFamily,
-              fontSize: 24,
+              fontSize: template.explanationFontSize || 24,
               fontWeight: 500,
-              color: 'rgba(255, 255, 255, 0.95)',
+              color: template.explanationColor || 'rgba(255, 255, 255, 0.95)',
               lineHeight: 1.6,
             }}
           >

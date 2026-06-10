@@ -89,9 +89,9 @@ export const ImageScene: React.FC<ImageSceneProps> = ({
           <h2
             style={{
               fontFamily: template.fontFamily,
-              fontSize: 38,
+              fontSize: template.explanationFontSize ? template.explanationFontSize + 12 : 38,
               fontWeight: 800,
-              color: template.textColor,
+              color: template.explanationColor || template.textColor,
               textAlign: 'center',
               margin: 0,
               textShadow: template.glowEffect ? `0 0 15px ${template.accentColor}50` : 'none',
@@ -133,7 +133,8 @@ export const ImageScene: React.FC<ImageSceneProps> = ({
               text={text}
               template={template}
               durationInFrames={durationInFrames}
-              fontSize={24}
+              fontSize={template.explanationFontSize || 24}
+              color={template.explanationColor}
             />
           </div>
         )}

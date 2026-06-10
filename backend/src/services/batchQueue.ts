@@ -143,6 +143,14 @@ async function processItem(item: BatchItem): Promise<void> {
     glowEffect: templateObj?.glow_effect !== 0,
     backgroundEffect: (templateObj?.background_effect as VideoTheme['backgroundEffect']) ?? 'none',
     backgroundGradient: templateObj?.background_gradient || undefined,
+    hookFontSize: templateObj?.hook_font_size ?? 64,
+    hookColor: templateObj?.hook_color ?? '#ffffff',
+    codeFontSize: templateObj?.code_font_size ?? 16,
+    codeColor: templateObj?.code_color ?? '#ffffff',
+    explanationFontSize: templateObj?.explanation_font_size ?? 26,
+    explanationColor: templateObj?.explanation_color ?? '#ffffff',
+    ctaFontSize: templateObj?.cta_font_size ?? 24,
+    ctaColor: templateObj?.cta_color ?? '#ffffff',
   };
 
   // Build Scene Configs

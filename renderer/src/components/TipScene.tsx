@@ -160,9 +160,9 @@ export const TipScene: React.FC<TipSceneProps> = ({
           <h2
             style={{
               fontFamily: template.fontFamily,
-              fontSize: 44,
+              fontSize: template.explanationFontSize ? template.explanationFontSize + 18 : 44,
               fontWeight: 800,
-              color: template.textColor,
+              color: template.explanationColor || template.textColor,
               lineHeight: 1.3,
               margin: 0,
               marginBottom: text ? 28 : 0,
@@ -189,7 +189,8 @@ export const TipScene: React.FC<TipSceneProps> = ({
                 text={text}
                 template={template}
                 durationInFrames={_durationInFrames}
-                fontSize={26}
+                fontSize={template.explanationFontSize || 26}
+                color={template.explanationColor}
               />
             </div>
           )}

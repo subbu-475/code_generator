@@ -81,7 +81,7 @@ function getKeywords(language: ProgrammingLanguage): Set<string> {
 }
 
 /** Accent-aware token colors */
-function getTokenColors(accentColor: string) {
+function getTokenColors(accentColor: string, codeColor?: string) {
   return {
     keyword: { color: '#c792ea', fontWeight: 'bold' } as TokenStyle,
     string: { color: '#c3e88d' } as TokenStyle,
@@ -92,7 +92,7 @@ function getTokenColors(accentColor: string) {
     bracket: { color: '#ffd700' } as TokenStyle,
     property: { color: accentColor } as TokenStyle,
     type: { color: '#ffcb6b' } as TokenStyle,
-    plain: { color: '#d4d4d4' } as TokenStyle,
+    plain: { color: codeColor || '#d4d4d4' } as TokenStyle,
   };
 }
 
@@ -282,7 +282,7 @@ export const CodeScene: React.FC<CodeSceneProps> = ({
   const playAudio = sfxTyping !== false;
 
   const keywords = getKeywords(language);
-  const tokenColors = getTokenColors(template.accentColor);
+  const tokenColors = getTokenColors(template.accentColor, template.codeColor);
 
   // Inline output is disabled inside the CodeScene so it only renders in the separate OutputScene.
   const hasOutput = false;
@@ -367,7 +367,7 @@ export const CodeScene: React.FC<CodeSceneProps> = ({
             fontFamily: template.fontFamily,
             fontSize: 32,
             fontWeight: 700,
-            color: template.textColor,
+            color: template.codeColor || template.textColor,
             marginBottom: 24,
             textAlign: 'center',
             opacity: 0.9,
@@ -481,9 +481,9 @@ export const CodeScene: React.FC<CodeSceneProps> = ({
                 style={{
                   display: 'flex',
                   fontFamily: template.fontFamily,
-                  fontSize: template.fontSize,
+                  fontSize: template.codeFontSize || template.fontSize,
                   lineHeight: 1.7,
-                  minHeight: template.fontSize * 1.7,
+                  minHeight: (template.codeFontSize || template.fontSize) * 1.7,
                 }}
               >
                 {/* Line number */}
@@ -493,7 +493,7 @@ export const CodeScene: React.FC<CodeSceneProps> = ({
                     textAlign: 'right',
                     paddingRight: 16,
                     color: 'rgba(255,255,255,0.2)',
-                    fontSize: template.fontSize - 2,
+                    fontSize: (template.codeFontSize || template.fontSize) - 2,
                     userSelect: 'none',
                     flexShrink: 0,
                   }}

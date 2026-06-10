@@ -117,101 +117,102 @@ export const CTAScene: React.FC<CTASceneProps> = ({
           text={text}
           template={template}
           durationInFrames={_durationInFrames}
-          fontSize={64}
+          fontSize={template.ctaFontSize || 64}
+          color={template.ctaColor}
         />
       </div>
-
-      {/* Subscribe button */}
-      <div
-        style={{
-          opacity: buttonOpacity,
-          transform: `translateY(${buttonY}px)`,
-          zIndex: 1,
-          marginBottom: 50,
-        }}
-      >
-        <div
-          style={{
-            background: template.accentColor,
-            color: '#fff',
-            fontFamily: template.fontFamily,
-            fontSize: 24,
-            fontWeight: 700,
-            padding: '18px 48px',
-            borderRadius: 50,
-            textTransform: 'uppercase',
-            letterSpacing: 2,
-            boxShadow: `0 8px 30px ${template.accentColor}60`,
-            transform: `scale(${1 + Math.sin(frame * 0.12) * 0.02})`,
-          }}
-        >
-          Subscribe
-        </div>
-      </div>
-
-      {/* Social icons row */}
-      <div
-        style={{
-          display: 'flex',
-          gap: 30,
-          opacity: interpolate(iconSpring, [0, 1], [0, 0.7]),
-          transform: `translateY(${interpolate(iconSpring, [0, 1], [30, 0])}px)`,
-          zIndex: 1,
-        }}
-      >
-        {/* YouTube icon placeholder */}
-        <div
-          style={{
-            width: 52,
-            height: 52,
-            borderRadius: 14,
-            backgroundColor: 'rgba(255,255,255,0.1)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: 20,
-            color: template.textColor,
-            border: `1px solid rgba(255,255,255,0.1)`,
-          }}
-        >
-          ▶
-        </div>
-
-        {/* GitHub icon placeholder */}
-        <div
-          style={{
-            width: 52,
-            height: 52,
-            borderRadius: 14,
-            backgroundColor: 'rgba(255,255,255,0.1)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: 20,
-            color: template.textColor,
-            border: `1px solid rgba(255,255,255,0.1)`,
-          }}
-        >
-          ⌘
-        </div>
-
-        {/* Twitter/X icon placeholder */}
-        <div
-          style={{
-            width: 52,
-            height: 52,
-            borderRadius: 14,
-            backgroundColor: 'rgba(255,255,255,0.1)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            fontSize: 20,
-            color: template.textColor,
-            border: `1px solid rgba(255,255,255,0.1)`,
-          }}
-        >
-          ✕
-        </div>
+ 
+       {/* Subscribe button */}
+       <div
+         style={{
+           opacity: buttonOpacity,
+           transform: `translateY(${buttonY}px)`,
+           zIndex: 1,
+           marginBottom: 50,
+         }}
+       >
+         <div
+           style={{
+             background: template.accentColor,
+             color: '#fff',
+             fontFamily: template.fontFamily,
+             fontSize: template.ctaFontSize ? Math.min(template.ctaFontSize, 24) : 24,
+             fontWeight: 700,
+             padding: '18px 48px',
+             borderRadius: 50,
+             textTransform: 'uppercase',
+             letterSpacing: 2,
+             boxShadow: `0 8px 30px ${template.accentColor}60`,
+             transform: `scale(${1 + Math.sin(frame * 0.12) * 0.02})`,
+           }}
+         >
+           Subscribe
+         </div>
+       </div>
+ 
+       {/* Social icons row */}
+       <div
+         style={{
+           display: 'flex',
+           gap: 30,
+           opacity: interpolate(iconSpring, [0, 1], [0, 0.7]),
+           transform: `translateY(${interpolate(iconSpring, [0, 1], [30, 0])}px)`,
+           zIndex: 1,
+         }}
+       >
+         {/* YouTube icon placeholder */}
+         <div
+           style={{
+             width: 52,
+             height: 52,
+             borderRadius: 14,
+             backgroundColor: 'rgba(255,255,255,0.1)',
+             display: 'flex',
+             justifyContent: 'center',
+             alignItems: 'center',
+             fontSize: 20,
+             color: template.ctaColor || template.textColor,
+             border: `1px solid rgba(255,255,255,0.1)`,
+           }}
+         >
+           ▶
+         </div>
+ 
+         {/* GitHub icon placeholder */}
+         <div
+           style={{
+             width: 52,
+             height: 52,
+             borderRadius: 14,
+             backgroundColor: 'rgba(255,255,255,0.1)',
+             display: 'flex',
+             justifyContent: 'center',
+             alignItems: 'center',
+             fontSize: 20,
+             color: template.ctaColor || template.textColor,
+             border: `1px solid rgba(255,255,255,0.1)`,
+           }}
+         >
+           ⌘
+         </div>
+ 
+         {/* Twitter/X icon placeholder */}
+         <div
+           style={{
+             width: 52,
+             height: 52,
+             borderRadius: 14,
+             backgroundColor: 'rgba(255,255,255,0.1)',
+             display: 'flex',
+             justifyContent: 'center',
+             alignItems: 'center',
+             fontSize: 20,
+             color: template.ctaColor || template.textColor,
+             border: `1px solid rgba(255,255,255,0.1)`,
+           }}
+         >
+           ✕
+         </div>
       </div>
 
       {/* Bottom accent line */}

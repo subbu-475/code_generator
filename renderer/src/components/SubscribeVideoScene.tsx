@@ -196,8 +196,8 @@ export const SubscribeVideoScene: React.FC<SubscribeVideoSceneProps> = ({
           <h2
             style={{
               fontFamily: template.fontFamily,
-              color: template.textColor,
-              fontSize: 30,
+              color: template.ctaColor || template.textColor,
+              fontSize: template.ctaFontSize || 30,
               fontWeight: 800,
               margin: '0 0 4px 0',
             }}
@@ -207,8 +207,8 @@ export const SubscribeVideoScene: React.FC<SubscribeVideoSceneProps> = ({
           <p
             style={{
               fontFamily: template.fontFamily,
-              color: 'rgba(255, 255, 255, 0.5)',
-              fontSize: 18,
+              color: template.explanationColor || 'rgba(255, 255, 255, 0.5)',
+              fontSize: template.explanationFontSize ? Math.min(template.explanationFontSize, 18) : 18,
               margin: 0,
             }}
           >
@@ -226,7 +226,7 @@ export const SubscribeVideoScene: React.FC<SubscribeVideoSceneProps> = ({
             border: 'none',
             borderRadius: 50,
             padding: '16px 36px',
-            fontSize: 20,
+            fontSize: template.ctaFontSize ? Math.min(template.ctaFontSize, 20) : 20,
             fontWeight: 800,
             cursor: 'pointer',
             boxShadow: !isSubscribed ? '0 10px 25px rgba(255, 0, 0, 0.3)' : 'none',

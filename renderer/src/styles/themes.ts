@@ -13,6 +13,14 @@ export const codingDark: VideoTheme = {
   codeTheme: 'tokyo-night',
   containerStyle: 'rounded',
   glowEffect: false,
+  hookFontSize: 64,
+  hookColor: '#ffffff',
+  codeFontSize: 16,
+  codeColor: '#e2e8f0',
+  explanationFontSize: 26,
+  explanationColor: '#ffffff',
+  ctaFontSize: 24,
+  ctaColor: '#ffffff',
 };
 
 /**
@@ -28,6 +36,14 @@ export const vscodeTheme: VideoTheme = {
   codeTheme: 'github-dark',
   containerStyle: 'sharp',
   glowEffect: false,
+  hookFontSize: 60,
+  hookColor: '#d4d4d4',
+  codeFontSize: 16,
+  codeColor: '#d4d4d4',
+  explanationFontSize: 24,
+  explanationColor: '#858585',
+  ctaFontSize: 24,
+  ctaColor: '#d4d4d4',
 };
 
 /**
@@ -43,6 +59,14 @@ export const neonBlue: VideoTheme = {
   codeTheme: 'vitesse-dark',
   containerStyle: 'floating',
   glowEffect: true,
+  hookFontSize: 68,
+  hookColor: '#e0f7ff',
+  codeFontSize: 16,
+  codeColor: '#00d4ff',
+  explanationFontSize: 28,
+  explanationColor: '#00d4ff',
+  ctaFontSize: 28,
+  ctaColor: '#00d4ff',
 };
 
 /**
@@ -58,6 +82,14 @@ export const cyberpunk: VideoTheme = {
   codeTheme: 'dracula',
   containerStyle: 'floating',
   glowEffect: true,
+  hookFontSize: 72,
+  hookColor: '#ff2079',
+  codeFontSize: 16,
+  codeColor: '#f0e6ff',
+  explanationFontSize: 28,
+  explanationColor: '#f0e6ff',
+  ctaFontSize: 32,
+  ctaColor: '#ff2079',
 };
 
 /**
@@ -73,6 +105,14 @@ export const minimal: VideoTheme = {
   codeTheme: 'github-dark',
   containerStyle: 'rounded',
   glowEffect: false,
+  hookFontSize: 56,
+  hookColor: '#1a1a1a',
+  codeFontSize: 16,
+  codeColor: '#1a1a1a',
+  explanationFontSize: 22,
+  explanationColor: '#333333',
+  ctaFontSize: 24,
+  ctaColor: '#1a1a1a',
 };
 
 /** All built-in themes by name */

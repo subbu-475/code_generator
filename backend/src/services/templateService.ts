@@ -31,8 +31,8 @@ export function createTemplate(input: TemplateInput): Template {
   const now = new Date().toISOString();
 
   db.prepare(`
-    INSERT INTO templates (id, name, background_color, font_family, font_size, accent_color, text_color, animation_style, transition_style, code_theme, custom_css, is_default, background_effect, background_gradient, container_style, glow_effect, created_at)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?)
+    INSERT INTO templates (id, name, background_color, font_family, font_size, accent_color, text_color, animation_style, transition_style, code_theme, custom_css, is_default, background_effect, background_gradient, container_style, glow_effect, hook_font_size, hook_color, code_font_size, code_color, explanation_font_size, explanation_color, cta_font_size, cta_color, created_at)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `).run(
     id,
     input.name,
@@ -49,6 +49,14 @@ export function createTemplate(input: TemplateInput): Template {
     input.background_gradient ?? null,
     input.container_style ?? 'rounded',
     input.glow_effect === false ? 0 : 1,
+    input.hook_font_size ?? 64,
+    input.hook_color ?? '#ffffff',
+    input.code_font_size ?? 16,
+    input.code_color ?? '#ffffff',
+    input.explanation_font_size ?? 26,
+    input.explanation_color ?? '#ffffff',
+    input.cta_font_size ?? 24,
+    input.cta_color ?? '#ffffff',
     now,
   );
 
@@ -81,6 +89,14 @@ export function updateTemplate(id: string, input: Partial<TemplateInput>): Templ
     ['background_gradient', 'background_gradient'],
     ['container_style', 'container_style'],
     ['glow_effect', 'glow_effect'],
+    ['hook_font_size', 'hook_font_size'],
+    ['hook_color', 'hook_color'],
+    ['code_font_size', 'code_font_size'],
+    ['code_color', 'code_color'],
+    ['explanation_font_size', 'explanation_font_size'],
+    ['explanation_color', 'explanation_color'],
+    ['cta_font_size', 'cta_font_size'],
+    ['cta_color', 'cta_color'],
   ];
 
   for (const [inputKey, dbCol] of mappable) {

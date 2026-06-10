@@ -58,6 +58,14 @@ export async function startRender(
     glowEffect: template?.glow_effect !== 0,
     backgroundEffect: (template?.background_effect as VideoTheme['backgroundEffect']) ?? 'none',
     backgroundGradient: template?.background_gradient || undefined,
+    hookFontSize: template?.hook_font_size ?? 64,
+    hookColor: template?.hook_color ?? template?.text_color ?? '#ffffff',
+    codeFontSize: template?.code_font_size ?? template?.font_size ?? 16,
+    codeColor: template?.code_color ?? template?.text_color ?? '#ffffff',
+    explanationFontSize: template?.explanation_font_size ?? 26,
+    explanationColor: template?.explanation_color ?? template?.text_color ?? '#ffffff',
+    ctaFontSize: template?.cta_font_size ?? 24,
+    ctaColor: template?.cta_color ?? template?.text_color ?? '#ffffff',
   };
 
   const host = `http://localhost:${process.env.PORT || 3001}`;
@@ -154,6 +162,26 @@ async function doRender(
         const question = scene.quizQuestion || '';
         const options = scene.quizOptions || [];
         textToSpeak = `${question}. ${options.join('. ')}`;
+      } else if (scene.type === 'guess_output') {
+        const question = scene.text || 'What does this code output?';
+        const answer = scene.guessAnswer || '';
+        textToSpeak = `${question}. ${answer}`;
+      } else if (scene.type === 'interview_question') {
+        const question = scene.text || '';
+        const answer = scene.interviewAnswer || '';
+        textToSpeak = `${question}. ${answer}`;
+      } else if (scene.type === 'bugfix') {
+        const question = scene.text || 'Can you spot the bug?';
+        const explanation = scene.bugExplanation || '';
+        textToSpeak = `${question}. ${explanation}`;
+      } else if (scene.type === 'oneliner') {
+        textToSpeak = scene.onelinerExplanation || '';
+      } else if (scene.type === 'comparison') {
+        textToSpeak = scene.comparisonVerdict || '';
+      } else if (scene.type === 'roadmap_step') {
+        const title = scene.text || '';
+        const description = scene.roadmapDescription || '';
+        textToSpeak = `${title}. ${description}`;
       }
 
       if (textToSpeak.trim()) {
