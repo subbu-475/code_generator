@@ -14,6 +14,7 @@ import {
   Tooltip,
   Paper,
   Divider,
+  Slider,
 } from '@mui/material';
 import {
   MovieFilter as TransitionIcon,
@@ -40,7 +41,7 @@ import {
   LiveHelp as QuizIcon,
 } from '@mui/icons-material';
 import * as api from '../../api/client.js';
-import type { Scene, SceneType, AnimationStyle, TransitionStyle } from '../../types/index.js';
+import type { Project, Scene, SceneType, AnimationStyle, TransitionStyle } from '../../types/index.js';
 
 // Visual mock preview component for insert blocks
 const ScenePreview = ({ type }: { type: SceneType }) => {
@@ -524,13 +525,42 @@ const getSceneIcon = (type: SceneType) => {
 
 interface TimelineEditorProps {
   projectId: string;
+  project: Project;
   scenes: Scene[];
   onRefresh: () => void;
   playerRef?: React.RefObject<any>;
 }
 
-export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef }: TimelineEditorProps) {
+export default function TimelineEditor({ projectId, project, scenes, onRefresh, playerRef }: TimelineEditorProps) {
   const [selectedSceneId, setSelectedSceneId] = useState<string | null>(null);
+  const [localMusicVolume, setLocalMusicVolume] = useState<number>(15);
+  const [localVoiceVolume, setLocalVoiceVolume] = useState<number>(100);
+
+  // Sync with project prop changes
+  useEffect(() => {
+    if (project) {
+      setLocalMusicVolume(project.music_volume !== undefined ? Math.round(project.music_volume * 100) : 15);
+      setLocalVoiceVolume(project.voice_volume !== undefined ? Math.round(project.voice_volume * 100) : 100);
+    }
+  }, [project]);
+
+  const handleMusicVolumeCommit = async (newVolPercent: number) => {
+    try {
+      await api.updateProject(projectId, { music_volume: newVolPercent / 100 });
+      onRefresh();
+    } catch (err) {
+      console.error('Failed to update music volume:', err);
+    }
+  };
+
+  const handleVoiceVolumeCommit = async (newVolPercent: number) => {
+    try {
+      await api.updateProject(projectId, { voice_volume: newVolPercent / 100 });
+      onRefresh();
+    } catch (err) {
+      console.error('Failed to update voice volume:', err);
+    }
+  };
   const [zoom, setZoom] = useState<number>(3); // pixels per frame (1 to 6) Snaps nicely
   const [saving, setSaving] = useState<boolean>(false);
   const [draggedSceneId, setDraggedSceneId] = useState<string | null>(null);
@@ -2601,6 +2631,55 @@ export default function TimelineEditor({ projectId, scenes, onRefresh, playerRef
               </Box>
             </Box>
           </Box>
+
+          {/* Audio Tracks & Volumes toolbar */}
+          {project && (project.audio_mode === 'music' || project.audio_mode === 'voice_music') && (
+            <Box sx={{ px: 3, py: 1, display: 'flex', gap: 4, alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.05)', background: '#0b0c16', flexWrap: 'wrap' }}>
+              <Typography variant="caption" sx={{ fontWeight: 700, color: 'text.secondary', textTransform: 'uppercase', letterSpacing: 0.5 }}>
+                Volume Controls:
+              </Typography>
+              
+              {(project.audio_mode === 'music' || project.audio_mode === 'voice_music') && (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, width: 220 }}>
+                  <Typography sx={{ fontSize: 11, minWidth: 90, color: 'rgba(255,255,255,0.7)' }}>Music Volume:</Typography>
+                  <Slider
+                    size="small"
+                    value={localMusicVolume}
+                    onChange={(_, val) => setLocalMusicVolume(val as number)}
+                    onChangeCommitted={(_, val) => handleMusicVolumeCommit(val as number)}
+                    min={0}
+                    max={100}
+                    step={5}
+                    valueLabelDisplay="auto"
+                    sx={{ flexGrow: 1 }}
+                  />
+                  <Typography sx={{ fontSize: 10, fontFamily: 'monospace', minWidth: 30, textAlign: 'right' }}>
+                    {localMusicVolume}%
+                  </Typography>
+                </Box>
+              )}
+
+              {project.audio_mode === 'voice_music' && (
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5, width: 220 }}>
+                  <Typography sx={{ fontSize: 11, minWidth: 90, color: 'rgba(255,255,255,0.7)' }}>Voice Volume:</Typography>
+                  <Slider
+                    size="small"
+                    value={localVoiceVolume}
+                    onChange={(_, val) => setLocalVoiceVolume(val as number)}
+                    onChangeCommitted={(_, val) => handleVoiceVolumeCommit(val as number)}
+                    min={0}
+                    max={100}
+                    step={5}
+                    valueLabelDisplay="auto"
+                    sx={{ flexGrow: 1 }}
+                  />
+                  <Typography sx={{ fontSize: 10, fontFamily: 'monospace', minWidth: 30, textAlign: 'right' }}>
+                    {localVoiceVolume}%
+                  </Typography>
+                </Box>
+              )}
+            </Box>
+          )}
 
           {/* Timeline ruler and track area */}
           <Box

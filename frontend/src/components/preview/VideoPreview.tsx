@@ -51,7 +51,7 @@ export default React.forwardRef<PlayerRef, VideoPreviewProps>(function VideoPrev
     return () => {
       cancelled = true;
     };
-  }, [project.id, project.audio_mode, project.tts_explanation]);
+  }, [project.id, project.audio_mode, project.tts_explanation, project.tts_output, scenes]);
 
   // Reconstruct scene configs for Remotion composition
   const sceneConfigs: SceneConfig[] = scenes.map((s) => {
@@ -134,6 +134,8 @@ export default React.forwardRef<PlayerRef, VideoPreviewProps>(function VideoPrev
     sfxAchievement: project.sfx_achievement,
     ttsExplanation: project.tts_explanation,
     ttsOutput: project.tts_output,
+    musicVolume: project.music_volume,
+    voiceVolume: project.voice_volume,
   };
 
   if (scenes.length === 0) {

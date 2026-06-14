@@ -522,7 +522,7 @@ export const CodeScene: React.FC<CodeSceneProps> = ({
                       style={{
                         display: 'inline-block',
                         width: 2,
-                        height: template.fontSize + 4,
+                        height: (template.codeFontSize || template.fontSize) + 4,
                         backgroundColor: template.accentColor,
                         marginLeft: 1,
                         verticalAlign: 'text-bottom',

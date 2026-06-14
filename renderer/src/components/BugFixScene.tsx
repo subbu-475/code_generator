@@ -133,7 +133,7 @@ export const BugFixScene: React.FC<BugFixSceneProps> = ({
             style={{
               margin: 0,
               fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
-              fontSize: template.codeFontSize || 18,
+              fontSize: template.codeFontSize || template.fontSize || 18,
               lineHeight: 1.7,
               color: template.codeColor || '#e2e8f0',
               whiteSpace: 'pre-wrap',

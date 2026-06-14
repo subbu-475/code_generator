@@ -147,7 +147,7 @@ export const ComparisonScene: React.FC<ComparisonSceneProps> = ({
           style={{
             margin: 0,
             fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
-            fontSize: template.codeFontSize || 15,
+            fontSize: template.codeFontSize || template.fontSize || 15,
             lineHeight: 1.65,
             color: template.codeColor || '#e2e8f0',
             whiteSpace: 'pre-wrap',

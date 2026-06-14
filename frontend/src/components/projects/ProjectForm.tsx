@@ -21,6 +21,7 @@ import {
   IconButton,
   CircularProgress,
   Checkbox,
+  Slider,
 } from '@mui/material';
 import {
   Save as SaveIcon,
@@ -60,6 +61,8 @@ export default function ProjectForm() {
   const [sfxAchievement, setSfxAchievement] = useState(true);
   const [ttsExplanation, setTtsExplanation] = useState(true);
   const [ttsOutput, setTtsOutput] = useState(true);
+  const [musicVolume, setMusicVolume] = useState<number>(15);
+  const [voiceVolume, setVoiceVolume] = useState<number>(100);
 
   // Multiple Code Snippets
   const [snippets, setSnippets] = useState<CodeSnippet[]>([
@@ -87,6 +90,8 @@ export default function ProjectForm() {
           setSfxAchievement(p.sfx_achievement !== false);
           setTtsExplanation(p.tts_explanation !== false);
           setTtsOutput((p as any).tts_output !== false);
+          setMusicVolume(p.music_volume !== undefined ? Math.round(p.music_volume * 100) : 15);
+          setVoiceVolume(p.voice_volume !== undefined ? Math.round(p.voice_volume * 100) : 100);
           
           if (p.code_snippets) {
             const parsed = JSON.parse(p.code_snippets) as CodeSnippet[];
@@ -302,6 +307,8 @@ export default function ProjectForm() {
         sfx_achievement: sfxAchievement,
         tts_explanation: ttsExplanation,
         tts_output: ttsOutput,
+        music_volume: musicVolume / 100,
+        voice_volume: voiceVolume / 100,
       };
 
       if (isEdit && id) {
@@ -1095,20 +1102,54 @@ export default function ProjectForm() {
                 </FormControl>
 
                 {(audioMode === 'music' || audioMode === 'voice_music') && (
-                  <TextField
-                    select
-                    label="Select Track"
-                    fullWidth
-                    value={musicFile}
-                    onChange={(e) => setMusicFile(e.target.value)}
-                    sx={{ mb: 3 }}
-                  >
-                    {musicTracks.map((track) => (
-                      <MenuItem key={track.value} value={track.value}>
-                        {track.label}
-                      </MenuItem>
-                    ))}
-                  </TextField>
+                  <>
+                    <TextField
+                      select
+                      label="Select Track"
+                      fullWidth
+                      value={musicFile}
+                      onChange={(e) => setMusicFile(e.target.value)}
+                      sx={{ mb: 3 }}
+                    >
+                      {musicTracks.map((track) => (
+                        <MenuItem key={track.value} value={track.value}>
+                          {track.label}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+
+                    <Box sx={{ mb: 3 }}>
+                      <Typography variant="body2" sx={{ fontWeight: 600, mb: 1, display: 'flex', justifyContent: 'space-between' }}>
+                        <span>Background Music Volume</span>
+                        <span style={{ opacity: 0.7 }}>{musicVolume}%</span>
+                      </Typography>
+                      <Slider
+                        value={musicVolume}
+                        onChange={(_, val) => setMusicVolume(val as number)}
+                        min={0}
+                        max={100}
+                        step={5}
+                        valueLabelDisplay="auto"
+                      />
+                    </Box>
+                  </>
+                )}
+
+                {audioMode === 'voice_music' && (
+                  <Box sx={{ mb: 3 }}>
+                    <Typography variant="body2" sx={{ fontWeight: 600, mb: 1, display: 'flex', justifyContent: 'space-between' }}>
+                      <span>Voice Narration Volume</span>
+                      <span style={{ opacity: 0.7 }}>{voiceVolume}%</span>
+                    </Typography>
+                    <Slider
+                      value={voiceVolume}
+                      onChange={(_, val) => setVoiceVolume(val as number)}
+                      min={0}
+                      max={100}
+                      step={5}
+                      valueLabelDisplay="auto"
+                    />
+                  </Box>
                 )}
 
                 <FormControl component="fieldset" sx={{ mt: 1, display: 'block' }}>

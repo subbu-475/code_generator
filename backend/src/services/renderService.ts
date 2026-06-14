@@ -11,6 +11,7 @@ import { getProjectById, updateProjectStatus } from './projectService.js';
 import { generateAudio } from './audioService.js';
 import { getTemplateById } from './templateService.js';
 import { createExportRecord, updateExportRecord } from './exportService.js';
+import { getDb } from '../database/connection.js';
 import type {
   ExportFormat,
   ExportResolution,
@@ -37,9 +38,14 @@ export async function startRender(
   const project = getProjectById(projectId);
   if (!project) throw new Error(`Project "${projectId}" not found`);
 
-  const template = project.template_id
+  let template = project.template_id
     ? getTemplateById(project.template_id)
     : null;
+
+  if (!template) {
+    const db = getDb();
+    template = db.prepare('SELECT * FROM templates WHERE is_default = 1').get() as any;
+  }
 
   const sceneConfigs: SceneConfig[] = JSON.parse(project.scene_config);
   if (sceneConfigs.length === 0) {
@@ -81,6 +87,8 @@ export async function startRender(
     sfxAchievement: project.sfx_achievement !== false,
     ttsExplanation: project.tts_explanation !== false,
     ttsOutput: project.tts_output !== false,
+    musicVolume: project.music_volume !== undefined ? project.music_volume : 0.15,
+    voiceVolume: project.voice_volume !== undefined ? project.voice_volume : 1.0,
   };
 
   // Calculate total duration

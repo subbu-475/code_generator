@@ -114,7 +114,7 @@ export default function ProjectDetail() {
 
   if (!project) return null;
 
-  const currentTemplate = templates.find((t) => t.id === project.template_id) || null;
+  const currentTemplate = templates.find((t) => t.id === project.template_id) || templates.find((t) => t.is_default === 1) || templates[0] || null;
 
   return (
     <Box sx={{ animation: 'fadeIn 0.5s ease', height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -155,7 +155,7 @@ export default function ProjectDetail() {
 
       <Grid container spacing={4} sx={{ flexGrow: 1 }}>
         <Grid item xs={12} md={7} lg={8} sx={{ display: 'flex', flexDirection: 'column' }}>
-          <TimelineEditor projectId={project.id} scenes={scenes} onRefresh={() => loadProjectData(false)} playerRef={playerRef} />
+          <TimelineEditor projectId={project.id} project={project} scenes={scenes} onRefresh={() => loadProjectData(false)} playerRef={playerRef} />
         </Grid>
 
         <Grid item xs={12} md={5} lg={4}>

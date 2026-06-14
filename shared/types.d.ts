@@ -11,6 +11,14 @@ export interface Project {
     audio_mode: AudioMode;
     music_file: string | null;
     status: ProjectStatus;
+    explanation_template: 'none' | 'step_by_step' | 'refactor' | 'spotlight' | 'quiz_generator' | 'guess_output' | 'interview_question' | 'bugfix' | 'oneliner' | 'comparison' | 'roadmap';
+    sfx_whoosh: boolean;
+    sfx_typing: boolean;
+    sfx_achievement: boolean;
+    tts_explanation: boolean;
+    tts_output: boolean;
+    music_volume: number;
+    voice_volume: number;
     created_at: string;
     updated_at: string;
 }
@@ -24,6 +32,14 @@ export interface ProjectInput {
     template_id?: string;
     audio_mode?: AudioMode;
     music_file?: string;
+    explanation_template?: 'none' | 'step_by_step' | 'refactor' | 'spotlight' | 'quiz_generator' | 'guess_output' | 'interview_question' | 'bugfix' | 'oneliner' | 'comparison' | 'roadmap';
+    sfx_whoosh?: boolean;
+    sfx_typing?: boolean;
+    sfx_achievement?: boolean;
+    tts_explanation?: boolean;
+    tts_output?: boolean;
+    music_volume?: number;
+    voice_volume?: number;
 }
 export interface CodeSnippet {
     id: string;
@@ -168,6 +184,13 @@ export interface VideoProps {
     audioMode: AudioMode;
     musicUrl?: string;
     voiceUrls?: string[];
+    sfxWhoosh?: boolean;
+    sfxTyping?: boolean;
+    sfxAchievement?: boolean;
+    ttsExplanation?: boolean;
+    ttsOutput?: boolean;
+    musicVolume?: number;
+    voiceVolume?: number;
 }
 export interface VideoTheme {
     backgroundColor: string;

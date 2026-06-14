@@ -136,6 +136,8 @@ export function runMigrations(): void {
       sfx_achievement INTEGER NOT NULL DEFAULT 1,
       tts_explanation INTEGER NOT NULL DEFAULT 1,
       tts_output      INTEGER NOT NULL DEFAULT 1,
+      music_volume    REAL NOT NULL DEFAULT 0.15,
+      voice_volume    REAL NOT NULL DEFAULT 1.0,
       created_at      TEXT NOT NULL DEFAULT (datetime('now')),
       updated_at      TEXT NOT NULL DEFAULT (datetime('now')),
       FOREIGN KEY (template_id) REFERENCES templates(id) ON DELETE SET NULL
@@ -174,6 +176,18 @@ export function runMigrations(): void {
 
   try {
     db.exec("ALTER TABLE projects ADD COLUMN tts_output INTEGER DEFAULT 1");
+  } catch (err) {
+    // Column already exists
+  }
+
+  try {
+    db.exec("ALTER TABLE projects ADD COLUMN music_volume REAL DEFAULT 0.15");
+  } catch (err) {
+    // Column already exists
+  }
+
+  try {
+    db.exec("ALTER TABLE projects ADD COLUMN voice_volume REAL DEFAULT 1.0");
   } catch (err) {
     // Column already exists
   }

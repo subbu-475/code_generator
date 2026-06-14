@@ -4,6 +4,7 @@
 
 import { Router } from 'express';
 import { z } from 'zod';
+import crypto from 'node:crypto';
 import { validate } from '../middleware/validation.js';
 import * as projectService from '../services/projectService.js';
 import * as sceneService from '../services/sceneService.js';
@@ -81,6 +82,8 @@ const ProjectInputSchema = z.object({
   sfx_achievement: z.boolean().default(true).optional(),
   tts_explanation: z.boolean().default(true).optional(),
   tts_output: z.boolean().default(true).optional(),
+  music_volume: z.number().min(0).max(1).default(0.15).optional(),
+  voice_volume: z.number().min(0).max(1).default(1.0).optional(),
 });
 
 const ProjectUpdateSchema = ProjectInputSchema.partial();
@@ -267,8 +270,9 @@ router.get('/:id/preview-audio', async (req, res, next) => {
 
       if (textToSpeak.trim()) {
         try {
-          // Use a deterministic filename so we cache by scene ID — avoids re-generating on every preview load
-          const cacheFile = `preview_${scene.id}.wav`;
+          // Use a deterministic filename so we cache by scene ID and text hash — avoids re-generating unless content changes
+          const textHash = crypto.createHash('md5').update(textToSpeak).digest('hex');
+          const cacheFile = `preview_${scene.id}_${textHash}.wav`;
           const result = await audioService.generateAudio(textToSpeak, undefined, cacheFile);
           voiceUrls.push(result.audioUrl);
         } catch (err) {

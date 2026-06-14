@@ -38,6 +38,8 @@ export const CodeShort: React.FC<VideoProps> = ({
   sfxTyping,
   sfxAchievement,
   ttsExplanation,
+  musicVolume,
+  voiceVolume,
 }) => {
   const resolvedTemplate = {
     ...template,
@@ -277,7 +279,7 @@ export const CodeShort: React.FC<VideoProps> = ({
       {(audioMode === 'music' || audioMode === 'voice_music') && musicUrl && (
         <Audio
           src={musicUrl}
-          volume={audioMode === 'voice_music' ? 0.15 : 0.6} // Duck music during voiceovers
+          volume={musicVolume !== undefined ? musicVolume : (audioMode === 'voice_music' ? 0.15 : 0.6)}
           loop
         />
       )}
@@ -286,10 +288,30 @@ export const CodeShort: React.FC<VideoProps> = ({
       {audioMode === 'voice_music' && voiceUrls && voiceUrls.length > 0 && (
         <>
           {voiceUrls.map((url, idx) => {
+            const scene = scenes[idx];
             // Calculate starting frame for each voice URL based on scene durations
-            const startFrame = scenes
+            let startFrame = scenes
               .slice(0, idx)
               .reduce((sum, s) => sum + s.duration_frames, 0);
+
+            // Slightly delay voice narration to align with visual entrance animations
+            if (scene) {
+              if (scene.type === 'tip') {
+                startFrame += 15; // 0.5s delay to sync with card entry and text fade-in
+              } else if (scene.type === 'output') {
+                startFrame += 20; // 0.67s delay to sync with typewriter start
+              } else if (
+                scene.type === 'quiz' ||
+                scene.type === 'guess_output' ||
+                scene.type === 'bugfix' ||
+                scene.type === 'interview_question' ||
+                scene.type === 'oneliner' ||
+                scene.type === 'comparison' ||
+                scene.type === 'roadmap_step'
+              ) {
+                startFrame += 15; // Align with question/layout entrance
+              }
+            }
 
             return (
               <Sequence key={idx} from={startFrame} layout="none">
@@ -297,7 +319,7 @@ export const CodeShort: React.FC<VideoProps> = ({
                   <Audio
                     src={url}
                     startFrom={0}
-                    volume={1.0}
+                    volume={voiceVolume !== undefined ? voiceVolume : 1.0}
                   />
                 ) : null}
               </Sequence>

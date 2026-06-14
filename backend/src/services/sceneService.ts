@@ -533,7 +533,7 @@ export function generateScenes(
       
       // 1. Snippet Hook (if specified)
       if (snippet.hook && snippet.hook.trim()) {
-        addSceneHelper(createSceneConfig('hook', snippet.title ? `${snippet.title} Hook` : 'Hook', {
+        addSceneHelper(createSceneConfig('hook', snippet.title || 'Hook', {
           text: snippet.hook,
           duration_frames: HOOK_DURATION_SECS * FPS,
           animation: 'pop',

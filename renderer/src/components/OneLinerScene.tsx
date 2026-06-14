@@ -166,7 +166,7 @@ export const OneLinerScene: React.FC<OneLinerSceneProps> = ({
               style={{
                 margin: 0,
                 fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
-                fontSize: template.codeFontSize || 24,
+                fontSize: template.codeFontSize || template.fontSize || 24,
                 lineHeight: 1.7,
                 color: template.codeColor || '#e2e8f0',
                 whiteSpace: 'pre-wrap',
@@ -179,7 +179,7 @@ export const OneLinerScene: React.FC<OneLinerSceneProps> = ({
                   style={{
                     display: 'inline-block',
                     width: 2.5,
-                    height: 26,
+                    height: (template.codeFontSize || template.fontSize || 24) + 2,
                     background: template.accentColor,
                     marginLeft: 2,
                     opacity: frame % 30 > 15 ? 1 : 0.2,

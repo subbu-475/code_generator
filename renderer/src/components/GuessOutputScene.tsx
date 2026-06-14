@@ -177,7 +177,7 @@ export const GuessOutputScene: React.FC<GuessOutputSceneProps> = ({
             style={{
               margin: 0,
               fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
-              fontSize: template.codeFontSize || 22,
+              fontSize: template.codeFontSize || template.fontSize || 22,
               lineHeight: 1.6,
               color: template.codeColor || '#e2e8f0',
               whiteSpace: 'pre-wrap',

@@ -30,8 +30,8 @@ export function createProject(input: ProjectInput): ProjectWithScenes {
   const executeCreate = db.transaction(() => {
     // 1. Insert project first with a placeholder '[]' for scene_config to satisfy foreign key constraints
     db.prepare(`
-      INSERT INTO projects (id, title, language, hook_text, code_snippets, output, cta, template_id, scene_config, audio_mode, music_file, status, explanation_template, sfx_whoosh, sfx_typing, sfx_achievement, tts_explanation, tts_output, created_at, updated_at)
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, '[]', ?, ?, 'draft', ?, ?, ?, ?, ?, ?, ?, ?)
+      INSERT INTO projects (id, title, language, hook_text, code_snippets, output, cta, template_id, scene_config, audio_mode, music_file, status, explanation_template, sfx_whoosh, sfx_typing, sfx_achievement, tts_explanation, tts_output, music_volume, voice_volume, created_at, updated_at)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, '[]', ?, ?, 'draft', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `).run(
       id,
       input.title,
@@ -49,6 +49,8 @@ export function createProject(input: ProjectInput): ProjectWithScenes {
       input.sfx_achievement === false ? 0 : 1,
       input.tts_explanation === false ? 0 : 1,
       input.tts_output === false ? 0 : 1,
+      input.music_volume !== undefined ? input.music_volume : 0.15,
+      input.voice_volume !== undefined ? input.voice_volume : 1.0,
       now,
       now,
     );
@@ -165,6 +167,8 @@ export function updateProject(id: string, input: Partial<ProjectInput>): Project
   if (input.sfx_achievement !== undefined) { fields.push('sfx_achievement = ?'); values.push(input.sfx_achievement ? 1 : 0); }
   if (input.tts_explanation !== undefined) { fields.push('tts_explanation = ?'); values.push(input.tts_explanation ? 1 : 0); }
   if (input.tts_output !== undefined) { fields.push('tts_output = ?'); values.push(input.tts_output ? 1 : 0); }
+  if (input.music_volume !== undefined) { fields.push('music_volume = ?'); values.push(input.music_volume); }
+  if (input.voice_volume !== undefined) { fields.push('voice_volume = ?'); values.push(input.voice_volume); }
 
   if (input.code_snippets !== undefined) {
     const snippets = input.code_snippets.map((s) => ({ ...s, id: s.id || uuidv4() }));

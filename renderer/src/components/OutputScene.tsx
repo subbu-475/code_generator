@@ -250,7 +250,7 @@ export const OutputScene: React.FC<OutputSceneProps> = ({
                   style={{
                     display: 'inline-block',
                     width: 2,
-                    height: template.fontSize + 2,
+                    height: (template.codeFontSize || template.fontSize) + 2,
                     backgroundColor: '#27c93f',
                     marginLeft: 2,
                     verticalAlign: 'text-bottom',

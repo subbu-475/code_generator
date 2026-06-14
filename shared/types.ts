@@ -23,6 +23,8 @@ export interface Project {
   sfx_achievement: boolean;
   tts_explanation: boolean;
   tts_output: boolean;
+  music_volume: number;
+  voice_volume: number;
   created_at: string;
   updated_at: string;
 }
@@ -43,6 +45,8 @@ export interface ProjectInput {
   sfx_achievement?: boolean;
   tts_explanation?: boolean;
   tts_output?: boolean;
+  music_volume?: number;
+  voice_volume?: number;
 }
 
 export interface CodeSnippet {
@@ -377,6 +381,8 @@ export interface VideoProps {
   sfxAchievement?: boolean;
   ttsExplanation?: boolean;
   ttsOutput?: boolean;
+  musicVolume?: number;
+  voiceVolume?: number;
 }
 
 export interface VideoTheme {
