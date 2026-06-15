@@ -24,6 +24,7 @@ import { BugFixScene } from '../components/BugFixScene';
 import { OneLinerScene } from '../components/OneLinerScene';
 import { ComparisonScene } from '../components/ComparisonScene';
 import { RoadmapStepScene } from '../components/RoadmapStepScene';
+import { SummaryScene } from '../components/SummaryScene';
 import { FontReady } from '../components/FontReady';
 import { withFontFallback } from '../utils/fontFallback';
 
@@ -95,6 +96,8 @@ export const CodeShort: React.FC<VideoProps> = ({
             durationInFrames={scene.duration_frames}
             backendUrl={backendUrl}
             sfxTyping={sfxTyping}
+            codeFontSize={scene.codeFontSize}
+            explanationFontSize={scene.explanationFontSize}
           />
         );
       case 'output':
@@ -265,6 +268,21 @@ export const CodeShort: React.FC<VideoProps> = ({
             durationInFrames={scene.duration_frames}
           />
         );
+      case 'summary':
+        return (
+          <SummaryScene
+            title={scene.title}
+            summaryTitle={scene.summaryTitle}
+            summaryPoints={scene.summaryPoints}
+            summaryLayout={scene.summaryLayout}
+            summaryVoiceOver={scene.summaryVoiceOver}
+            text={scene.text}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+            codeFontSize={scene.codeFontSize}
+            explanationFontSize={scene.explanationFontSize}
+          />
+        );
       default:
         return null;
     }
@@ -307,7 +325,8 @@ export const CodeShort: React.FC<VideoProps> = ({
                 scene.type === 'interview_question' ||
                 scene.type === 'oneliner' ||
                 scene.type === 'comparison' ||
-                scene.type === 'roadmap_step'
+                scene.type === 'roadmap_step' ||
+                scene.type === 'summary'
               ) {
                 startFrame += 15; // Align with question/layout entrance
               }

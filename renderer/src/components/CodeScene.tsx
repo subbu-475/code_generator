@@ -276,11 +276,13 @@ export const CodeScene: React.FC<CodeSceneProps> = ({
   durationInFrames,
   backendUrl,
   sfxTyping,
+  codeFontSize,
 }) => {
   const frame = useCurrentFrame();
   const audioUrl = `${backendUrl || ''}/assets/sfx/typing.wav`;
   const playAudio = sfxTyping !== false;
 
+  const finalCodeFontSize = codeFontSize || template.codeFontSize || template.fontSize;
   const keywords = getKeywords(language);
   const tokenColors = getTokenColors(template.accentColor, template.codeColor);
 
@@ -481,9 +483,9 @@ export const CodeScene: React.FC<CodeSceneProps> = ({
                 style={{
                   display: 'flex',
                   fontFamily: template.fontFamily,
-                  fontSize: template.codeFontSize || template.fontSize,
+                  fontSize: finalCodeFontSize,
                   lineHeight: 1.7,
-                  minHeight: (template.codeFontSize || template.fontSize) * 1.7,
+                  minHeight: finalCodeFontSize * 1.7,
                 }}
               >
                 {/* Line number */}
@@ -493,7 +495,7 @@ export const CodeScene: React.FC<CodeSceneProps> = ({
                     textAlign: 'right',
                     paddingRight: 16,
                     color: 'rgba(255,255,255,0.2)',
-                    fontSize: (template.codeFontSize || template.fontSize) - 2,
+                    fontSize: finalCodeFontSize - 2,
                     userSelect: 'none',
                     flexShrink: 0,
                   }}
@@ -522,7 +524,7 @@ export const CodeScene: React.FC<CodeSceneProps> = ({
                       style={{
                         display: 'inline-block',
                         width: 2,
-                        height: (template.codeFontSize || template.fontSize) + 4,
+                        height: finalCodeFontSize + 4,
                         backgroundColor: template.accentColor,
                         marginLeft: 1,
                         verticalAlign: 'text-bottom',

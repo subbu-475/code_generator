@@ -23,6 +23,7 @@ import { Caption } from './Caption';
  */
 export const HookScene: React.FC<HookSceneProps> = ({
   title,
+  text,
   template,
   durationInFrames,
   backendUrl,
@@ -323,7 +324,7 @@ export const HookScene: React.FC<HookSceneProps> = ({
               }}
             >
               <Caption
-                text={title}
+                text={text || title}
                 template={template}
                 durationInFrames={durationInFrames}
                 fontSize={template.hookFontSize || 64}
@@ -347,7 +348,7 @@ export const HookScene: React.FC<HookSceneProps> = ({
               }}
             >
               <Caption
-                text={title}
+                text={text || title}
                 template={{
                   ...template,
                   accentColor: '#ffff00', // yellow accent
@@ -360,7 +361,7 @@ export const HookScene: React.FC<HookSceneProps> = ({
           ) : (
             <div>
               <Caption
-                text={title}
+                text={text || title}
                 template={template}
                 durationInFrames={durationInFrames}
                 fontSize={template.hookFontSize || 76}

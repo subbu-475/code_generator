@@ -630,7 +630,9 @@ export function updateScene(sceneId: string, updates: Partial<SceneConfig>): Sce
     'buggyCode', 'fixedCode', 'bugLanguage', 'bugExplanation',
     'onelinerCode', 'onelinerLanguage', 'onelinerExplanation',
     'comparisonLeftTitle', 'comparisonRightTitle', 'comparisonLeftCode', 'comparisonRightCode', 'comparisonLeftLanguage', 'comparisonRightLanguage', 'comparisonVerdict',
-    'roadmapStepNumber', 'roadmapTotalSteps', 'roadmapIcon', 'roadmapDescription'
+    'roadmapStepNumber', 'roadmapTotalSteps', 'roadmapIcon', 'roadmapDescription',
+    'summaryTitle', 'summaryPoints', 'summaryVoiceOver', 'summaryLayout',
+    'codeFontSize', 'explanationFontSize'
   ];
   const hasContentUpdate = contentKeys.some((k) => (updates as any)[k] !== undefined);
 
@@ -731,6 +733,12 @@ export function syncProjectSceneConfig(db: ReturnType<typeof getDb>, projectId: 
       roadmapTotalSteps: content.roadmapTotalSteps,
       roadmapIcon: content.roadmapIcon,
       roadmapDescription: content.roadmapDescription,
+      summaryTitle: content.summaryTitle,
+      summaryPoints: content.summaryPoints,
+      summaryVoiceOver: content.summaryVoiceOver,
+      summaryLayout: content.summaryLayout,
+      codeFontSize: content.codeFontSize,
+      explanationFontSize: content.explanationFontSize,
     };
   });
 
@@ -952,6 +960,21 @@ export function addScene(projectId: string, type: SceneType, insertAfterId?: str
         content.roadmapTotalSteps = 5;
         content.roadmapIcon = '📚';
         content.roadmapDescription = 'Start learning the fundamentals';
+        break;
+      case 'summary':
+        title = 'Summary';
+        duration = 180;
+        animation = 'fade';
+        transition = 'fade';
+        content.summaryTitle = 'Key Takeaways';
+        content.summaryPoints = [
+          'First key takeaway of this video',
+          'Second important summary point',
+          'Third key takeaway to remember'
+        ];
+        content.summaryVoiceOver = true;
+        content.summaryLayout = 'points';
+        content.text = 'Provide a brief summary of the lesson in this paragraph.';
         break;
     }
 

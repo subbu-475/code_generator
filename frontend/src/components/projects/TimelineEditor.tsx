@@ -15,6 +15,8 @@ import {
   Paper,
   Divider,
   Slider,
+  Checkbox,
+  FormControlLabel,
 } from '@mui/material';
 import {
   MovieFilter as TransitionIcon,
@@ -478,6 +480,30 @@ const ScenePreview = ({ type }: { type: SceneType }) => {
             </Box>
           )
         };
+      case 'summary':
+        return {
+          title: 'Summary Slide',
+          desc: 'Staggered key takeaways bullet list in a premium glassmorphic card.',
+          element: (
+            <Box sx={{ width: 140, height: 180, borderRadius: 2.5, background: 'linear-gradient(135deg, #0f172a, #2a1b0f)', border: '1px solid rgba(249,115,22,0.25)', p: 1.2, display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'center', boxShadow: '0 8px 24px rgba(249,115,22,0.15)' }}>
+              <Box sx={{ px: 0.8, py: 0.2, borderRadius: 1, bgcolor: 'rgba(249,115,22,0.12)', border: '1px solid rgba(249,115,22,0.3)' }}>
+                <Typography sx={{ fontSize: 5, fontWeight: 900, color: '#f97316', letterSpacing: 0.5 }}>📋 SUMMARY</Typography>
+              </Box>
+              <Typography sx={{ fontSize: 7, fontWeight: 800, color: '#fff', textAlign: 'center', lineHeight: 1.2 }}>Key Takeaways</Typography>
+              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 0.5, mt: 1 }}>
+                {[1, 2, 3].map((pt) => (
+                  <Box key={pt} sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
+                    <Box sx={{ width: 4, height: 4, borderRadius: '50%', border: '0.75px solid #f97316', display: 'flex', justifyContent: 'center', alignItems: 'center', bgcolor: 'rgba(249,115,22,0.1)' }}>
+                      <Typography sx={{ fontSize: 2.5, color: '#f97316' }}>✓</Typography>
+                    </Box>
+                    <Typography sx={{ fontSize: 4, color: 'rgba(255,255,255,0.6)', whiteSpace: 'nowrap', overflow: 'hidden' }}>Point {pt} description...</Typography>
+                  </Box>
+                ))}
+              </Box>
+              <Box sx={{ width: 40, height: 1.5, borderRadius: 0.5, bgcolor: '#f97316', mt: 1, opacity: 0.5 }} />
+            </Box>
+          )
+        };
       default:
         return { title: 'Scene Block', desc: '', element: null };
     }
@@ -519,6 +545,7 @@ const getSceneIcon = (type: SceneType) => {
     case 'oneliner': return <CodeIcon sx={{ fontSize: 18 }} />;
     case 'comparison': return <CodeIcon sx={{ fontSize: 18 }} />;
     case 'roadmap_step': return <OutroIcon sx={{ fontSize: 18 }} />;
+    case 'summary': return <OutroIcon sx={{ fontSize: 18 }} />;
     default: return <AddIcon sx={{ fontSize: 18 }} />;
   }
 };
@@ -658,6 +685,16 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
   const [roadmapIcon, setRoadmapIcon] = useState('📚');
   const [roadmapDescription, setRoadmapDescription] = useState('');
 
+  // Summary Slide states
+  const [summaryTitle, setSummaryTitle] = useState('Key Takeaways');
+  const [summaryPoints, setSummaryPoints] = useState<string[]>(['', '', '']);
+  const [summaryVoiceOver, setSummaryVoiceOver] = useState(true);
+  const [summaryLayout, setSummaryLayout] = useState<'points' | 'paragraph'>('points');
+
+  // Font Size Override states
+  const [codeFontSize, setCodeFontSize] = useState<number | ''>('');
+  const [explanationFontSize, setExplanationFontSize] = useState<number | ''>('');
+
   const selectedScene = scenes.find((s) => s.id === selectedSceneId) || null;
 
   // Sync form state when selected scene changes
@@ -740,6 +777,16 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
       setRoadmapTotalSteps(content.roadmapTotalSteps || 5);
       setRoadmapIcon(content.roadmapIcon || '📚');
       setRoadmapDescription(content.roadmapDescription || '');
+
+      // Summary Slide
+      setSummaryTitle(content.summaryTitle || 'Key Takeaways');
+      setSummaryPoints(content.summaryPoints || ['', '', '']);
+      setSummaryVoiceOver(content.summaryVoiceOver !== false);
+      setSummaryLayout(content.summaryLayout || 'points');
+
+      // Font overrides
+      setCodeFontSize(content.codeFontSize !== undefined && content.codeFontSize !== null ? content.codeFontSize : '');
+      setExplanationFontSize(content.explanationFontSize !== undefined && content.explanationFontSize !== null ? content.explanationFontSize : '');
     } else if (!selectedSceneId && scenes.length > 0) {
       setSelectedSceneId(scenes[0].id);
     }
@@ -853,7 +900,17 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
         payload.roadmapTotalSteps = roadmapTotalSteps;
         payload.roadmapIcon = roadmapIcon;
         payload.roadmapDescription = roadmapDescription;
+      } else if (selectedScene.type === 'summary') {
+        payload.summaryTitle = summaryTitle;
+        payload.summaryPoints = summaryPoints;
+        payload.summaryVoiceOver = summaryVoiceOver;
+        payload.summaryLayout = summaryLayout;
+        payload.text = text;
       }
+
+      // Font overrides
+      payload.codeFontSize = codeFontSize !== '' ? Number(codeFontSize) : null;
+      payload.explanationFontSize = explanationFontSize !== '' ? Number(explanationFontSize) : null;
 
       await api.updateScene(projectId, selectedSceneId, payload);
       onRefresh();
@@ -1227,6 +1284,8 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
         return '#6366f1'; // Indigo
       case 'roadmap_step':
         return '#22c55e'; // Green
+      case 'summary':
+        return '#f97316'; // Orange
       default:
         return '#6b7280'; // Gray
     }
@@ -2440,6 +2499,120 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
                     </>
                   )}
 
+                  {selectedScene.type === 'summary' && (
+                    <>
+                      <Grid item xs={12}>
+                        <TextField
+                           label="Summary Title"
+                           fullWidth
+                           size="small"
+                           value={summaryTitle}
+                           onChange={(e) => setSummaryTitle(e.target.value)}
+                           sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <TextField
+                          select
+                          label="Layout Format"
+                          fullWidth
+                          size="small"
+                          value={summaryLayout}
+                          onChange={(e) => setSummaryLayout(e.target.value as any)}
+                          sx={{ mb: 2 }}
+                        >
+                          <MenuItem value="points">Takeaway Bullet Points</MenuItem>
+                          <MenuItem value="paragraph">Paragraph Text Summary</MenuItem>
+                        </TextField>
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={summaryVoiceOver}
+                              onChange={(e) => setSummaryVoiceOver(e.target.checked)}
+                            />
+                          }
+                          label="Enable Voice Over (TTS)"
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+                      
+                      {summaryLayout === 'paragraph' ? (
+                        <Grid item xs={12}>
+                          <TextField
+                            label="Summary Paragraph Text"
+                            fullWidth
+                            multiline
+                            rows={4}
+                            value={text}
+                            onChange={(e) => setText(e.target.value)}
+                            sx={{ mb: 2 }}
+                          />
+                        </Grid>
+                      ) : (
+                        <>
+                          <Grid item xs={12}>
+                            <Typography variant="subtitle2" sx={{ fontWeight: 800, mb: 1.5, textTransform: 'uppercase', letterSpacing: 0.5, fontSize: '0.75rem', color: 'text.secondary' }}>
+                              Takeaway Points
+                            </Typography>
+                          </Grid>
+                          {summaryPoints.map((point, idx) => (
+                            <Grid item xs={12} key={idx} sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                              <TextField
+                                label={`Point #${idx + 1}`}
+                                fullWidth
+                                size="small"
+                                value={point}
+                                onChange={(e) => {
+                                  const copy = [...summaryPoints];
+                                  copy[idx] = e.target.value;
+                                  setSummaryPoints(copy);
+                                }}
+                                sx={{ mb: 1 }}
+                              />
+                              {summaryPoints.length > 1 && (
+                                <IconButton
+                                  color="error"
+                                  size="small"
+                                  onClick={() => {
+                                    setSummaryPoints(summaryPoints.filter((_, i) => i !== idx));
+                                  }}
+                                  sx={{ mb: 1 }}
+                                >
+                                  <DeleteIcon fontSize="small" />
+                                </IconButton>
+                              )}
+                            </Grid>
+                          ))}
+                          {summaryPoints.length < 6 && (
+                            <Grid item xs={12}>
+                              <Button
+                                variant="outlined"
+                                size="small"
+                                startIcon={<AddIcon />}
+                                onClick={() => {
+                                  setSummaryPoints([...summaryPoints, '']);
+                                }}
+                                sx={{
+                                  mt: 1,
+                                  borderColor: 'rgba(255, 255, 255, 0.15)',
+                                  color: 'text.primary',
+                                  '&:hover': {
+                                    borderColor: 'primary.main',
+                                    background: 'rgba(124, 58, 237, 0.08)'
+                                  }
+                                }}
+                              >
+                                Add Takeaway Point
+                              </Button>
+                            </Grid>
+                          )}
+                        </>
+                      )}
+                    </>
+                  )}
+
                   {/* Transition parameters */}
                   <Grid item xs={6} sx={{ mt: 2 }}>
                     <TextField
@@ -2478,6 +2651,43 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
                         </MenuItem>
                       ))}
                     </TextField>
+                  </Grid>
+
+                  {/* Font Size Overrides */}
+                  <Grid item xs={12} sx={{ mt: 2.5 }}>
+                    <Typography variant="subtitle2" sx={{ fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, fontSize: '0.75rem', color: 'text.secondary', mb: 0.5 }}>
+                      Font Size Overrides (Optional)
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      label="Code Font Size (px)"
+                      type="number"
+                      fullWidth
+                      size="small"
+                      value={codeFontSize}
+                      placeholder="Template default"
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setCodeFontSize(val === '' ? '' : Number(val));
+                      }}
+                      inputProps={{ min: 10, max: 100 }}
+                    />
+                  </Grid>
+                  <Grid item xs={6}>
+                    <TextField
+                      label="Text Font Size (px)"
+                      type="number"
+                      fullWidth
+                      size="small"
+                      value={explanationFontSize}
+                      placeholder="Template default"
+                      onChange={(e) => {
+                        const val = e.target.value;
+                        setExplanationFontSize(val === '' ? '' : Number(val));
+                      }}
+                      inputProps={{ min: 10, max: 100 }}
+                    />
                   </Grid>
                 </Grid>
 
@@ -2526,6 +2736,7 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
                 { type: 'oneliner' as SceneType, label: 'One-Liner' },
                 { type: 'comparison' as SceneType, label: 'Comparison' },
                 { type: 'roadmap_step' as SceneType, label: 'Roadmap Step' },
+                { type: 'summary' as SceneType, label: 'Summary Slide' },
               ].map((item) => (
                 <Grid item xs={6} key={item.type}>
                   <Tooltip

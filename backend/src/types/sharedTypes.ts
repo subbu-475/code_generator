@@ -187,6 +187,16 @@ export interface SceneConfig {
   roadmapTotalSteps?: number;
   roadmapIcon?: string;
   roadmapDescription?: string;
+
+  // Summary Slide
+  summaryTitle?: string;
+  summaryPoints?: string[];
+  summaryVoiceOver?: boolean;
+  summaryLayout?: 'points' | 'paragraph';
+
+  // Font Size Overrides
+  codeFontSize?: number;
+  explanationFontSize?: number;
 }
 
 export interface Template {
@@ -290,7 +300,8 @@ export type SceneType =
   | 'bugfix'
   | 'oneliner'
   | 'comparison'
-  | 'roadmap_step';
+  | 'roadmap_step'
+  | 'summary';
 
 export type AnimationStyle = 'fade' | 'zoom' | 'slide' | 'pop' | 'bounce';
 

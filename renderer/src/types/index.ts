@@ -41,6 +41,8 @@ export interface SceneComponentProps {
   title: string;
   template: VideoTheme;
   durationInFrames: number;
+  codeFontSize?: number;
+  explanationFontSize?: number;
 }
 
 /** Props specific to the HookScene */
@@ -154,4 +156,14 @@ export interface RoadmapStepSceneProps extends SceneComponentProps {
   roadmapDescription?: string;
   text?: string;
 }
+
+/** Props specific to the SummaryScene */
+export interface SummarySceneProps extends SceneComponentProps {
+  summaryTitle?: string;
+  summaryPoints?: string[];
+  summaryVoiceOver?: boolean;
+  summaryLayout?: 'points' | 'paragraph';
+  text?: string;
+}
+
 

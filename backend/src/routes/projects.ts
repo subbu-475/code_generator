@@ -157,6 +157,16 @@ const SceneUpdateSchema = z.object({
   roadmapTotalSteps: z.number().int().optional(),
   roadmapIcon: z.string().optional(),
   roadmapDescription: z.string().optional(),
+
+  // Summary Slide
+  summaryTitle: z.string().optional(),
+  summaryPoints: z.array(z.string()).optional(),
+  summaryVoiceOver: z.boolean().optional(),
+  summaryLayout: z.enum(['points', 'paragraph']).optional(),
+
+  // Font Size Overrides
+  codeFontSize: z.number().int().min(10).max(100).nullable().optional(),
+  explanationFontSize: z.number().int().min(10).max(100).nullable().optional(),
 });
 
 const SceneCreateSchema = z.object({
@@ -178,6 +188,7 @@ const SceneCreateSchema = z.object({
     'oneliner',
     'comparison',
     'roadmap_step',
+    'summary',
   ]),
   insertAfterId: z.string().optional(),
 });
@@ -266,6 +277,16 @@ router.get('/:id/preview-audio', async (req, res, next) => {
         const title = content.text || '';
         const description = content.roadmapDescription || '';
         textToSpeak = `${title}. ${description}`;
+      } else if (scene.type === 'summary') {
+        if (content.summaryVoiceOver !== false) {
+          if (content.summaryLayout === 'paragraph') {
+            textToSpeak = content.text || '';
+          } else {
+            const title = content.summaryTitle || 'Summary';
+            const points = content.summaryPoints || [];
+            textToSpeak = `${title}. ${points.join('. ')}`;
+          }
+        }
       }
 
       if (textToSpeak.trim()) {

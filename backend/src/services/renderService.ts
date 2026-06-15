@@ -190,6 +190,16 @@ async function doRender(
         const title = scene.text || '';
         const description = scene.roadmapDescription || '';
         textToSpeak = `${title}. ${description}`;
+      } else if (scene.type === 'summary') {
+        if (scene.summaryVoiceOver !== false) {
+          if (scene.summaryLayout === 'paragraph') {
+            textToSpeak = scene.text || '';
+          } else {
+            const title = scene.summaryTitle || 'Summary';
+            const points = scene.summaryPoints || [];
+            textToSpeak = `${title}. ${points.join('. ')}`;
+          }
+        }
       }
 
       if (textToSpeak.trim()) {
