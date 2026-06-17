@@ -193,6 +193,7 @@ export interface SceneConfig {
   summaryPoints?: string[];
   summaryVoiceOver?: boolean;
   summaryLayout?: 'points' | 'paragraph';
+  summaryShowSubscribe?: boolean;
 
   // Font Size Overrides
   codeFontSize?: number;

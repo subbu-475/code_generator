@@ -631,7 +631,7 @@ export function updateScene(sceneId: string, updates: Partial<SceneConfig>): Sce
     'onelinerCode', 'onelinerLanguage', 'onelinerExplanation',
     'comparisonLeftTitle', 'comparisonRightTitle', 'comparisonLeftCode', 'comparisonRightCode', 'comparisonLeftLanguage', 'comparisonRightLanguage', 'comparisonVerdict',
     'roadmapStepNumber', 'roadmapTotalSteps', 'roadmapIcon', 'roadmapDescription',
-    'summaryTitle', 'summaryPoints', 'summaryVoiceOver', 'summaryLayout',
+    'summaryTitle', 'summaryPoints', 'summaryVoiceOver', 'summaryLayout', 'summaryShowSubscribe',
     'codeFontSize', 'explanationFontSize'
   ];
   const hasContentUpdate = contentKeys.some((k) => (updates as any)[k] !== undefined);
@@ -737,6 +737,7 @@ export function syncProjectSceneConfig(db: ReturnType<typeof getDb>, projectId: 
       summaryPoints: content.summaryPoints,
       summaryVoiceOver: content.summaryVoiceOver,
       summaryLayout: content.summaryLayout,
+      summaryShowSubscribe: content.summaryShowSubscribe,
       codeFontSize: content.codeFontSize,
       explanationFontSize: content.explanationFontSize,
     };
@@ -974,6 +975,7 @@ export function addScene(projectId: string, type: SceneType, insertAfterId?: str
         ];
         content.summaryVoiceOver = true;
         content.summaryLayout = 'points';
+        content.summaryShowSubscribe = true;
         content.text = 'Provide a brief summary of the lesson in this paragraph.';
         break;
     }

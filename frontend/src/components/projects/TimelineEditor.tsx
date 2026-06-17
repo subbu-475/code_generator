@@ -690,6 +690,7 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
   const [summaryPoints, setSummaryPoints] = useState<string[]>(['', '', '']);
   const [summaryVoiceOver, setSummaryVoiceOver] = useState(true);
   const [summaryLayout, setSummaryLayout] = useState<'points' | 'paragraph'>('points');
+  const [summaryShowSubscribe, setSummaryShowSubscribe] = useState(true);
 
   // Font Size Override states
   const [codeFontSize, setCodeFontSize] = useState<number | ''>('');
@@ -783,6 +784,7 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
       setSummaryPoints(content.summaryPoints || ['', '', '']);
       setSummaryVoiceOver(content.summaryVoiceOver !== false);
       setSummaryLayout(content.summaryLayout || 'points');
+      setSummaryShowSubscribe(content.summaryShowSubscribe !== false);
 
       // Font overrides
       setCodeFontSize(content.codeFontSize !== undefined && content.codeFontSize !== null ? content.codeFontSize : '');
@@ -905,7 +907,9 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
         payload.summaryPoints = summaryPoints;
         payload.summaryVoiceOver = summaryVoiceOver;
         payload.summaryLayout = summaryLayout;
+        payload.summaryShowSubscribe = summaryShowSubscribe;
         payload.text = text;
+        payload.imageUrl = logoUrl;
       }
 
       // Font overrides
@@ -2536,6 +2540,69 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
                           label="Enable Voice Over (TTS)"
                           sx={{ mb: 2 }}
                         />
+                      </Grid>
+                      <Grid item xs={12} sm={6}>
+                        <FormControlLabel
+                          control={
+                            <Checkbox
+                              checked={summaryShowSubscribe}
+                              onChange={(e) => setSummaryShowSubscribe(e.target.checked)}
+                            />
+                          }
+                          label="Overlay Like & Subscribe Animation"
+                          sx={{ mb: 2 }}
+                        />
+                      </Grid>
+
+                      <Grid item xs={12}>
+                        <Typography variant="caption" color="text.secondary" sx={{ display: 'block', mb: 1, fontWeight: 700 }}>
+                          Channel Logo / Avatar
+                        </Typography>
+                        <Box sx={{ display: 'flex', gap: 2, alignItems: 'center', mb: 2 }}>
+                          {logoUrl && (
+                            <Box
+                              component="img"
+                              src={logoUrl}
+                              alt="Logo"
+                              sx={{ width: 48, height: 48, borderRadius: '50%', objectFit: 'cover', border: '2px solid rgba(255,255,255,0.1)' }}
+                            />
+                          )}
+                          <TextField
+                            label="Logo Image URL"
+                            fullWidth
+                            size="small"
+                            value={logoUrl}
+                            onChange={(e) => setLogoUrl(e.target.value)}
+                          />
+                          <Button
+                            variant="outlined"
+                            component="label"
+                            size="medium"
+                            disabled={uploadingLogo}
+                            startIcon={<UploadIcon />}
+                            sx={{ flexShrink: 0, height: 40 }}
+                          >
+                            {uploadingLogo ? 'Uploading...' : 'Upload'}
+                            <input
+                              type="file"
+                              accept="image/*"
+                              hidden
+                              onChange={async (e) => {
+                                const file = e.target.files?.[0];
+                                if (!file) return;
+                                try {
+                                  setUploadingLogo(true);
+                                  const res = await api.uploadFile(file);
+                                  setLogoUrl(res.url);
+                                } catch (err: any) {
+                                  alert(err.message || 'Upload failed');
+                                } finally {
+                                  setUploadingLogo(false);
+                                }
+                              }}
+                            />
+                          </Button>
+                        </Box>
                       </Grid>
                       
                       {summaryLayout === 'paragraph' ? (

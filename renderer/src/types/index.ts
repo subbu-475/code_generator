@@ -163,7 +163,9 @@ export interface SummarySceneProps extends SceneComponentProps {
   summaryPoints?: string[];
   summaryVoiceOver?: boolean;
   summaryLayout?: 'points' | 'paragraph';
+  summaryShowSubscribe?: boolean;
   text?: string;
+  imageUrl?: string;
 }
 
 

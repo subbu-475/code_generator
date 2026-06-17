@@ -163,6 +163,7 @@ const SceneUpdateSchema = z.object({
   summaryPoints: z.array(z.string()).optional(),
   summaryVoiceOver: z.boolean().optional(),
   summaryLayout: z.enum(['points', 'paragraph']).optional(),
+  summaryShowSubscribe: z.boolean().optional(),
 
   // Font Size Overrides
   codeFontSize: z.number().int().min(10).max(100).nullable().optional(),
