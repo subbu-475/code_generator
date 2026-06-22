@@ -39,6 +39,8 @@ export const HookScene: React.FC<HookSceneProps> = ({
   hookImage,
   hookImageSize = 'medium',
   hookImageViewMode = 'contain',
+  snippetHookColor,
+  snippetHookEmoji,
 }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -90,6 +92,27 @@ export const HookScene: React.FC<HookSceneProps> = ({
   // Subtle floating animation
   const floatY = Math.sin(frame * 0.05) * 6;
   const imgFloatY = Math.sin(frame * 0.04) * 8;
+
+  // Resolved hook color (snippet override > template default)
+  const resolvedHookColor = snippetHookColor || template.hookColor;
+
+  // Create a template override so Caption's active word highlight uses the custom color
+  const hookTemplate = snippetHookColor
+    ? { ...template, accentColor: snippetHookColor }
+    : template;
+
+  // Emoji bounce animation
+  const emojiBounce = spring({
+    frame: frame - 5,
+    fps,
+    config: {
+      damping: 10,
+      stiffness: 200,
+      mass: 0.6,
+    },
+  });
+  const emojiScale = interpolate(emojiBounce, [0, 1], [0, 1], { extrapolateLeft: 'clamp' });
+  const emojiFloatY = Math.sin(frame * 0.08) * 5;
 
   // Glow pulse
   const glowOpacity = interpolate(
@@ -302,9 +325,25 @@ export const HookScene: React.FC<HookSceneProps> = ({
             textAlign: 'center',
             width: '100%',
             display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
             justifyContent: 'center',
           }}
         >
+          {/* Snippet Hook Emoji */}
+          {snippetHookEmoji && (
+            <div
+              style={{
+                fontSize: 72,
+                transform: `scale(${emojiScale}) translateY(${emojiFloatY}px)`,
+                marginBottom: 16,
+                filter: `drop-shadow(0 4px 20px ${resolvedHookColor}60)`,
+                lineHeight: 1,
+              }}
+            >
+              {snippetHookEmoji}
+            </div>
+          )}
           {isGlass ? (
             <div
               style={{
@@ -325,10 +364,10 @@ export const HookScene: React.FC<HookSceneProps> = ({
             >
               <Caption
                 text={text || title}
-                template={template}
+                template={hookTemplate}
                 durationInFrames={durationInFrames}
                 fontSize={template.hookFontSize || 64}
-                color={template.hookColor}
+                color={resolvedHookColor}
               />
             </div>
           ) : isThumbnail ? (
@@ -350,22 +389,22 @@ export const HookScene: React.FC<HookSceneProps> = ({
               <Caption
                 text={text || title}
                 template={{
-                  ...template,
-                  accentColor: '#ffff00', // yellow accent
+                  ...hookTemplate,
+                  accentColor: snippetHookColor || '#ffff00',
                 }}
                 durationInFrames={durationInFrames}
                 fontSize={template.hookFontSize || 64}
-                color={template.hookColor}
+                color={resolvedHookColor}
               />
             </div>
           ) : (
             <div>
               <Caption
                 text={text || title}
-                template={template}
+                template={hookTemplate}
                 durationInFrames={durationInFrames}
                 fontSize={template.hookFontSize || 76}
-                color={template.hookColor}
+                color={resolvedHookColor}
               />
               <div
                 style={{
@@ -373,7 +412,7 @@ export const HookScene: React.FC<HookSceneProps> = ({
                   height: 6,
                   width: interpolate(springValue, [0, 1], [0, 240]),
                   borderRadius: 3,
-                  background: `linear-gradient(90deg, ${template.accentColor}, ${template.accentColor}80)`,
+                  background: `linear-gradient(90deg, ${resolvedHookColor}, ${resolvedHookColor}80)`,
                   marginLeft: 'auto',
                   marginRight: 'auto',
                 }}

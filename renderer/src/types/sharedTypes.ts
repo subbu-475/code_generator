@@ -56,6 +56,8 @@ export interface CodeSnippet {
   language: ProgrammingLanguage;
   output?: string;
   hook?: string;
+  hookColor?: string;
+  hookEmoji?: string;
   explanation?: string;
 
   // Quiz
@@ -144,6 +146,8 @@ export interface SceneConfig {
   hookImage?: string;
   hookImageSize?: 'small' | 'medium' | 'large';
   hookImageViewMode?: 'cover' | 'contain';
+  snippetHookColor?: string;
+  snippetHookEmoji?: string;
   explanation?: string;
   quizQuestion?: string;
   quizOptions?: string[];

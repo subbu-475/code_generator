@@ -19,6 +19,8 @@ const CodeSnippetSchema = z.object({
   language: z.enum(['javascript', 'typescript', 'jsx', 'tsx', 'python', 'java', 'csharp', 'php']),
   output: z.string().optional(),
   hook: z.string().optional(),
+  hookColor: z.string().optional().nullable(),
+  hookEmoji: z.string().optional().nullable(),
   explanation: z.string().optional(),
   
   // Quiz
@@ -114,6 +116,8 @@ const SceneUpdateSchema = z.object({
   hookImage: z.string().optional(),
   hookImageSize: z.enum(['small', 'medium', 'large']).optional(),
   hookImageViewMode: z.enum(['cover', 'contain']).optional(),
+  snippetHookColor: z.string().optional().nullable(),
+  snippetHookEmoji: z.string().optional().nullable(),
   explanation: z.string().optional(),
   quizQuestion: z.string().optional(),
   quizOptions: z.array(z.string()).optional(),

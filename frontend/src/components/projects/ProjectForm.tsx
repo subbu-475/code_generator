@@ -508,15 +508,74 @@ export default function ProjectForm() {
                     </Grid>
                     <Grid container spacing={3} sx={{ mb: 2.5 }}>
                       <Grid item xs={12} md={4}>
-                        <TextField
-                          label="Snippet Hook (Optional)"
-                          size="small"
-                          fullWidth
-                          value={snippet.hook || ''}
-                          onChange={(e) => handleSnippetChange(idx, 'hook', e.target.value)}
-                          placeholder="e.g. Stop using loops!"
-                          helperText="Pops up introducing this snippet"
-                        />
+                        <Box sx={{ display: 'flex', gap: 1, alignItems: 'flex-start' }}>
+                          <TextField
+                            select
+                            label="Emoji"
+                            size="small"
+                            value={snippet.hookEmoji || ''}
+                            onChange={(e) => handleSnippetChange(idx, 'hookEmoji', e.target.value)}
+                            sx={{ minWidth: 80, maxWidth: 80, '& .MuiSelect-select': { fontSize: 20, textAlign: 'center' } }}
+                          >
+                            <MenuItem value="">None</MenuItem>
+                            {['🔥','⚡','💡','🚀','✨','🎯','💻','🧠','⭐','🏆','💎','🎉','👀','💥','🛠️','📌','🔑','🎨','📢','⚠️'].map((emoji) => (
+                              <MenuItem key={emoji} value={emoji} sx={{ fontSize: 20, justifyContent: 'center' }}>
+                                {emoji}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                          <TextField
+                            label="Snippet Hook (Optional)"
+                            size="small"
+                            fullWidth
+                            value={snippet.hook || ''}
+                            onChange={(e) => handleSnippetChange(idx, 'hook', e.target.value)}
+                            placeholder="e.g. Stop using loops!"
+                            helperText="Pops up introducing this snippet"
+                          />
+                          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5, pt: 0.5 }}>
+                            <Box
+                              component="label"
+                              sx={{
+                                width: 36,
+                                height: 36,
+                                borderRadius: 1,
+                                border: '2px solid',
+                                borderColor: 'divider',
+                                backgroundColor: snippet.hookColor || '#ffffff',
+                                cursor: 'pointer',
+                                display: 'block',
+                                position: 'relative',
+                                overflow: 'hidden',
+                                transition: 'border-color 0.2s',
+                                '&:hover': { borderColor: 'primary.main' },
+                              }}
+                            >
+                              <input
+                                type="color"
+                                value={snippet.hookColor || '#ffffff'}
+                                onChange={(e) => handleSnippetChange(idx, 'hookColor', e.target.value)}
+                                style={{
+                                  position: 'absolute',
+                                  top: 0,
+                                  left: 0,
+                                  width: '100%',
+                                  height: '100%',
+                                  opacity: 0,
+                                  cursor: 'pointer',
+                                }}
+                              />
+                            </Box>
+                            <Box
+                              component="span"
+                              sx={{ fontSize: 9, color: 'text.secondary', fontFamily: 'monospace', cursor: 'pointer' }}
+                              onClick={() => handleSnippetChange(idx, 'hookColor', '')}
+                              title="Click to reset color"
+                            >
+                              {snippet.hookColor ? snippet.hookColor.toUpperCase() : 'Auto'}
+                            </Box>
+                          </Box>
+                        </Box>
                       </Grid>
                       <Grid item xs={12} md={4}>
                         <TextField
@@ -534,9 +593,12 @@ export default function ProjectForm() {
                           label="Snippet Output / Result (Optional)"
                           size="small"
                           fullWidth
+                          multiline
+                          minRows={2}
+                          maxRows={6}
                           value={snippet.output || ''}
                           onChange={(e) => handleSnippetChange(idx, 'output', e.target.value)}
-                          placeholder="e.g. [2, 4, 6]"
+                          placeholder={"e.g.\nJohn\n25"}
                           helperText="Terminal output for this snippet"
                         />
                       </Grid>

@@ -61,6 +61,8 @@ export interface HookSceneProps extends SceneComponentProps {
   hookImage?: string;
   hookImageSize?: 'small' | 'medium' | 'large';
   hookImageViewMode?: 'cover' | 'contain';
+  snippetHookColor?: string;
+  snippetHookEmoji?: string;
 }
 
 /** Props specific to the CodeScene */

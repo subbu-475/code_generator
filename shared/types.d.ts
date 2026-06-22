@@ -47,6 +47,9 @@ export interface CodeSnippet {
     code: string;
     language: ProgrammingLanguage;
     output?: string;
+    hook?: string;
+    hookColor?: string;
+    hookEmoji?: string;
 }
 export interface Scene {
     id: string;

@@ -538,6 +538,8 @@ export function generateScenes(
           duration_frames: HOOK_DURATION_SECS * FPS,
           animation: 'pop',
           transition: 'fade',
+          snippetHookColor: snippet.hookColor || undefined,
+          snippetHookEmoji: snippet.hookEmoji || undefined,
         }));
       }
 
@@ -624,7 +626,7 @@ export function updateScene(sceneId: string, updates: Partial<SceneConfig>): Sce
   const contentKeys = [
     'code', 'text', 'output', 'language', 'channelName', 'channelHandle', 'subscriberCount', 'socials', 'imageUrl', 'videoUrl',
     'hookBadge', 'hookBadgeStyle', 'hookCreatorName', 'hookCreatorHandle', 'hookCreatorAvatar', 'hookShowProgress', 'hookProgressStyle', 'hookLayout', 'hookImage',
-    'hookImageSize', 'hookImageViewMode', 'explanation', 'quizQuestion', 'quizOptions', 'quizCorrectIndex', 'quizExplanation', 'quizRevealDelay',
+    'hookImageSize', 'hookImageViewMode', 'snippetHookColor', 'snippetHookEmoji', 'explanation', 'quizQuestion', 'quizOptions', 'quizCorrectIndex', 'quizExplanation', 'quizRevealDelay',
     'guessCode', 'guessLanguage', 'guessAnswer', 'guessRevealDelay',
     'interviewDifficulty', 'interviewCategory', 'interviewAnswer',
     'buggyCode', 'fixedCode', 'bugLanguage', 'bugExplanation',
@@ -702,6 +704,8 @@ export function syncProjectSceneConfig(db: ReturnType<typeof getDb>, projectId: 
       hookImage: content.hookImage,
       hookImageSize: content.hookImageSize,
       hookImageViewMode: content.hookImageViewMode,
+      snippetHookColor: content.snippetHookColor,
+      snippetHookEmoji: content.snippetHookEmoji,
       explanation: content.explanation,
       quizQuestion: content.quizQuestion,
       quizOptions: content.quizOptions,
@@ -1106,6 +1110,8 @@ function insertScene(
   if (config.hookImage) content.hookImage = config.hookImage;
   if (config.hookImageSize) content.hookImageSize = config.hookImageSize;
   if (config.hookImageViewMode) content.hookImageViewMode = config.hookImageViewMode;
+  if (config.snippetHookColor) content.snippetHookColor = config.snippetHookColor;
+  if (config.snippetHookEmoji) content.snippetHookEmoji = config.snippetHookEmoji;
   if (config.explanation) content.explanation = config.explanation;
   if (config.quizQuestion !== undefined) content.quizQuestion = config.quizQuestion;
   if (config.quizOptions !== undefined) content.quizOptions = config.quizOptions;

@@ -83,6 +83,8 @@ export const CodeShort: React.FC<VideoProps> = ({
             hookImage={resolveUrl(scene.hookImage)}
             hookImageSize={scene.hookImageSize}
             hookImageViewMode={scene.hookImageViewMode}
+            snippetHookColor={scene.snippetHookColor}
+            snippetHookEmoji={scene.snippetHookEmoji}
           />
         );
       case 'code':

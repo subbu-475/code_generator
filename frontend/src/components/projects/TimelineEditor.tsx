@@ -639,6 +639,8 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
   const [uploadingHookImage, setUploadingHookImage] = useState(false);
   const [hookImageSize, setHookImageSize] = useState('medium');
   const [hookImageViewMode, setHookImageViewMode] = useState('contain');
+  const [snippetHookColor, setSnippetHookColor] = useState('');
+  const [snippetHookEmoji, setSnippetHookEmoji] = useState('');
   const [explanation, setExplanation] = useState('');
   const [quizQuestion, setQuizQuestion] = useState('');
   const [quizOptions, setQuizOptions] = useState<string[]>(['Option A', 'Option B', 'Option C', 'Option D']);
@@ -735,6 +737,8 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
       setHookImage(content.hookImage || '');
       setHookImageSize(content.hookImageSize || 'medium');
       setHookImageViewMode(content.hookImageViewMode || 'contain');
+      setSnippetHookColor(content.snippetHookColor || '');
+      setSnippetHookEmoji(content.snippetHookEmoji || '');
       setExplanation(content.explanation || '');
       setQuizQuestion(content.quizQuestion || 'What is the output of this code?');
       setQuizOptions(content.quizOptions || ['Option A', 'Option B', 'Option C', 'Option D']);
@@ -836,6 +840,8 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
         payload.hookImage = hookImage;
         payload.hookImageSize = hookImageSize;
         payload.hookImageViewMode = hookImageViewMode;
+        payload.snippetHookColor = snippetHookColor || null;
+        payload.snippetHookEmoji = snippetHookEmoji || null;
       } else if (selectedScene.type === 'output') {
         payload.text = text;
         payload.explanation = explanation;
@@ -1459,6 +1465,70 @@ export default function TimelineEditor({ projectId, project, scenes, onRefresh, 
                           </Grid>
                         </>
                       )}
+
+                      {/* Emoji & Color Customization */}
+                      <Grid item xs={12} sm={6}>
+                        <Box sx={{ display: 'flex', gap: 1.5, alignItems: 'flex-start' }}>
+                          <TextField
+                            select
+                            label="Hook Emoji"
+                            size="small"
+                            fullWidth
+                            value={snippetHookEmoji}
+                            onChange={(e) => setSnippetHookEmoji(e.target.value)}
+                            sx={{ '& .MuiSelect-select': { fontSize: 20, py: '5.5px' } }}
+                          >
+                            <MenuItem value="">None</MenuItem>
+                            {['🔥','⚡','💡','🚀','✨','🎯','💻','🧠','⭐','🏆','💎','🎉','👀','💥','🛠️','📌','🔑','🎨','📢','⚠️'].map((emoji) => (
+                              <MenuItem key={emoji} value={emoji} sx={{ fontSize: 20, justifyContent: 'center' }}>
+                                {emoji}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                          <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 0.5, pt: 0.5 }}>
+                            <Box
+                              component="label"
+                              sx={{
+                                width: 36,
+                                height: 36,
+                                borderRadius: 1,
+                                border: '2px solid',
+                                borderColor: 'divider',
+                                backgroundColor: snippetHookColor || '#ffffff',
+                                cursor: 'pointer',
+                                display: 'block',
+                                position: 'relative',
+                                overflow: 'hidden',
+                                transition: 'border-color 0.2s',
+                                '&:hover': { borderColor: 'primary.main' },
+                              }}
+                            >
+                              <input
+                                type="color"
+                                value={snippetHookColor || '#ffffff'}
+                                onChange={(e) => setSnippetHookColor(e.target.value)}
+                                style={{
+                                  position: 'absolute',
+                                  top: 0,
+                                  left: 0,
+                                  width: '100%',
+                                  height: '100%',
+                                  opacity: 0,
+                                  cursor: 'pointer',
+                                }}
+                              />
+                            </Box>
+                            <Box
+                              component="span"
+                              sx={{ fontSize: 9, color: 'text.secondary', fontFamily: 'monospace', cursor: 'pointer' }}
+                              onClick={() => setSnippetHookColor('')}
+                              title="Click to reset color"
+                            >
+                              {snippetHookColor ? snippetHookColor.toUpperCase() : 'Auto'}
+                            </Box>
+                          </Box>
+                        </Box>
+                      </Grid>
 
                       {/* Layout Selection */}
                       <Grid item xs={12} sm={6}>
