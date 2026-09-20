@@ -31,6 +31,10 @@ import { StudioTitleScene } from '../components/studio/StudioTitleScene';
 import { StudioSliderScene } from '../components/studio/StudioSliderScene';
 import { StudioPromptMistakeScene } from '../components/studio/StudioPromptMistakeScene';
 import { StudioChecklistScene } from '../components/studio/StudioChecklistScene';
+import { NetworkFlowScene } from '../components/NetworkFlowScene';
+import { BrowserSimScene } from '../components/BrowserSimScene';
+import { CinematicImageScene } from '../components/CinematicImageScene';
+import { ArchitectureOverviewScene } from '../components/ArchitectureOverviewScene';
 
 export const CodeShort: React.FC<VideoProps> = ({
   scenes,
@@ -325,6 +329,51 @@ export const CodeShort: React.FC<VideoProps> = ({
             durationInFrames={scene.duration_frames}
           />
         );
+      case 'network_flow':
+        return (
+          <NetworkFlowScene
+            title={scene.title}
+            text={scene.text}
+            flowNodes={scene.flowNodes}
+            flowActiveStep={scene.flowActiveStep}
+            packetLabel={scene.packetLabel}
+            telemetry={scene.telemetry}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'browser_sim':
+        return (
+          <BrowserSimScene
+            title={scene.title}
+            text={scene.text}
+            browserUrl={scene.browserUrl}
+            browserSimState={scene.browserSimState}
+            browserPageTitle={scene.browserPageTitle}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'cinematic_image':
+        return (
+          <CinematicImageScene
+            title={scene.title}
+            text={scene.text}
+            imageUrl={resolveUrl(scene.imageUrl)}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+            cinematicZoom={scene.cinematicZoom !== false}
+          />
+        );
+      case 'architecture_overview':
+        return (
+          <ArchitectureOverviewScene
+            title={scene.title}
+            text={scene.text}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
       default:
         return null;
     }
@@ -349,37 +398,25 @@ export const CodeShort: React.FC<VideoProps> = ({
         <>
           {voiceUrls.map((url, idx) => {
             const scene = scenes[idx];
-            // Calculate starting frame for each voice URL based on scene durations
-            let startFrame = scenes
+            const sceneStartFrame = scenes
               .slice(0, idx)
               .reduce((sum, s) => sum + s.duration_frames, 0);
 
-            // Slightly delay voice narration to align with visual entrance animations
+            // Retention Rule: start voiceover almost immediately so first curiosity hook lands within 1.0s
+            let voiceOffset = idx === 0 ? 3 : 6;
             if (scene) {
               if (scene.type === 'tip') {
-                startFrame += 15; // 0.5s delay to sync with card entry and text fade-in
+                voiceOffset = 8;
               } else if (scene.type === 'output') {
-                startFrame += 20; // 0.67s delay to sync with typewriter start
-              } else if (
-                scene.type === 'quiz' ||
-                scene.type === 'guess_output' ||
-                scene.type === 'bugfix' ||
-                scene.type === 'interview_question' ||
-                scene.type === 'oneliner' ||
-                scene.type === 'comparison' ||
-                scene.type === 'roadmap_step' ||
-                scene.type === 'summary' ||
-                scene.type === 'studio_title' ||
-                scene.type === 'studio_slider' ||
-                scene.type === 'studio_prompt_mistake' ||
-                scene.type === 'studio_checklist'
-              ) {
-                startFrame += 12; // Align with question/layout entrance
+                voiceOffset = 10;
               }
             }
 
+            const startFrame = sceneStartFrame + voiceOffset;
+            const availableFrames = Math.max(1, (sceneStartFrame + (scene?.duration_frames || 90)) - startFrame);
+
             return (
-              <Sequence key={idx} from={startFrame} layout="none">
+              <Sequence key={idx} from={startFrame} durationInFrames={availableFrames} layout="none">
                 {url ? (
                   <Audio
                     src={url}

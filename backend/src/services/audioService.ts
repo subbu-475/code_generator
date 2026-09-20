@@ -87,7 +87,37 @@ export interface AudioResult {
 }
 
 /**
- * Generate voice audio from text using Piper TTS.
+ * Accurately get audio file duration in seconds using ffprobe.
+ */
+export function getAudioDuration(filePath: string): number {
+  try {
+    const out = execSync(`ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "${filePath}"`, {
+      encoding: 'utf-8',
+      stdio: ['pipe', 'pipe', 'ignore'],
+      timeout: 5000,
+    }).trim();
+    const parsed = parseFloat(out);
+    if (!isNaN(parsed) && parsed > 0) {
+      return Math.round(parsed * 100) / 100;
+    }
+  } catch {
+    // ffprobe failed or timed out, fall back
+  }
+
+  try {
+    const stats = fs.statSync(filePath);
+    if (filePath.endsWith('.wav')) {
+      return Math.round(Math.max(0.5, (stats.size - 44) / 44100) * 100) / 100;
+    }
+    // Approximate for 128kbps mp3 (~16000 bytes/sec)
+    return Math.round(Math.max(0.5, stats.size / 16000) * 100) / 100;
+  } catch {
+    return 1.0;
+  }
+}
+
+/**
+ * Generate voice audio from text using Edge TTS (default) or Piper TTS.
  */
 export async function generateAudio(
   text: string,
@@ -95,19 +125,22 @@ export async function generateAudio(
   outputFilename?: string,
 ): Promise<AudioResult> {
   const isTamil = /[\u0B80-\u0BFF]/.test(text) || voiceModel?.includes('ta-IN');
-  if (isTamil) {
+  const isEdgeTts = isTamil || voiceModel?.includes('Neural') || voiceModel?.includes('en-US') || !checkPiper();
+  if (isEdgeTts) {
     const id = uuidv4();
     const fileName = outputFilename ?? `${id}.mp3`;
     const outputPath = path.join(GENERATED_AUDIO_DIR, fileName);
-    const selectedVoice = voiceModel || 'ta-IN-ValluvarNeural';
+    // Default to clean English developer neural voice
+    const selectedVoice = voiceModel || (isTamil ? 'ta-IN-ValluvarNeural' : 'en-US-ChristopherNeural');
+    const rate = isTamil ? '--rate=+18%' : '--rate=+10%';
 
     if (outputFilename && fs.existsSync(outputPath)) {
-      const stats = fs.statSync(outputPath);
+      const durationSeconds = getAudioDuration(outputPath);
       return {
         id,
         audioPath: outputPath,
         audioUrl: `/generated/audio/${fileName}`,
-        durationSeconds: Math.round(((stats.size - 44) / 44100) * 100) / 100,
+        durationSeconds,
       };
     }
 
@@ -118,7 +151,7 @@ export async function generateAudio(
       const proc = spawn('python', [
         '-m', 'edge_tts',
         '--voice', selectedVoice,
-        '--rate=+18%',
+        rate,
         '-f', tempTextPath,
         '--write-media', outputPath,
       ], { shell: false });
@@ -129,12 +162,12 @@ export async function generateAudio(
       proc.on('close', (code) => {
         try { fs.unlinkSync(tempTextPath); } catch {}
         if (code === 0 && fs.existsSync(outputPath)) {
-          const stats = fs.statSync(outputPath);
+          const durationSeconds = getAudioDuration(outputPath);
           resolve({
             id,
             audioPath: outputPath,
             audioUrl: `/generated/audio/${fileName}`,
-            durationSeconds: Math.round(((stats.size - 44) / 44100) * 100) / 100,
+            durationSeconds,
           });
         } else {
           reject(new Error(`edge-tts failed (code ${code}): ${stderr}`));
@@ -163,13 +196,12 @@ export async function generateAudio(
 
   // Cache hit — return existing file without re-running Piper
   if (outputFilename && fs.existsSync(outputPath)) {
-    const stats = fs.statSync(outputPath);
-    const durationSeconds = Math.max(0, (stats.size - 44) / 44100);
+    const durationSeconds = getAudioDuration(outputPath);
     return {
       id,
       audioPath: outputPath,
       audioUrl: `/generated/audio/${fileName}`,
-      durationSeconds: Math.round(durationSeconds * 100) / 100,
+      durationSeconds,
     };
   }
 
@@ -186,7 +218,7 @@ export async function generateAudio(
 
     let stderr = '';
 
-    proc.stderr.on('data', (data: Buffer) => {
+    proc.stderr?.on('data', (data: Buffer) => {
       stderr += data.toString();
     });
 
@@ -205,16 +237,13 @@ export async function generateAudio(
         return;
       }
 
-      // Estimate duration from WAV file size
-      const stats = fs.statSync(outputPath);
-      // WAV: 16-bit mono 22050 Hz → ~44100 bytes per second
-      const durationSeconds = Math.max(0, (stats.size - 44) / 44100);
+      const durationSeconds = getAudioDuration(outputPath);
 
       resolve({
         id,
         audioPath: outputPath,
         audioUrl: `/generated/audio/${fileName}`,
-        durationSeconds: Math.round(durationSeconds * 100) / 100,
+        durationSeconds,
       });
     });
 

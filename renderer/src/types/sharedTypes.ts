@@ -208,6 +208,29 @@ export interface SceneConfig {
   studioHeaderTop?: string;
   studioHeaderBottom?: string;
   voiceNarration?: string;
+  voiceUrl?: string;
+
+  // Animated Tech Explainer Fields (CodeWithSundresh)
+  flowNodes?: Array<{
+    id: string;
+    label: string;
+    icon?: string;
+    status?: 'done' | 'active' | 'pending';
+    detail?: string;
+    color?: string;
+  }>;
+  flowActiveStep?: number;
+  packetLabel?: string;
+  telemetry?: {
+    rtt?: string;
+    protocol?: string;
+    payload?: string;
+    status?: string;
+  };
+  browserUrl?: string;
+  browserSimState?: 'typing' | 'enter' | 'loading' | 'rendered';
+  browserPageTitle?: string;
+  cinematicZoom?: boolean;
 }
 
 export interface Template {
@@ -316,7 +339,11 @@ export type SceneType =
   | 'studio_title'
   | 'studio_slider'
   | 'studio_prompt_mistake'
-  | 'studio_checklist';
+  | 'studio_checklist'
+  | 'network_flow'
+  | 'browser_sim'
+  | 'cinematic_image'
+  | 'architecture_overview';
 
 export type AnimationStyle = 'fade' | 'zoom' | 'slide' | 'pop' | 'bounce';
 

@@ -6,9 +6,9 @@ import { EventEmitter } from 'node:events';
 import path from 'node:path';
 import fs from 'node:fs';
 import { v4 as uuidv4 } from 'uuid';
-import { GENERATED_VIDEOS_DIR, PROJECT_ROOT } from '../utils/paths.js';
+import { GENERATED_VIDEOS_DIR, GENERATED_AUDIO_DIR, PROJECT_ROOT } from '../utils/paths.js';
 import { getProjectById, updateProjectStatus } from './projectService.js';
-import { generateAudio } from './audioService.js';
+import { generateAudio, getAudioDuration } from './audioService.js';
 import { getTemplateById } from './templateService.js';
 import { createExportRecord, updateExportRecord } from './exportService.js';
 import { getDb } from '../database/connection.js';
@@ -47,7 +47,24 @@ export async function startRender(
     template = db.prepare('SELECT * FROM templates WHERE is_default = 1').get() as any;
   }
 
-  const sceneConfigs: SceneConfig[] = JSON.parse(project.scene_config);
+  let sceneConfigs: SceneConfig[] = [];
+  if (project.scenes && project.scenes.length > 0) {
+    sceneConfigs = project.scenes.map((s: any) => {
+      const content = s.content ? (typeof s.content === 'string' ? JSON.parse(s.content) : s.content) : {};
+      return {
+        id: s.id,
+        type: s.type as any,
+        title: s.title,
+        duration_frames: s.duration_frames,
+        animation: s.animation as any,
+        transition: (s.transition_ || s.transition) as any,
+        ...content,
+      };
+    });
+  } else if (project.scene_config) {
+    sceneConfigs = JSON.parse(project.scene_config);
+  }
+
   if (sceneConfigs.length === 0) {
     throw new Error('Project has no scenes to render');
   }
@@ -158,9 +175,9 @@ async function doRender(
       const scene = videoProps.scenes[i];
       let textToSpeak = '';
       
-      // Restrict TTS narration to explanation (tip), output, and cta scenes.
-      // Hook scene uses a whoosh SFX and Code scene uses a typing SFX.
-      if (
+      if (scene.voiceNarration && scene.voiceNarration.trim()) {
+        textToSpeak = scene.voiceNarration.trim();
+      } else if (
         (scene.type === 'tip' && videoProps.ttsExplanation !== false) ||
         (scene.type === 'output' && videoProps.ttsOutput !== false) ||
         scene.type === 'cta'
@@ -204,15 +221,39 @@ async function doRender(
         scene.type === 'studio_title' ||
         scene.type === 'studio_slider' ||
         scene.type === 'studio_prompt_mistake' ||
-        scene.type === 'studio_checklist'
+        scene.type === 'studio_checklist' ||
+        scene.type === 'network_flow' ||
+        scene.type === 'browser_sim' ||
+        scene.type === 'cinematic_image' ||
+        scene.type === 'architecture_overview'
       ) {
         textToSpeak = scene.voiceNarration || scene.text || scene.title || '';
       }
 
-      if (textToSpeak.trim()) {
+      if (scene.voiceUrl) {
+        voiceUrls.push(scene.voiceUrl.startsWith('http') ? scene.voiceUrl : `${host}${scene.voiceUrl}`);
+        // Ensure scene is long enough for the existing audio file
+        if (scene.voiceUrl.includes('/generated/audio/')) {
+          const filename = path.basename(scene.voiceUrl);
+          const localAudioPath = path.join(GENERATED_AUDIO_DIR, filename);
+          if (fs.existsSync(localAudioPath)) {
+            const dur = getAudioDuration(localAudioPath);
+            const neededFrames = Math.ceil(dur * FPS) + 24;
+            if (neededFrames > scene.duration_frames) {
+              scene.duration_frames = neededFrames;
+            }
+          }
+        }
+      } else if (textToSpeak.trim()) {
         try {
           const audioResult = await generateAudio(textToSpeak);
           voiceUrls.push(`${host}${audioResult.audioUrl}`);
+          if (audioResult.durationSeconds > 0) {
+            const neededFrames = Math.ceil(audioResult.durationSeconds * FPS) + 24;
+            if (neededFrames > scene.duration_frames) {
+              scene.duration_frames = neededFrames;
+            }
+          }
         } catch (err) {
           console.error(`[Render] Failed to generate TTS for scene ${scene.id}:`, err);
           voiceUrls.push('');
@@ -222,6 +263,8 @@ async function doRender(
       }
     }
     videoProps.voiceUrls = voiceUrls;
+    // Recalculate totalFrames to ensure all narration completes without cutting off
+    totalFrames = videoProps.scenes.reduce((sum, s) => sum + s.duration_frames, 0);
   }
 
   const resConfig = RESOLUTION_CONFIG[resolution];
