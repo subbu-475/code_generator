@@ -27,6 +27,10 @@ import { RoadmapStepScene } from '../components/RoadmapStepScene';
 import { SummaryScene } from '../components/SummaryScene';
 import { FontReady } from '../components/FontReady';
 import { withFontFallback } from '../utils/fontFallback';
+import { StudioTitleScene } from '../components/studio/StudioTitleScene';
+import { StudioSliderScene } from '../components/studio/StudioSliderScene';
+import { StudioPromptMistakeScene } from '../components/studio/StudioPromptMistakeScene';
+import { StudioChecklistScene } from '../components/studio/StudioChecklistScene';
 
 export const CodeShort: React.FC<VideoProps> = ({
   scenes,
@@ -285,6 +289,40 @@ export const CodeShort: React.FC<VideoProps> = ({
             durationInFrames={scene.duration_frames}
             codeFontSize={scene.codeFontSize}
             explanationFontSize={scene.explanationFontSize}
+          />
+        );
+      case 'studio_title':
+        return (
+          <StudioTitleScene
+            subtitle={scene.text || scene.title}
+            headerTop={scene.studioHeaderTop || 'CLAUDE'}
+            headerBottom={scene.studioHeaderBottom || 'CODE'}
+            promptText={scene.studioPromptText || '> Make me a meditation app'}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'studio_slider':
+        return (
+          <StudioSliderScene
+            subtitle={scene.text || scene.title}
+            robotMascotUrl={resolveUrl(scene.imageUrl) || `${backendUrl}/assets/images/robot_mascot.jpg`}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'studio_prompt_mistake':
+        return (
+          <StudioPromptMistakeScene
+            subtitle={scene.text || scene.title}
+            redCrossUrl={resolveUrl(scene.imageUrl) || `${backendUrl}/assets/images/red_cross.jpg`}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'studio_checklist':
+        return (
+          <StudioChecklistScene
+            subtitle={scene.text || scene.title}
+            asteriskUrl={resolveUrl(scene.imageUrl) || `${backendUrl}/assets/images/green_asterisk.jpg`}
+            durationInFrames={scene.duration_frames}
           />
         );
       default:

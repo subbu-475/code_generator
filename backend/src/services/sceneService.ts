@@ -514,6 +514,45 @@ export function generateScenes(
       transition: 'none',
     }));
 
+  } else if (explanationTemplate === 'studio_explainer') {
+    // 1. Studio 3D Title Card (4s = 120 frames)
+    addSceneHelper(createSceneConfig('studio_title', 'Studio Title', {
+      text: hookText || 'Claude Code Clearly Explained',
+      studioHeaderTop: 'CLAUDE',
+      studioHeaderBottom: 'CODE',
+      studioPromptText: '> Make me a meditation app',
+      duration_frames: 120,
+      animation: 'fade',
+      transition: 'fade',
+    }));
+
+    // 2. Studio 3D Robot Mascot Slider (6s = 180 frames)
+    addSceneHelper(createSceneConfig('studio_slider', 'Context Slider', {
+      text: 'instructions at around 50%. So, whenever you hit the 40 to 50% mark,',
+      imageUrl: '/assets/images/robot_mascot.jpg',
+      duration_frames: 180,
+      animation: 'fade',
+      transition: 'fade',
+    }));
+
+    // 3. Studio 3D Bad Prompt with Red Cross (6s = 180 frames)
+    addSceneHelper(createSceneConfig('studio_prompt_mistake', 'Prompt Mistake', {
+      text: 'knows what you want, don\'t simply say "Build me an app". Instead, break it down...',
+      imageUrl: '/assets/images/red_cross.png',
+      duration_frames: 180,
+      animation: 'fade',
+      transition: 'fade',
+    }));
+
+    // 4. Studio 3D Tabbed Checklist with Asterisk (8s = 240 frames)
+    addSceneHelper(createSceneConfig('studio_checklist', 'Edge Cases Checklist', {
+      text: 'every single technical detail, trade-off, and edge case before writing code.',
+      imageUrl: '/assets/images/green_asterisk.png',
+      duration_frames: 240,
+      animation: 'fade',
+      transition: 'none',
+    }));
+
   } else {
     // default/none template
     const hasGlobalHook = !!hookText && hookText.trim().length > 0;
@@ -634,7 +673,8 @@ export function updateScene(sceneId: string, updates: Partial<SceneConfig>): Sce
     'comparisonLeftTitle', 'comparisonRightTitle', 'comparisonLeftCode', 'comparisonRightCode', 'comparisonLeftLanguage', 'comparisonRightLanguage', 'comparisonVerdict',
     'roadmapStepNumber', 'roadmapTotalSteps', 'roadmapIcon', 'roadmapDescription',
     'summaryTitle', 'summaryPoints', 'summaryVoiceOver', 'summaryLayout', 'summaryShowSubscribe',
-    'codeFontSize', 'explanationFontSize'
+    'codeFontSize', 'explanationFontSize',
+    'studioPromptText', 'studioHeaderTop', 'studioHeaderBottom'
   ];
   const hasContentUpdate = contentKeys.some((k) => (updates as any)[k] !== undefined);
 
@@ -744,6 +784,9 @@ export function syncProjectSceneConfig(db: ReturnType<typeof getDb>, projectId: 
       summaryShowSubscribe: content.summaryShowSubscribe,
       codeFontSize: content.codeFontSize,
       explanationFontSize: content.explanationFontSize,
+      studioPromptText: content.studioPromptText,
+      studioHeaderTop: content.studioHeaderTop,
+      studioHeaderBottom: content.studioHeaderBottom,
     };
   });
 
@@ -1143,6 +1186,9 @@ function insertScene(
   if (config.roadmapTotalSteps !== undefined) content.roadmapTotalSteps = config.roadmapTotalSteps;
   if (config.roadmapIcon !== undefined) content.roadmapIcon = config.roadmapIcon;
   if (config.roadmapDescription !== undefined) content.roadmapDescription = config.roadmapDescription;
+  if (config.studioPromptText !== undefined) content.studioPromptText = config.studioPromptText;
+  if (config.studioHeaderTop !== undefined) content.studioHeaderTop = config.studioHeaderTop;
+  if (config.studioHeaderBottom !== undefined) content.studioHeaderBottom = config.studioHeaderBottom;
 
   db.prepare(`
     INSERT INTO scenes (id, project_id, scene_order, type, title, content, duration_frames, animation, transition_)

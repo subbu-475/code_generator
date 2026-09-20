@@ -202,6 +202,11 @@ export interface SceneConfig {
   // Font Size Overrides
   codeFontSize?: number;
   explanationFontSize?: number;
+
+  // Studio Fields
+  studioPromptText?: string;
+  studioHeaderTop?: string;
+  studioHeaderBottom?: string;
 }
 
 export interface Template {
@@ -306,7 +311,11 @@ export type SceneType =
   | 'oneliner'
   | 'comparison'
   | 'roadmap_step'
-  | 'summary';
+  | 'summary'
+  | 'studio_title'
+  | 'studio_slider'
+  | 'studio_prompt_mistake'
+  | 'studio_checklist';
 
 export type AnimationStyle = 'fade' | 'zoom' | 'slide' | 'pop' | 'bounce';
 
