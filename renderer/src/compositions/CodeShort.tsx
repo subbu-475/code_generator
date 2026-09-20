@@ -313,7 +313,7 @@ export const CodeShort: React.FC<VideoProps> = ({
         return (
           <StudioPromptMistakeScene
             subtitle={scene.text || scene.title}
-            redCrossUrl={resolveUrl(scene.imageUrl) || `${backendUrl}/assets/images/red_cross.jpg`}
+            redCrossUrl={resolveUrl(scene.imageUrl) || `${backendUrl}/assets/images/red_cross.png`}
             durationInFrames={scene.duration_frames}
           />
         );
@@ -321,7 +321,7 @@ export const CodeShort: React.FC<VideoProps> = ({
         return (
           <StudioChecklistScene
             subtitle={scene.text || scene.title}
-            asteriskUrl={resolveUrl(scene.imageUrl) || `${backendUrl}/assets/images/green_asterisk.jpg`}
+            asteriskUrl={resolveUrl(scene.imageUrl) || `${backendUrl}/assets/images/green_asterisk.png`}
             durationInFrames={scene.duration_frames}
           />
         );
@@ -368,9 +368,13 @@ export const CodeShort: React.FC<VideoProps> = ({
                 scene.type === 'oneliner' ||
                 scene.type === 'comparison' ||
                 scene.type === 'roadmap_step' ||
-                scene.type === 'summary'
+                scene.type === 'summary' ||
+                scene.type === 'studio_title' ||
+                scene.type === 'studio_slider' ||
+                scene.type === 'studio_prompt_mistake' ||
+                scene.type === 'studio_checklist'
               ) {
-                startFrame += 15; // Align with question/layout entrance
+                startFrame += 12; // Align with question/layout entrance
               }
             }
 

@@ -94,6 +94,59 @@ export async function generateAudio(
   voiceModel?: string,
   outputFilename?: string,
 ): Promise<AudioResult> {
+  const isTamil = /[\u0B80-\u0BFF]/.test(text) || voiceModel?.includes('ta-IN');
+  if (isTamil) {
+    const id = uuidv4();
+    const fileName = outputFilename ?? `${id}.mp3`;
+    const outputPath = path.join(GENERATED_AUDIO_DIR, fileName);
+    const selectedVoice = voiceModel || 'ta-IN-ValluvarNeural';
+
+    if (outputFilename && fs.existsSync(outputPath)) {
+      const stats = fs.statSync(outputPath);
+      return {
+        id,
+        audioPath: outputPath,
+        audioUrl: `/generated/audio/${fileName}`,
+        durationSeconds: Math.round(((stats.size - 44) / 44100) * 100) / 100,
+      };
+    }
+
+    const tempTextPath = path.join(GENERATED_AUDIO_DIR, `temp_${id}.txt`);
+    fs.writeFileSync(tempTextPath, text, 'utf-8');
+
+    return new Promise<AudioResult>((resolve, reject) => {
+      const proc = spawn('python', [
+        '-m', 'edge_tts',
+        '--voice', selectedVoice,
+        '--rate=+18%',
+        '-f', tempTextPath,
+        '--write-media', outputPath,
+      ], { shell: false });
+
+      let stderr = '';
+      proc.stderr?.on('data', (d) => { stderr += d.toString(); });
+
+      proc.on('close', (code) => {
+        try { fs.unlinkSync(tempTextPath); } catch {}
+        if (code === 0 && fs.existsSync(outputPath)) {
+          const stats = fs.statSync(outputPath);
+          resolve({
+            id,
+            audioPath: outputPath,
+            audioUrl: `/generated/audio/${fileName}`,
+            durationSeconds: Math.round(((stats.size - 44) / 44100) * 100) / 100,
+          });
+        } else {
+          reject(new Error(`edge-tts failed (code ${code}): ${stderr}`));
+        }
+      });
+      proc.on('error', (err) => {
+        try { fs.unlinkSync(tempTextPath); } catch {}
+        reject(err);
+      });
+    });
+  }
+
   if (!checkPiper()) {
     throw new Error('Piper TTS is not available. Install piper or place it in assets/piper/');
   }

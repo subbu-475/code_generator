@@ -515,40 +515,44 @@ export function generateScenes(
     }));
 
   } else if (explanationTemplate === 'studio_explainer') {
-    // 1. Studio 3D Title Card (4s = 120 frames)
+    // 1. Studio 3D Title Card (6s = 180 frames)
     addSceneHelper(createSceneConfig('studio_title', 'Studio Title', {
-      text: hookText || 'Claude Code Clearly Explained',
+      text: hookText || 'கிளாட் கோட்: முழு விளக்கம் (Claude Code Explained)',
+      voiceNarration: 'கிளாட் கோட் பற்றி மிகத் தெளிவாக தெரிஞ்சுக்கலாம். ஒரு மெடிடேஷன் ஆப் உருவாக்குவது எப்படி?',
       studioHeaderTop: 'CLAUDE',
       studioHeaderBottom: 'CODE',
       studioPromptText: '> Make me a meditation app',
-      duration_frames: 120,
+      duration_frames: 180,
       animation: 'fade',
       transition: 'fade',
     }));
 
-    // 2. Studio 3D Robot Mascot Slider (6s = 180 frames)
+    // 2. Studio 3D Robot Mascot Slider (6.5s = 195 frames)
     addSceneHelper(createSceneConfig('studio_slider', 'Context Slider', {
-      text: 'instructions at around 50%. So, whenever you hit the 40 to 50% mark,',
+      text: 'டோக்கன் லிமிட் 50% மட்டுமே பயன்படுத்துங்க',
+      voiceNarration: 'டோக்கன் லிமிட் ஐம்பது சதவீதத்துக்குள் வைங்க. நாற்பது முதல் ஐம்பது சதவீதம் வந்ததும் புதிய செஷன் தொடங்குங்க.',
       imageUrl: '/assets/images/robot_mascot.jpg',
-      duration_frames: 180,
+      duration_frames: 195,
       animation: 'fade',
       transition: 'fade',
     }));
 
     // 3. Studio 3D Bad Prompt with Red Cross (6s = 180 frames)
     addSceneHelper(createSceneConfig('studio_prompt_mistake', 'Prompt Mistake', {
-      text: 'knows what you want, don\'t simply say "Build me an app". Instead, break it down...',
+      text: 'வெறும் "ஆப் பண்ணு" என்று சொல்லாதீங்க ❌',
+      voiceNarration: 'சும்மா ஆப் செய்து கொடு என்று ஒற்றை வரியில் கேட்காதீங்க. ஒவ்வொரு அம்சமாக பிரித்து சொல்லுங்க.',
       imageUrl: '/assets/images/red_cross.png',
       duration_frames: 180,
       animation: 'fade',
       transition: 'fade',
     }));
 
-    // 4. Studio 3D Tabbed Checklist with Asterisk (8s = 240 frames)
+    // 4. Studio 3D Tabbed Checklist with Asterisk (6s = 180 frames)
     addSceneHelper(createSceneConfig('studio_checklist', 'Edge Cases Checklist', {
-      text: 'every single technical detail, trade-off, and edge case before writing code.',
+      text: 'கோடிங் செய்வதற்கு முன் முழு விவரம் கொடுங்க ✅',
+      voiceNarration: 'கோடிங் தொடங்குவதற்கு முன், எல்லா எட்ஜ் கேஸ்கள் மற்றும் டெக்னிகல் விவரங்களை முன்கூட்டியே கொடுங்க.',
       imageUrl: '/assets/images/green_asterisk.png',
-      duration_frames: 240,
+      duration_frames: 180,
       animation: 'fade',
       transition: 'none',
     }));

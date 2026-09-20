@@ -17,6 +17,10 @@ import type {
   Batch,
   BatchItem,
   BatchProgress,
+  YoutubeStatus,
+  YoutubeConfigInput,
+  YoutubeUploadResult,
+  YoutubeUploadRecord,
 } from '../types';
 
 // ---- Axios Instance ----
@@ -272,6 +276,41 @@ export async function retryBatch(id: string): Promise<void> {
 
 export async function deleteBatch(id: string): Promise<void> {
   await api.delete(`/batch/${id}`);
+}
+
+// ---- YouTube Integration ----
+
+export async function getYoutubeStatus(): Promise<YoutubeStatus> {
+  return unwrap(await api.get<ApiResponse<YoutubeStatus>>('/youtube/status'));
+}
+
+export async function updateYoutubeConfig(config: YoutubeConfigInput): Promise<YoutubeStatus> {
+  return unwrap(await api.post<ApiResponse<YoutubeStatus>>('/youtube/config', config));
+}
+
+export async function getYoutubeAuthUrl(): Promise<string> {
+  const res = unwrap(await api.get<ApiResponse<{ url: string }>>('/youtube/auth-url'));
+  return res.url;
+}
+
+export async function disconnectYoutube(): Promise<void> {
+  await api.post('/youtube/disconnect');
+}
+
+export async function uploadToYoutube(data: {
+  exportId?: string;
+  projectId?: string;
+  filePath?: string;
+  title: string;
+  description?: string;
+  tags?: string[];
+  privacyStatus?: 'private' | 'unlisted' | 'public';
+}): Promise<YoutubeUploadResult> {
+  return unwrap(await api.post<ApiResponse<YoutubeUploadResult>>('/youtube/upload', data));
+}
+
+export async function getYoutubeUploads(): Promise<YoutubeUploadRecord[]> {
+  return unwrap(await api.get<ApiResponse<YoutubeUploadRecord[]>>('/youtube/uploads'));
 }
 
 export default api;

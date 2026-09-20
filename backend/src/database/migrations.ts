@@ -260,6 +260,24 @@ export function runMigrations(): void {
     );
   `);
 
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS youtube_uploads (
+      id              TEXT PRIMARY KEY,
+      project_id      TEXT,
+      export_id       TEXT,
+      youtube_id      TEXT NOT NULL,
+      video_url       TEXT NOT NULL,
+      title           TEXT NOT NULL,
+      description     TEXT,
+      tags            TEXT,
+      status          TEXT NOT NULL DEFAULT 'uploaded',
+      privacy_status  TEXT NOT NULL DEFAULT 'private',
+      created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+      FOREIGN KEY (project_id) REFERENCES projects(id) ON DELETE SET NULL,
+      FOREIGN KEY (export_id) REFERENCES exports(id) ON DELETE SET NULL
+    );
+  `);
+
   // ---- Indexes -------------------------------------------------------
 
   db.exec(`
@@ -269,6 +287,8 @@ export function runMigrations(): void {
     CREATE INDEX IF NOT EXISTS idx_projects_created_at ON projects(created_at);
     CREATE INDEX IF NOT EXISTS idx_batch_items_batch_id ON batch_items(batch_id);
     CREATE INDEX IF NOT EXISTS idx_batch_items_status ON batch_items(status);
+    CREATE INDEX IF NOT EXISTS idx_youtube_uploads_project_id ON youtube_uploads(project_id);
+    CREATE INDEX IF NOT EXISTS idx_youtube_uploads_export_id ON youtube_uploads(export_id);
   `);
 
   // ---- Seed default templates ----------------------------------------
@@ -417,6 +437,9 @@ function seedDefaultSettings(): void {
     default_animation: 'fade',
     default_music: '',
     default_resolution: '1080p',
+    youtube_auto_upload: '0',
+    youtube_default_privacy: 'private',
+    youtube_default_tags: 'Shorts,CodeShorts,Coding,Programming,Tech',
   };
 
   const upsert = db.prepare(`

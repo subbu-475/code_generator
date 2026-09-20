@@ -206,6 +206,7 @@ export interface SceneConfig {
   studioPromptText?: string;
   studioHeaderTop?: string;
   studioHeaderBottom?: string;
+  voiceNarration?: string;
 }
 
 export interface Template {

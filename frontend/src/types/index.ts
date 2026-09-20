@@ -62,3 +62,46 @@ export interface FilterState {
   status: string;
   language: string;
 }
+
+export interface YoutubeStatus {
+  configured: boolean;
+  connected: boolean;
+  channelTitle?: string;
+  channelHandle?: string;
+  channelThumbnail?: string;
+  autoUpload: boolean;
+  defaultPrivacy: 'private' | 'unlisted' | 'public';
+  defaultTags: string;
+  clientIdMasked?: string;
+}
+
+export interface YoutubeConfigInput {
+  clientId?: string;
+  clientSecret?: string;
+  autoUpload?: boolean;
+  defaultPrivacy?: 'private' | 'unlisted' | 'public';
+  defaultTags?: string;
+}
+
+export interface YoutubeUploadResult {
+  id: string;
+  youtubeId: string;
+  videoUrl: string;
+  title: string;
+  privacyStatus: string;
+  status: string;
+}
+
+export interface YoutubeUploadRecord {
+  id: string;
+  project_id: string | null;
+  export_id: string | null;
+  youtube_id: string;
+  video_url: string;
+  title: string;
+  description: string | null;
+  tags: string | null;
+  status: string;
+  privacy_status: string;
+  created_at: string;
+}

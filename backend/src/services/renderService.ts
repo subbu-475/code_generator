@@ -200,6 +200,13 @@ async function doRender(
             textToSpeak = `${title}. ${points.join('. ')}`;
           }
         }
+      } else if (
+        scene.type === 'studio_title' ||
+        scene.type === 'studio_slider' ||
+        scene.type === 'studio_prompt_mistake' ||
+        scene.type === 'studio_checklist'
+      ) {
+        textToSpeak = scene.voiceNarration || scene.text || scene.title || '';
       }
 
       if (textToSpeak.trim()) {
@@ -332,6 +339,31 @@ async function doRender(
     message: 'Render complete!',
     output_path: `/generated/videos/${path.basename(outputPath)}`,
   });
+
+  // Check for YouTube auto-upload
+  try {
+    const db = getDb();
+    const autoUploadRow = db.prepare("SELECT value FROM settings WHERE key = 'youtube_auto_upload'").get() as { value: string } | undefined;
+    const tokensRow = db.prepare("SELECT value FROM settings WHERE key = 'youtube_tokens'").get() as { value: string } | undefined;
+
+    if (autoUploadRow?.value === '1' && tokensRow?.value) {
+      const { uploadVideo } = await import('./youtubeService.js');
+      const project = getProjectById(projectId);
+      const title = project?.title || 'Code Shorts Video';
+      
+      console.log(`[Render] Auto-uploading rendered video to YouTube for project: ${projectId}...`);
+      uploadVideo({
+        filePath: outputPath,
+        title,
+        projectId,
+        exportId,
+      }).catch((err) => {
+        console.error('[Render] Auto-upload to YouTube failed:', err);
+      });
+    }
+  } catch (err) {
+    console.warn('[Render] Could not trigger YouTube auto-upload:', err);
+  }
 }
 
 function emitProgress(projectId: string, progress: RenderProgress): void {

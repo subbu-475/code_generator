@@ -1,9 +1,29 @@
-// ============================================================
-// Server entry point for the backend API
-// ============================================================
-
 import express from 'express';
 import cors from 'cors';
+import fs from 'node:fs';
+import path from 'node:path';
+
+// Load .env variables if present
+try {
+  const envPath = path.resolve('.env');
+  if (fs.existsSync(envPath)) {
+    const lines = fs.readFileSync(envPath, 'utf-8').split(/\r?\n/);
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (trimmed && !trimmed.startsWith('#') && trimmed.includes('=')) {
+        const idx = trimmed.indexOf('=');
+        const key = trimmed.slice(0, idx).trim();
+        const val = trimmed.slice(idx + 1).trim();
+        if (!process.env[key]) {
+          process.env[key] = val;
+        }
+      }
+    }
+  }
+} catch (e) {
+  console.warn('[Env] Could not load .env file:', e);
+}
+
 import { ensureDirectories, GENERATED_DIR, ASSETS_DIR } from './utils/paths.js';
 import { runMigrations } from './database/migrations.js';
 import { getDb } from './database/connection.js';
@@ -21,6 +41,7 @@ import exportsRouter from './routes/exports.js';
 import settingsRouter from './routes/settings.js';
 import uploadRouter from './routes/upload.js';
 import batchRouter from './routes/batch.js';
+import youtubeRouter from './routes/youtube.js';
 import { initQueue } from './services/batchQueue.js';
 
 const app = express();
@@ -57,6 +78,7 @@ app.use('/api/exports', exportsRouter);
 app.use('/api/settings', settingsRouter);
 app.use('/api/upload', uploadRouter);
 app.use('/api/batch', batchRouter);
+app.use('/api/youtube', youtubeRouter);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {
