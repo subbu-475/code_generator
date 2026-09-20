@@ -35,6 +35,8 @@ const UploadSchema = z.object({
   description: z.string().optional(),
   tags: z.array(z.string()).optional(),
   privacyStatus: z.enum(['private', 'unlisted', 'public']).optional(),
+  playlistId: z.string().optional(),
+  thumbnailPath: z.string().optional(),
 });
 
 // GET /api/youtube/status - Get integration status
@@ -156,7 +158,7 @@ router.post('/disconnect', (req, res, next) => {
 // POST /api/youtube/upload - Upload a video
 router.post('/upload', validate(UploadSchema), async (req, res, next) => {
   try {
-    const { exportId, projectId, filePath, title, description, tags, privacyStatus } = req.body;
+    const { exportId, projectId, filePath, title, description, tags, privacyStatus, playlistId, thumbnailPath } = req.body;
 
     let targetFilePath = filePath;
 
@@ -193,6 +195,8 @@ router.post('/upload', validate(UploadSchema), async (req, res, next) => {
       privacyStatus,
       projectId,
       exportId,
+      playlistId,
+      thumbnailPath,
     });
 
     res.json({
@@ -200,6 +204,35 @@ router.post('/upload', validate(UploadSchema), async (req, res, next) => {
       data: result,
       message: 'Video successfully uploaded to YouTube Shorts!',
     });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// GET /api/youtube/playlists - Get channel playlists
+router.get('/playlists', async (req, res, next) => {
+  try {
+    const { getPlaylists } = await import('../services/youtubeService.js');
+    const playlists = await getPlaylists();
+    res.json({
+      success: true,
+      data: playlists,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+// POST /api/youtube/set-thumbnail - Set video thumbnail
+router.post('/set-thumbnail', async (req, res, next) => {
+  try {
+    const { videoId, imagePath } = req.body;
+    if (!videoId || !imagePath) {
+      return res.status(400).json({ success: false, error: 'videoId and imagePath are required' });
+    }
+    const { setVideoThumbnail } = await import('../services/youtubeService.js');
+    await setVideoThumbnail(videoId, imagePath);
+    res.json({ success: true, message: 'Thumbnail updated successfully' });
   } catch (err) {
     next(err);
   }

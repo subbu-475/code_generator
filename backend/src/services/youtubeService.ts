@@ -41,6 +41,8 @@ export interface UploadOptions {
   privacyStatus?: 'private' | 'unlisted' | 'public';
   projectId?: string;
   exportId?: string;
+  playlistId?: string;
+  thumbnailPath?: string;
 }
 
 export interface YoutubeUploadResult {
@@ -410,6 +412,24 @@ export async function uploadVideo(options: UploadOptions): Promise<YoutubeUpload
 
   console.log(`[YouTube] Successfully uploaded video: ${videoUrl}`);
 
+  // Optional: Add to playlist
+  if (options.playlistId) {
+    try {
+      await addToPlaylist(options.playlistId, youtubeId);
+    } catch (err) {
+      console.warn(`[YouTube] Could not add to playlist ${options.playlistId}:`, err);
+    }
+  }
+
+  // Optional: Upload custom thumbnail
+  if (options.thumbnailPath && fs.existsSync(options.thumbnailPath)) {
+    try {
+      await setVideoThumbnail(youtubeId, options.thumbnailPath);
+    } catch (err) {
+      console.warn('[YouTube] Could not set custom thumbnail:', err);
+    }
+  }
+
   return {
     id: uploadId,
     youtubeId,
@@ -418,6 +438,62 @@ export async function uploadVideo(options: UploadOptions): Promise<YoutubeUpload
     privacyStatus: finalPrivacy,
     status: 'uploaded',
   };
+}
+
+/**
+ * Get channel playlists
+ */
+export async function getPlaylists(): Promise<{ id: string; title: string }[]> {
+  const oauth2Client = getOAuth2Client();
+  if (!oauth2Client) throw new Error('YouTube is not configured.');
+  const youtube = google.youtube({ version: 'v3', auth: oauth2Client });
+  const res = await youtube.playlists.list({
+    part: ['snippet'],
+    mine: true,
+    maxResults: 50,
+  });
+  return (res.data.items || []).map((item) => ({
+    id: item.id || '',
+    title: item.snippet?.title || 'Untitled Playlist',
+  }));
+}
+
+/**
+ * Add a video to a specific playlist
+ */
+export async function addToPlaylist(playlistId: string, videoId: string): Promise<void> {
+  const oauth2Client = getOAuth2Client();
+  if (!oauth2Client) throw new Error('YouTube is not configured.');
+  const youtube = google.youtube({ version: 'v3', auth: oauth2Client });
+  await youtube.playlistItems.insert({
+    part: ['snippet'],
+    requestBody: {
+      snippet: {
+        playlistId,
+        resourceId: {
+          kind: 'youtube#video',
+          videoId,
+        },
+      },
+    },
+  });
+  console.log(`[YouTube] Video ${videoId} added to playlist ${playlistId}`);
+}
+
+/**
+ * Upload custom thumbnail for a video
+ */
+export async function setVideoThumbnail(videoId: string, imagePath: string): Promise<void> {
+  const oauth2Client = getOAuth2Client();
+  if (!oauth2Client) throw new Error('YouTube is not configured.');
+  const youtube = google.youtube({ version: 'v3', auth: oauth2Client });
+  await youtube.thumbnails.set({
+    videoId,
+    media: {
+      body: fs.createReadStream(imagePath),
+    },
+  });
+  console.log(`[YouTube] Thumbnail set for video ${videoId}`);
 }
 
 /**
