@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#0a0a0f"/>
+  <line x1="540" y1="40" x2="540" y2="1880" stroke="#6C63FF" stroke-width="2" stroke-dasharray="8 4"/>
+  <text x="270" y="60" text-anchor="middle" fill="#6C63FF" font-family="Inter, sans-serif" font-size="20" font-weight="700">Option A</text>
+  <text x="810" y="60" text-anchor="middle" fill="#00D4AA" font-family="Inter, sans-serif" font-size="20" font-weight="700">Option B</text>
+</svg>

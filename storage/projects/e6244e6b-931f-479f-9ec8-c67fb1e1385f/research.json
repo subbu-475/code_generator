@@ -1,0 +1,37 @@
+{
+  "topic": "HTTP vs HTTPS",
+  "category": "networking",
+  "summary": "HTTP (Hypertext Transfer Protocol) sends data in plain text, while HTTPS adds TLS encryption. HTTPS prevents eavesdropping, tampering, and impersonation. The 'S' stands for Secure — it uses certificates to verify server identity and encrypt all data in transit.",
+  "keyFacts": [
+    "The internet is built on layers of protocols (OSI model / TCP/IP stack)",
+    "Data travels as packets across the network",
+    "Encryption protects data in transit from interception",
+    "Latency and bandwidth are the two key network performance metrics",
+    "Every device on the internet has a unique IP address"
+  ],
+  "analogies": [
+    "Think of it as a building block in a larger system",
+    "Like learning to drive — once you understand the fundamentals, everything else builds on top"
+  ],
+  "visualMetaphors": [
+    "technical_architecture_diagram",
+    "connected_nodes_network",
+    "layered_system"
+  ],
+  "technicalTerms": [
+    {
+      "term": "HTTPS",
+      "explanation": "A fundamental concept in modern technology"
+    }
+  ],
+  "commonMisconceptions": [
+    "Common misconceptions often arise from oversimplifying complex concepts",
+    "Understanding edge cases is as important as understanding the happy path"
+  ],
+  "relatedTopics": [
+    "System Design",
+    "Best Practices",
+    "Performance Optimization",
+    "Security Considerations"
+  ]
+}

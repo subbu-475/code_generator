@@ -1,0 +1,367 @@
+{
+  "sceneConfigs": [
+    {
+      "id": "cfa3e870-b2d8-443e-b749-70c343d12500",
+      "scene_order": 0,
+      "type": "hook",
+      "title": "YOUR PASSWORD JUST TRAVELED ACROSS THE INTERNET",
+      "text": "Your password just traveled across the internet. Was anyone watching?",
+      "duration_frames": 162,
+      "animation": "scale",
+      "transition": "fade",
+      "voiceNarration": "Your password just traveled across the internet. Was anyone watching?",
+      "voiceUrl": "/generated/audio/voice_cfa3e870-b2d8-443e-b749-70c343d12500.mp3",
+      "captionPhrases": [
+        {
+          "text": "Your password just traveled",
+          "startFrame": 0,
+          "endFrame": 22,
+          "highlight": true
+        },
+        {
+          "text": "across the internet.",
+          "startFrame": 22,
+          "endFrame": 44,
+          "highlight": false
+        },
+        {
+          "text": "Was anyone",
+          "startFrame": 45,
+          "endFrame": 67,
+          "highlight": true
+        },
+        {
+          "text": "watching?",
+          "startFrame": 67,
+          "endFrame": 89,
+          "highlight": false
+        }
+      ],
+      "hookLayout": "glassmorphic",
+      "hookBadge": "⚡",
+      "hookBadgeStyle": "glow"
+    },
+    {
+      "id": "f78a3a0a-2107-4059-b8f1-88b17995f98f",
+      "scene_order": 1,
+      "type": "diagram",
+      "title": "HTTP sends data in plain text",
+      "text": "HTTP sends data in plain text. Anyone on your Wi-Fi network can read your passwords.",
+      "duration_frames": 221,
+      "animation": "draw-path",
+      "transition": "slide",
+      "voiceNarration": "HTTP sends data in plain text. Anyone on your Wi-Fi network can read your passwords.",
+      "voiceUrl": "/generated/audio/voice_f78a3a0a-2107-4059-b8f1-88b17995f98f.mp3",
+      "captionPhrases": [
+        {
+          "text": "HTTP sends data",
+          "startFrame": 0,
+          "endFrame": 37,
+          "highlight": true
+        },
+        {
+          "text": "in plain text.",
+          "startFrame": 37,
+          "endFrame": 74,
+          "highlight": false
+        },
+        {
+          "text": "Anyone on your Wi-Fi network",
+          "startFrame": 75,
+          "endFrame": 112,
+          "highlight": true
+        },
+        {
+          "text": "can read your passwords.",
+          "startFrame": 112,
+          "endFrame": 149,
+          "highlight": false
+        }
+      ],
+      "flowNodes": [
+        {
+          "id": "client",
+          "label": "BROWSER",
+          "icon": "🌐",
+          "status": "active",
+          "detail": "Client"
+        },
+        {
+          "id": "tls",
+          "label": "TLS HANDSHAKE",
+          "icon": "🔒",
+          "status": "active",
+          "detail": "Encrypt"
+        },
+        {
+          "id": "server",
+          "label": "WEB SERVER",
+          "icon": "🖥️",
+          "status": "pending",
+          "detail": "HTTPS"
+        }
+      ],
+      "flowActiveStep": 1,
+      "packetLabel": "HTTP sends data in plain text",
+      "telemetry": {
+        "protocol": "TLS 1.3 / HTTPS",
+        "status": "ACTIVE"
+      },
+      "imageUrl": "/storage/projects/e6244e6b-931f-479f-9ec8-c67fb1e1385f/assets/03c5ff51-a14e-4fff-87b7-dec4452e6c6a.svg"
+    },
+    {
+      "id": "06c2dd95-9a58-489c-bbfa-13b6da9a9d05",
+      "scene_order": 2,
+      "type": "split_comparison",
+      "title": "Let's compare http and https side by side",
+      "text": "Let's compare http and https side by side. They might seem similar, but the differences are critical.",
+      "duration_frames": 254,
+      "animation": "slide-left",
+      "transition": "zoom",
+      "voiceNarration": "Let's compare http and https side by side. They might seem similar, but the differences are critical.",
+      "voiceUrl": "/generated/audio/voice_06c2dd95-9a58-489c-bbfa-13b6da9a9d05.mp3",
+      "captionPhrases": [
+        {
+          "text": "Let's compare http and",
+          "startFrame": 0,
+          "endFrame": 45,
+          "highlight": true
+        },
+        {
+          "text": "https side by side.",
+          "startFrame": 45,
+          "endFrame": 90,
+          "highlight": false
+        },
+        {
+          "text": "They might seem similar, but",
+          "startFrame": 90,
+          "endFrame": 135,
+          "highlight": true
+        },
+        {
+          "text": "the differences are critical.",
+          "startFrame": 135,
+          "endFrame": 180,
+          "highlight": false
+        }
+      ],
+      "comparisonLeftTitle": "HTTP",
+      "comparisonRightTitle": "HTTPS",
+      "comparisonVerdict": "Let's compare http and https side by side. They might seem similar, but the differences are critical.",
+      "imageUrl": "/storage/projects/e6244e6b-931f-479f-9ec8-c67fb1e1385f/assets/c77c9a65-b6f5-44e3-abe1-5fe1d5883c7a.svg"
+    },
+    {
+      "id": "07c1cf0d-39a0-4c27-ae52-6c5323fca93a",
+      "scene_order": 3,
+      "type": "diagram",
+      "title": "During the handshake, the server presents...",
+      "text": "During the handshake, the server presents a digital certificate. The client verifies this certificate with a trusted Certificate Authority to confirm the server's identity.",
+      "duration_frames": 305,
+      "animation": "draw-path",
+      "transition": "fade",
+      "voiceNarration": "During the handshake, the server presents a digital certificate. The client verifies this certificate with a trusted Certificate Authority to confirm the server's identity.",
+      "voiceUrl": "/generated/audio/voice_07c1cf0d-39a0-4c27-ae52-6c5323fca93a.mp3",
+      "captionPhrases": [
+        {
+          "text": "During the handshake, the server",
+          "startFrame": 0,
+          "endFrame": 45,
+          "highlight": true
+        },
+        {
+          "text": "presents a digital certificate.",
+          "startFrame": 45,
+          "endFrame": 90,
+          "highlight": false
+        },
+        {
+          "text": "The client verifies this certificate with",
+          "startFrame": 90,
+          "endFrame": 120,
+          "highlight": true
+        },
+        {
+          "text": "a trusted Certificate Authority to confirm",
+          "startFrame": 120,
+          "endFrame": 150,
+          "highlight": false
+        },
+        {
+          "text": "the server's identity.",
+          "startFrame": 150,
+          "endFrame": 180,
+          "highlight": false
+        }
+      ],
+      "flowNodes": [
+        {
+          "id": "client",
+          "label": "BROWSER",
+          "icon": "🌐",
+          "status": "active",
+          "detail": "Client"
+        },
+        {
+          "id": "tls",
+          "label": "TLS HANDSHAKE",
+          "icon": "🔒",
+          "status": "active",
+          "detail": "Encrypt"
+        },
+        {
+          "id": "server",
+          "label": "WEB SERVER",
+          "icon": "🖥️",
+          "status": "pending",
+          "detail": "HTTPS"
+        }
+      ],
+      "flowActiveStep": 1,
+      "packetLabel": "During the handshake, the server presents...",
+      "telemetry": {
+        "protocol": "TLS 1.3 / HTTPS",
+        "status": "ACTIVE"
+      },
+      "imageUrl": "/storage/projects/e6244e6b-931f-479f-9ec8-c67fb1e1385f/assets/9e7612fe-3c9d-4ba2-be92-dd8d57002332.svg"
+    },
+    {
+      "id": "7c75e294-5f99-43a3-a0e6-fdd04472d8c8",
+      "scene_order": 4,
+      "type": "diagram",
+      "title": "Once the secure channel is established,...",
+      "text": "Once the secure channel is established, all data is encrypted. Even if someone intercepts the traffic, they see only scrambled, unreadable bytes.",
+      "duration_frames": 297,
+      "animation": "draw-path",
+      "transition": "fade",
+      "voiceNarration": "Once the secure channel is established, all data is encrypted. Even if someone intercepts the traffic, they see only scrambled, unreadable bytes.",
+      "voiceUrl": "/generated/audio/voice_7c75e294-5f99-43a3-a0e6-fdd04472d8c8.mp3",
+      "captionPhrases": [
+        {
+          "text": "Once the secure channel is",
+          "startFrame": 0,
+          "endFrame": 45,
+          "highlight": true
+        },
+        {
+          "text": "established, all data is encrypted.",
+          "startFrame": 45,
+          "endFrame": 90,
+          "highlight": false
+        },
+        {
+          "text": "Even if someone intercepts the traffic,",
+          "startFrame": 90,
+          "endFrame": 135,
+          "highlight": true
+        },
+        {
+          "text": "they see only scrambled, unreadable bytes.",
+          "startFrame": 135,
+          "endFrame": 180,
+          "highlight": false
+        }
+      ],
+      "flowNodes": [
+        {
+          "id": "client",
+          "label": "BROWSER",
+          "icon": "🌐",
+          "status": "active",
+          "detail": "Client"
+        },
+        {
+          "id": "tls",
+          "label": "TLS HANDSHAKE",
+          "icon": "🔒",
+          "status": "active",
+          "detail": "Encrypt"
+        },
+        {
+          "id": "server",
+          "label": "WEB SERVER",
+          "icon": "🖥️",
+          "status": "pending",
+          "detail": "HTTPS"
+        }
+      ],
+      "flowActiveStep": 1,
+      "packetLabel": "Once the secure channel is established,...",
+      "telemetry": {
+        "protocol": "TLS 1.3 / HTTPS",
+        "status": "ACTIVE"
+      },
+      "imageUrl": "/storage/projects/e6244e6b-931f-479f-9ec8-c67fb1e1385f/assets/ad607d57-ad8a-473d-8928-6ac9285e9b51.svg"
+    },
+    {
+      "id": "8b934564-397a-4c31-b4e7-17bdfa3c1d1a",
+      "scene_order": 5,
+      "type": "concept_reveal",
+      "title": "Remember this key fact: Common misconceptions...",
+      "text": "Remember this key fact: Common misconceptions often arise from oversimplifying complex concepts",
+      "duration_frames": 204,
+      "animation": "spring",
+      "transition": "slide",
+      "voiceNarration": "Remember this key fact: Common misconceptions often arise from oversimplifying complex concepts",
+      "voiceUrl": "/generated/audio/voice_8b934564-397a-4c31-b4e7-17bdfa3c1d1a.mp3",
+      "captionPhrases": [
+        {
+          "text": "Remember this key fact: Common misconceptions",
+          "startFrame": 0,
+          "endFrame": 90,
+          "highlight": true
+        },
+        {
+          "text": "often arise from oversimplifying complex concepts",
+          "startFrame": 90,
+          "endFrame": 180,
+          "highlight": false
+        }
+      ],
+      "icon": "🔒",
+      "badge": "NETWORKING",
+      "imageUrl": "/storage/projects/e6244e6b-931f-479f-9ec8-c67fb1e1385f/assets/0186e783-3ab1-479c-a1b3-46fd0fa4892e.svg"
+    },
+    {
+      "id": "6d54c231-7277-46bf-bf37-fc77cc4241e9",
+      "scene_order": 6,
+      "type": "cta_end",
+      "title": "Want to learn about System Design",
+      "text": "Want to learn about System Design? Subscribe to CodeWithSundresh for daily tech explainers.",
+      "duration_frames": 202,
+      "animation": "fade",
+      "transition": "fade",
+      "voiceNarration": "Want to learn about System Design? Subscribe to CodeWithSundresh for daily tech explainers.",
+      "voiceUrl": "/generated/audio/voice_6d54c231-7277-46bf-bf37-fc77cc4241e9.mp3",
+      "captionPhrases": [
+        {
+          "text": "Want to learn",
+          "startFrame": 0,
+          "endFrame": 30,
+          "highlight": true
+        },
+        {
+          "text": "about System Design?",
+          "startFrame": 30,
+          "endFrame": 60,
+          "highlight": false
+        },
+        {
+          "text": "Subscribe to CodeWithSundresh for",
+          "startFrame": 60,
+          "endFrame": 90,
+          "highlight": true
+        },
+        {
+          "text": "daily tech explainers.",
+          "startFrame": 90,
+          "endFrame": 120,
+          "highlight": false
+        }
+      ],
+      "channelName": "CodeWithSundresh",
+      "channelHandle": "@CodeWithSundresh"
+    }
+  ],
+  "totalFrames": 1645
+}

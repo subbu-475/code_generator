@@ -1,0 +1,34 @@
+{
+  "title": "What is Docker — Explained Visually in 30 Seconds ⚡ #shorts",
+  "description": "Your app works on your machine but crashes on the server. Docker fixes this forever.\n\nIn this short animated explainer, we break down What is Docker? and how it works under the hood.\n\n⚡ Key Concepts:\n• Docker containers share the host OS kernel, unlike VMs which need a full OS\n• A Dockerfile is a text file with instructions to build a container image\n• Docker images are built in layers — each instruction creates a new layer\n• Containers are ephemeral by default — data is lost when they stop\n\n🔍 Tech Breakdown:\n• Container: A lightweight, standalone package that includes everything needed to run a piece of software\n• Image: A read-only template used to create containers — like a snapshot of an application\n• Dockerfile: A text document containing instructions to build a Docker image\n\nSubscribe to @CodeWithSundresh for daily animated software architecture, systems engineering, and tech deep dives!\n\n#shorts #whatisdocker #programming #softwareengineering #coding #systemdesign #devops #tech #webdevelopment",
+  "tags": [
+    "what is docker?",
+    "what",
+    "is",
+    "docker?",
+    "container",
+    "image",
+    "dockerfile",
+    "volume",
+    "registry",
+    "devops",
+    "shorts",
+    "programming",
+    "coding",
+    "software engineering",
+    "system design",
+    "computer science",
+    "CodeWithSundresh",
+    "tech explainer",
+    "animated"
+  ],
+  "hashtags": [
+    "#shorts",
+    "#whatisdocker",
+    "#programming",
+    "#coding",
+    "#systemdesign",
+    "#tech"
+  ],
+  "category": "28"
+}

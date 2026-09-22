@@ -1,0 +1,29 @@
+{
+  "title": "HTTP vs HTTPS — The Key Differences in 30 Seconds ⚡ #shorts",
+  "description": "Your password just traveled across the internet. Was anyone watching?\n\nIn this short animated explainer, we break down HTTP vs HTTPS and how it works under the hood.\n\n⚡ Key Concepts:\n• The internet is built on layers of protocols (OSI model / TCP/IP stack)\n• Data travels as packets across the network\n• Encryption protects data in transit from interception\n• Latency and bandwidth are the two key network performance metrics\n\n🔍 Tech Breakdown:\n• HTTPS: A fundamental concept in modern technology\n\nSubscribe to @CodeWithSundresh for daily animated software architecture, systems engineering, and tech deep dives!\n\n#shorts #httpvshttps #programming #softwareengineering #coding #systemdesign #devops #tech #webdevelopment",
+  "tags": [
+    "http vs https",
+    "http",
+    "vs",
+    "https",
+    "networking",
+    "shorts",
+    "programming",
+    "coding",
+    "software engineering",
+    "system design",
+    "computer science",
+    "CodeWithSundresh",
+    "tech explainer",
+    "animated"
+  ],
+  "hashtags": [
+    "#shorts",
+    "#httpvshttps",
+    "#programming",
+    "#coding",
+    "#systemdesign",
+    "#tech"
+  ],
+  "category": "28"
+}

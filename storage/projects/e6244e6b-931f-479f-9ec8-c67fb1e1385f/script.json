@@ -1,0 +1,115 @@
+{
+  "title": "HTTP vs HTTPS — The Key Differences",
+  "hook": "Your password just traveled across the internet. Was anyone watching?",
+  "totalDurationTarget": 32,
+  "wordCount": 113,
+  "scenes": [
+    {
+      "id": "cfa3e870-b2d8-443e-b749-70c343d12500",
+      "sceneNumber": 1,
+      "narration": "Your password just traveled across the internet. Was anyone watching?",
+      "caption": "Your password just traveled across the internet",
+      "visualDescription": "Bold hook text with attention-grabbing animation. Topic: HTTP vs HTTPS. Dark cinematic background with subtle particles.",
+      "animationDescription": "Text scales in with spring animation, subtle camera zoom",
+      "suggestedDuration": 3,
+      "sceneType": "hook",
+      "assetRequirements": []
+    },
+    {
+      "id": "f78a3a0a-2107-4059-b8f1-88b17995f98f",
+      "sceneNumber": 2,
+      "narration": "HTTP sends data in plain text. Anyone on your Wi-Fi network can read your passwords.",
+      "caption": "HTTP sends data in plain text",
+      "visualDescription": "Visual representation of the problem that HTTP vs HTTPS solves. Dark themed diagram with glowing nodes.",
+      "animationDescription": "Animated diagram showing the problem scenario with progressive reveals",
+      "suggestedDuration": 5,
+      "sceneType": "diagram",
+      "assetRequirements": [
+        {
+          "type": "diagram",
+          "description": "Problem visualization for HTTP vs HTTPS",
+          "priority": "required"
+        }
+      ]
+    },
+    {
+      "id": "06c2dd95-9a58-489c-bbfa-13b6da9a9d05",
+      "sceneNumber": 3,
+      "narration": "Let's compare http and https side by side. They might seem similar, but the differences are critical.",
+      "caption": "Let's compare http and https side by side",
+      "visualDescription": "Side-by-side comparison: http vs https. Each side has distinct visual identity with pros/cons indicators.",
+      "animationDescription": "Both panels slide in from opposite sides, comparison points appear one by one",
+      "suggestedDuration": 6,
+      "sceneType": "split-comparison",
+      "assetRequirements": [
+        {
+          "type": "diagram",
+          "description": "Visual for: The internet is built on layers of protocols (OSI model / TCP/IP stack)",
+          "priority": "required"
+        }
+      ]
+    },
+    {
+      "id": "07c1cf0d-39a0-4c27-ae52-6c5323fca93a",
+      "sceneNumber": 4,
+      "narration": "During the handshake, the server presents a digital certificate. The client verifies this certificate with a trusted Certificate Authority to confirm the server's identity.",
+      "caption": "During the handshake, the server presents...",
+      "visualDescription": "Animated technical diagram for HTTP vs HTTPS. Glassmorphic nodes with neon accent connections on dark background.",
+      "animationDescription": "Nodes appear sequentially with connecting lines drawing between them, data packets flow along paths",
+      "suggestedDuration": 6,
+      "sceneType": "diagram",
+      "assetRequirements": [
+        {
+          "type": "diagram",
+          "description": "Visual for: Data travels as packets across the network",
+          "priority": "required"
+        }
+      ]
+    },
+    {
+      "id": "7c75e294-5f99-43a3-a0e6-fdd04472d8c8",
+      "sceneNumber": 5,
+      "narration": "Once the secure channel is established, all data is encrypted. Even if someone intercepts the traffic, they see only scrambled, unreadable bytes.",
+      "caption": "Once the secure channel is established,...",
+      "visualDescription": "Animated technical diagram for HTTP vs HTTPS. Glassmorphic nodes with neon accent connections on dark background.",
+      "animationDescription": "Nodes appear sequentially with connecting lines drawing between them, data packets flow along paths",
+      "suggestedDuration": 6,
+      "sceneType": "diagram",
+      "assetRequirements": [
+        {
+          "type": "diagram",
+          "description": "Visual for: Encryption protects data in transit from interception",
+          "priority": "required"
+        }
+      ]
+    },
+    {
+      "id": "8b934564-397a-4c31-b4e7-17bdfa3c1d1a",
+      "sceneNumber": 6,
+      "narration": "Remember this key fact: Common misconceptions often arise from oversimplifying complex concepts",
+      "caption": "Remember this key fact: Common misconceptions...",
+      "visualDescription": "Key insight visualization: Latency and bandwidth are the two key network performance metrics. Large centered icon with supporting text. Premium glassmorphic card.",
+      "animationDescription": "Card fades in with scale animation, icon pulses, text reveals line by line",
+      "suggestedDuration": 6,
+      "sceneType": "concept-reveal",
+      "assetRequirements": [
+        {
+          "type": "diagram",
+          "description": "Visual for: Latency and bandwidth are the two key network performance metrics",
+          "priority": "required"
+        }
+      ]
+    },
+    {
+      "id": "6d54c231-7277-46bf-bf37-fc77cc4241e9",
+      "sceneNumber": 7,
+      "narration": "Want to learn about System Design? Subscribe to CodeWithSundresh for daily tech explainers.",
+      "caption": "Want to learn about System Design",
+      "visualDescription": "Clean closing with channel branding. Key takeaway text with subscribe prompt.",
+      "animationDescription": "Smooth fade transition, text slides up, follow button pulses",
+      "suggestedDuration": 4,
+      "sceneType": "cta-end",
+      "assetRequirements": []
+    }
+  ]
+}

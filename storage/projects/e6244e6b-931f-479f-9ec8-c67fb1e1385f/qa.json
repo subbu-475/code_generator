@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "name": "File Size",
+      "passed": true,
+      "expected": ">= 0.2 MB",
+      "actual": "7.60 MB",
+      "severity": "critical"
+    },
+    {
+      "name": "Video Stream",
+      "passed": true,
+      "expected": "Present (h264)",
+      "actual": "h264",
+      "severity": "critical"
+    },
+    {
+      "name": "Resolution (9:16 Vertical)",
+      "passed": true,
+      "expected": "1080x1920 (9:16 vertical)",
+      "actual": "1080x1920",
+      "severity": "info"
+    },
+    {
+      "name": "Duration (YouTube Shorts limit)",
+      "passed": true,
+      "expected": "15s - 60s",
+      "actual": "54.9s",
+      "severity": "critical"
+    },
+    {
+      "name": "Audio Stream",
+      "passed": true,
+      "expected": "Present (aac / mp3)",
+      "actual": "aac (48000Hz)",
+      "severity": "critical"
+    }
+  ],
+  "videoPath": "D:\\Code Shorts Generator\\codegen\\storage\\projects\\e6244e6b-931f-479f-9ec8-c67fb1e1385f\\renders\\e6244e6b-931f-479f-9ec8-c67fb1e1385f_v1.mp4",
+  "timestamp": "2026-09-22T06:30:47.669Z"
+}
