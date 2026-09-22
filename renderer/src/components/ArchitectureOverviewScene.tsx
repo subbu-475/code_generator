@@ -6,6 +6,7 @@ import { Caption } from './Caption';
 interface ArchitectureOverviewSceneProps {
   title: string;
   text?: string;
+  architectureSteps?: Array<{ label: string; icon: string; badge?: string }>;
   template: VideoTheme;
   durationInFrames: number;
 }
@@ -13,6 +14,7 @@ interface ArchitectureOverviewSceneProps {
 export const ArchitectureOverviewScene: React.FC<ArchitectureOverviewSceneProps> = ({
   title,
   text,
+  architectureSteps,
   template,
   durationInFrames,
 }) => {
@@ -26,14 +28,19 @@ export const ArchitectureOverviewScene: React.FC<ArchitectureOverviewSceneProps>
   const brightLime = '#B8FF9C';
   const metricAmber = '#F4C95D';
 
-  const steps = [
-    { label: 'USER INPUT', icon: '⌨️', badge: 'STEP 01' },
-    { label: 'DNS RESOLUTION', icon: '🌐', badge: 'STEP 02' },
-    { label: 'TCP/TLS HANDSHAKE', icon: '🔒', badge: 'STEP 03' },
-    { label: 'WEB SERVER ROUTING', icon: '⚡', badge: 'STEP 04' },
-    { label: 'DATABASE QUERY', icon: '🗄️', badge: 'STEP 05' },
-    { label: 'DOM PARSE & RENDER', icon: '🎉', badge: 'STEP 06' },
-  ];
+  const steps = architectureSteps && architectureSteps.length > 0
+    ? architectureSteps.map((s, idx) => ({
+        ...s,
+        badge: s.badge || `STEP ${String(idx + 1).padStart(2, '0')}`,
+      }))
+    : [
+        { label: 'USER INPUT', icon: '⌨️', badge: 'STEP 01' },
+        { label: 'DNS RESOLUTION', icon: '🌐', badge: 'STEP 02' },
+        { label: 'TCP/TLS HANDSHAKE', icon: '🔒', badge: 'STEP 03' },
+        { label: 'WEB SERVER ROUTING', icon: '⚡', badge: 'STEP 04' },
+        { label: 'DATABASE QUERY', icon: '🗄️', badge: 'STEP 05' },
+        { label: 'DOM PARSE & RENDER', icon: '🎉', badge: 'STEP 06' },
+      ];
 
   // Title entrance
   const titleEntrance = spring({ frame, fps, config: { damping: 14, stiffness: 100 } });

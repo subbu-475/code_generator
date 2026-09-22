@@ -352,7 +352,7 @@ async function doRender(
     crf: format === 'webm' ? undefined : 16,
     imageFormat: 'png',
     pixelFormat: format === 'webm' ? undefined : 'yuv420p',
-    x264Preset: format === 'webm' ? undefined : 'slow',
+    x264Preset: format === 'webm' ? undefined : 'fast',
     scale: 1,
     outputLocation: outputPath,
     onProgress: ({ progress }: { progress: number }) => {

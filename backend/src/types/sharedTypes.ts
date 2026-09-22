@@ -231,6 +231,17 @@ export interface SceneConfig {
   browserSimState?: 'typing' | 'enter' | 'loading' | 'rendered';
   browserPageTitle?: string;
   cinematicZoom?: boolean;
+  architectureSteps?: Array<{
+    label: string;
+    icon: string;
+    badge?: string;
+  }>;
+  captionPhrases?: Array<{
+    text: string;
+    startFrame: number;
+    endFrame: number;
+    highlight?: boolean;
+  }>;
 }
 
 export interface Template {
@@ -343,7 +354,12 @@ export type SceneType =
   | 'network_flow'
   | 'browser_sim'
   | 'cinematic_image'
-  | 'architecture_overview';
+  | 'architecture_overview'
+  | 'diagram'
+  | 'code_visualization'
+  | 'concept_reveal'
+  | 'split_comparison'
+  | 'cta_end';
 
 export type AnimationStyle = 'fade' | 'zoom' | 'slide' | 'pop' | 'bounce';
 

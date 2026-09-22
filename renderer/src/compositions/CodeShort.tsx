@@ -35,6 +35,11 @@ import { NetworkFlowScene } from '../components/NetworkFlowScene';
 import { BrowserSimScene } from '../components/BrowserSimScene';
 import { CinematicImageScene } from '../components/CinematicImageScene';
 import { ArchitectureOverviewScene } from '../components/ArchitectureOverviewScene';
+import { DiagramScene } from '../components/DiagramScene';
+import { SplitComparisonScene } from '../components/SplitComparisonScene';
+import { CodeVisualizationScene } from '../components/CodeVisualizationScene';
+import { ConceptRevealScene } from '../components/ConceptRevealScene';
+import { CTAEndScene } from '../components/CTAEndScene';
 
 export const CodeShort: React.FC<VideoProps> = ({
   scenes,
@@ -370,6 +375,72 @@ export const CodeShort: React.FC<VideoProps> = ({
           <ArchitectureOverviewScene
             title={scene.title}
             text={scene.text}
+            architectureSteps={scene.architectureSteps}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'diagram':
+        return (
+          <DiagramScene
+            title={scene.title}
+            text={scene.text}
+            flowNodes={scene.flowNodes}
+            flowActiveStep={scene.flowActiveStep}
+            packetLabel={scene.packetLabel}
+            telemetry={scene.telemetry}
+            captionPhrases={scene.captionPhrases}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'split_comparison':
+        return (
+          <SplitComparisonScene
+            title={scene.title}
+            text={scene.text}
+            comparisonLeftTitle={scene.comparisonLeftTitle}
+            comparisonRightTitle={scene.comparisonRightTitle}
+            comparisonLeftCode={scene.comparisonLeftCode}
+            comparisonRightCode={scene.comparisonRightCode}
+            comparisonVerdict={scene.comparisonVerdict}
+            captionPhrases={scene.captionPhrases}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'code_visualization':
+        return (
+          <CodeVisualizationScene
+            title={scene.title}
+            text={scene.text}
+            code={scene.code}
+            language={scene.language}
+            output={scene.output}
+            captionPhrases={scene.captionPhrases}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'concept_reveal':
+        return (
+          <ConceptRevealScene
+            title={scene.title}
+            text={scene.text}
+            imageUrl={resolveUrl(scene.imageUrl)}
+            captionPhrases={scene.captionPhrases}
+            template={resolvedTemplate}
+            durationInFrames={scene.duration_frames}
+          />
+        );
+      case 'cta_end':
+        return (
+          <CTAEndScene
+            title={scene.title}
+            text={scene.text}
+            channelName={scene.channelName}
+            channelHandle={scene.channelHandle}
+            captionPhrases={scene.captionPhrases}
             template={resolvedTemplate}
             durationInFrames={scene.duration_frames}
           />

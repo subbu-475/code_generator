@@ -40,19 +40,24 @@ Audio and visuals must be **100% synchronized** with dynamic scene duration padd
 
 ---
 
-## The 7-Scene Master Story Structure (25–35s / 750–1,050 frames)
+## Dynamic Archetype System (Never Use Rigid/Identical Templates)
+
+Videos MUST adapt their scene structures and visuals dynamically based on topic nature:
 
 ```mermaid
 graph TD
-  A[Scene 1: Instant Hook 0-3s] --> B[Scene 2: Entering System 3-6s]
-  B --> C[Scene 3: Step 1 DNS Lookup 6-12s]
-  C --> D[Scene 4: Micro-Hook + TLS 1.3 Handshake 12-18s]
-  D --> E[Scene 5: Server & Database Query 18-24s]
-  E --> F[Scene 6: DOM Render Payoff 24-29s]
-  F --> G[Scene 7: Architecture Loop & Next Question 29-35s]
+  A[Topic Provided] --> B{Detect Archetype}
+  B -->|System & Reverse Proxy| C[Browser Sim Traffic Surge ➔ Server Cluster ➔ Network Flow Round Robin ➔ nginx.conf ➔ Architecture Pipeline ➔ DDoS Loop]
+  B -->|Cloud & Containerization| D[Browser Sim Error ➔ VM vs Docker ➔ Shared Kernel Namespaces ➔ Dockerfile Layers ➔ docker run 50ms ➔ Pipeline ➔ K8s Loop]
+  B -->|Protocol Comparisons| E[Unencrypted Leak Alert ➔ Side-by-Side Comparison ➔ TLS 1.3 Key Exchange ➔ Browser Sim Padlock ➔ Pipeline ➔ DoH Loop]
+  B -->|Web & DNS Lifecycle| F[Browser Sim google.com ➔ Fiber Visual ➔ DNS UDP/53 ➔ TLS 1.3 ➔ DB Query ➔ DOM Render ➔ Ocean Cable Loop]
+  B -->|Custom / Arbitrary Tech| G[Problem Simulation ➔ Tech Visual ➔ High-Throughput RPC Flow ➔ Minimal Config ➔ Verified Status ➔ CAP Loop]
 ```
 
----
+### Automatic Generation Endpoints & Service:
+- **Backend Service:** `aiTopicEngine.generateProjectFromTopic(topic, options)`
+- **HTTP Endpoint:** `POST /api/projects/ai-generate` with `{ topic: "..." }`
+- **Frontend UI:** **"✨ AI Topic Generator"** button & modal in Dashboard and Projects view.
 
 ## 10 Core Topic Scene Recipes
 

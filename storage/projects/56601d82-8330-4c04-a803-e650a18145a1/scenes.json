@@ -1,0 +1,565 @@
+[
+  {
+    "id": "8dcf2972-ac88-4963-95c3-198a91c382ca",
+    "sceneNumber": 1,
+    "narration": "Your app works on your machine but crashes on the server. Docker fixes this forever.",
+    "captionPhrases": [
+      {
+        "text": "Your app works on your machine",
+        "startFrame": 0,
+        "endFrame": 22,
+        "highlight": true
+      },
+      {
+        "text": "but crashes on the server.",
+        "startFrame": 22,
+        "endFrame": 44,
+        "highlight": false
+      },
+      {
+        "text": "Docker fixes",
+        "startFrame": 45,
+        "endFrame": 67,
+        "highlight": true
+      },
+      {
+        "text": "this forever.",
+        "startFrame": 67,
+        "endFrame": 89,
+        "highlight": false
+      }
+    ],
+    "durationFrames": 90,
+    "componentType": "hook",
+    "visualConfig": {
+      "title": "YOUR APP WORKS ON YOUR MACHINE...",
+      "text": "Your app works on your machine but crashes on the server. Docker fixes this forever.",
+      "hookLayout": "glassmorphic",
+      "hookBadge": "⚡",
+      "hookBadgeStyle": "glow"
+    },
+    "animation": "scale",
+    "transition": "fade",
+    "cameraMovement": "slow-zoom-in",
+    "assets": [],
+    "background": {
+      "type": "gradient",
+      "value": "radial-gradient(ellipse at 50% 30%, #111827 0%, #0a0a0f 70%)"
+    }
+  },
+  {
+    "id": "f57279ad-9338-4fdd-b636-b264ca1ff84b",
+    "sceneNumber": 2,
+    "narration": "Imagine you build an app on your laptop. It works perfectly. You deploy it to the server, and it breaks. Different OS, different libraries, different everything. This is the 'works on my machine' problem.",
+    "captionPhrases": [
+      {
+        "text": "Imagine you build an",
+        "startFrame": 0,
+        "endFrame": 15,
+        "highlight": true
+      },
+      {
+        "text": "app on your laptop.",
+        "startFrame": 15,
+        "endFrame": 30,
+        "highlight": false
+      },
+      {
+        "text": "It works",
+        "startFrame": 30,
+        "endFrame": 45,
+        "highlight": true
+      },
+      {
+        "text": "perfectly.",
+        "startFrame": 45,
+        "endFrame": 60,
+        "highlight": false
+      },
+      {
+        "text": "You deploy it to the",
+        "startFrame": 60,
+        "endFrame": 75,
+        "highlight": true
+      },
+      {
+        "text": "server, and it breaks.",
+        "startFrame": 75,
+        "endFrame": 90,
+        "highlight": false
+      },
+      {
+        "text": "Different OS, different",
+        "startFrame": 90,
+        "endFrame": 105,
+        "highlight": true
+      },
+      {
+        "text": "libraries, different everything.",
+        "startFrame": 105,
+        "endFrame": 120,
+        "highlight": false
+      },
+      {
+        "text": "This is the 'works",
+        "startFrame": 120,
+        "endFrame": 135,
+        "highlight": true
+      },
+      {
+        "text": "on my machine' problem.",
+        "startFrame": 135,
+        "endFrame": 150,
+        "highlight": false
+      }
+    ],
+    "durationFrames": 150,
+    "componentType": "diagram",
+    "visualConfig": {
+      "title": "Imagine you build an app on your laptop",
+      "text": "Imagine you build an app on your laptop. It works perfectly. You deploy it to the server, and it breaks. Different OS, different libraries, different everything. This is the 'works on my machine' problem.",
+      "flowNodes": [
+        {
+          "id": "app",
+          "label": "APPLICATION",
+          "icon": "📦",
+          "status": "active",
+          "detail": "Your Code"
+        },
+        {
+          "id": "deps",
+          "label": "DEPENDENCIES",
+          "icon": "📚",
+          "status": "active",
+          "detail": "Libraries"
+        },
+        {
+          "id": "container",
+          "label": "CONTAINER",
+          "icon": "🐳",
+          "status": "pending",
+          "detail": "Docker"
+        }
+      ],
+      "flowActiveStep": 1,
+      "packetLabel": "Imagine you build an app on your laptop",
+      "telemetry": {
+        "protocol": "Docker Engine API",
+        "status": "ACTIVE"
+      }
+    },
+    "animation": "draw-path",
+    "transition": "slide",
+    "cameraMovement": "slow-zoom-in",
+    "assets": [
+      {
+        "id": "192b2610-78f8-4acc-b85e-d8caa869f2df",
+        "type": "svg-diagram",
+        "prompt": "Problem visualization for What is Docker?",
+        "status": "pending"
+      }
+    ],
+    "background": {
+      "type": "gradient",
+      "value": "radial-gradient(ellipse at 50% 30%, #111827 0%, #0a0a0f 70%)"
+    }
+  },
+  {
+    "id": "1d3c0234-8b06-456a-9d44-03fa84feb1e1",
+    "sceneNumber": 3,
+    "narration": "Docker wraps your application, its dependencies, libraries, and runtime into a single package called a container. This container runs identically everywhere — your laptop, staging, production.",
+    "captionPhrases": [
+      {
+        "text": "Docker wraps your application, its dependencies,",
+        "startFrame": 0,
+        "endFrame": 30,
+        "highlight": true
+      },
+      {
+        "text": "libraries, and runtime into a single",
+        "startFrame": 30,
+        "endFrame": 60,
+        "highlight": false
+      },
+      {
+        "text": "package called a container.",
+        "startFrame": 60,
+        "endFrame": 90,
+        "highlight": false
+      },
+      {
+        "text": "This container runs identically everywhere",
+        "startFrame": 90,
+        "endFrame": 135,
+        "highlight": true
+      },
+      {
+        "text": "— your laptop, staging, production.",
+        "startFrame": 135,
+        "endFrame": 180,
+        "highlight": false
+      }
+    ],
+    "durationFrames": 180,
+    "componentType": "diagram",
+    "visualConfig": {
+      "title": "Docker wraps your application, its dependencies,...",
+      "text": "Docker wraps your application, its dependencies, libraries, and runtime into a single package called a container. This container runs identically everywhere — your laptop, staging, production.",
+      "flowNodes": [
+        {
+          "id": "dev",
+          "label": "DEVELOPMENT",
+          "icon": "💻",
+          "status": "done",
+          "detail": "Local Machine"
+        },
+        {
+          "id": "image",
+          "label": "DOCKER IMAGE",
+          "icon": "📋",
+          "status": "active",
+          "detail": "Build"
+        },
+        {
+          "id": "prod",
+          "label": "PRODUCTION",
+          "icon": "🌐",
+          "status": "pending",
+          "detail": "Server"
+        }
+      ],
+      "flowActiveStep": 1,
+      "packetLabel": "Docker wraps your application, its dependencies,...",
+      "telemetry": {
+        "protocol": "Docker Engine API",
+        "status": "ACTIVE"
+      }
+    },
+    "animation": "draw-path",
+    "transition": "zoom",
+    "cameraMovement": "slow-zoom-in",
+    "assets": [
+      {
+        "id": "5800b032-af95-4ba0-b573-cf8cee0f4056",
+        "type": "svg-diagram",
+        "prompt": "Visual for: Docker containers share the host OS kernel, unlike VMs which need a full OS",
+        "status": "pending"
+      }
+    ],
+    "background": {
+      "type": "gradient",
+      "value": "radial-gradient(ellipse at 50% 30%, #111827 0%, #0a0a0f 70%)"
+    }
+  },
+  {
+    "id": "b06a4829-ca9f-47cf-9689-ee950eacbc1c",
+    "sceneNumber": 4,
+    "narration": "Unlike virtual machines that need an entire operating system, Docker containers share the host's kernel. They start in milliseconds and use a fraction of the resources.",
+    "captionPhrases": [
+      {
+        "text": "Unlike virtual machines that need an",
+        "startFrame": 0,
+        "endFrame": 30,
+        "highlight": true
+      },
+      {
+        "text": "entire operating system, Docker containers share",
+        "startFrame": 30,
+        "endFrame": 60,
+        "highlight": false
+      },
+      {
+        "text": "the host's kernel.",
+        "startFrame": 60,
+        "endFrame": 90,
+        "highlight": false
+      },
+      {
+        "text": "They start in milliseconds and use",
+        "startFrame": 90,
+        "endFrame": 135,
+        "highlight": true
+      },
+      {
+        "text": "a fraction of the resources.",
+        "startFrame": 135,
+        "endFrame": 180,
+        "highlight": false
+      }
+    ],
+    "durationFrames": 180,
+    "componentType": "diagram",
+    "visualConfig": {
+      "title": "Unlike virtual machines that need an...",
+      "text": "Unlike virtual machines that need an entire operating system, Docker containers share the host's kernel. They start in milliseconds and use a fraction of the resources.",
+      "flowNodes": [
+        {
+          "id": "dockerfile",
+          "label": "DOCKERFILE",
+          "icon": "📄",
+          "status": "done",
+          "detail": "Instructions"
+        },
+        {
+          "id": "build",
+          "label": "BUILD",
+          "icon": "🔨",
+          "status": "active",
+          "detail": "docker build"
+        },
+        {
+          "id": "registry",
+          "label": "REGISTRY",
+          "icon": "📦",
+          "status": "pending",
+          "detail": "Docker Hub"
+        }
+      ],
+      "flowActiveStep": 1,
+      "packetLabel": "Unlike virtual machines that need an...",
+      "telemetry": {
+        "protocol": "Docker Engine API",
+        "status": "ACTIVE"
+      }
+    },
+    "animation": "draw-path",
+    "transition": "fade",
+    "cameraMovement": "slow-zoom-in",
+    "assets": [
+      {
+        "id": "2799bd2e-3e71-469a-b5fb-a28fb5865210",
+        "type": "svg-diagram",
+        "prompt": "Visual for: A Dockerfile is a text file with instructions to build a container image",
+        "status": "pending"
+      }
+    ],
+    "background": {
+      "type": "gradient",
+      "value": "radial-gradient(ellipse at 50% 30%, #111827 0%, #0a0a0f 70%)"
+    }
+  },
+  {
+    "id": "8b4c6bc0-67d9-49b5-b3c7-7e469671356d",
+    "sceneNumber": 5,
+    "narration": "You define everything in a Dockerfile. Base image, dependencies, configuration, startup command. Build it once, and the same image runs anywhere Docker is installed.",
+    "captionPhrases": [
+      {
+        "text": "You define everything",
+        "startFrame": 0,
+        "endFrame": 30,
+        "highlight": true
+      },
+      {
+        "text": "in a Dockerfile.",
+        "startFrame": 30,
+        "endFrame": 60,
+        "highlight": false
+      },
+      {
+        "text": "Base image, dependencies,",
+        "startFrame": 60,
+        "endFrame": 90,
+        "highlight": true
+      },
+      {
+        "text": "configuration, startup command.",
+        "startFrame": 90,
+        "endFrame": 120,
+        "highlight": false
+      },
+      {
+        "text": "Build it once, and the same",
+        "startFrame": 120,
+        "endFrame": 150,
+        "highlight": true
+      },
+      {
+        "text": "image runs anywhere Docker is installed.",
+        "startFrame": 150,
+        "endFrame": 180,
+        "highlight": false
+      }
+    ],
+    "durationFrames": 180,
+    "componentType": "diagram",
+    "visualConfig": {
+      "title": "You define everything in a Dockerfile",
+      "text": "You define everything in a Dockerfile. Base image, dependencies, configuration, startup command. Build it once, and the same image runs anywhere Docker is installed.",
+      "flowNodes": [
+        {
+          "id": "dockerfile",
+          "label": "DOCKERFILE",
+          "icon": "📄",
+          "status": "done",
+          "detail": "Instructions"
+        },
+        {
+          "id": "build",
+          "label": "BUILD",
+          "icon": "🔨",
+          "status": "active",
+          "detail": "docker build"
+        },
+        {
+          "id": "registry",
+          "label": "REGISTRY",
+          "icon": "📦",
+          "status": "pending",
+          "detail": "Docker Hub"
+        }
+      ],
+      "flowActiveStep": 1,
+      "packetLabel": "You define everything in a Dockerfile",
+      "telemetry": {
+        "protocol": "Docker Engine API",
+        "status": "ACTIVE"
+      }
+    },
+    "animation": "draw-path",
+    "transition": "fade",
+    "cameraMovement": "slow-zoom-in",
+    "assets": [
+      {
+        "id": "6fafb8fe-d297-48c2-ac31-d682107a294e",
+        "type": "svg-diagram",
+        "prompt": "Visual for: Docker images are built in layers — each instruction creates a new layer",
+        "status": "pending"
+      }
+    ],
+    "background": {
+      "type": "gradient",
+      "value": "radial-gradient(ellipse at 50% 30%, #111827 0%, #0a0a0f 70%)"
+    }
+  },
+  {
+    "id": "e8080b80-02a9-4537-91be-b41d9b2fb9ca",
+    "sceneNumber": 6,
+    "narration": "The key insight: Docker didn't just solve deployment. It made environments reproducible, testing reliable, and microservices practical. It changed how the entire industry ships software.",
+    "captionPhrases": [
+      {
+        "text": "The key insight: Docker",
+        "startFrame": 0,
+        "endFrame": 30,
+        "highlight": true
+      },
+      {
+        "text": "didn't just solve deployment.",
+        "startFrame": 30,
+        "endFrame": 60,
+        "highlight": false
+      },
+      {
+        "text": "It made environments reproducible, testing",
+        "startFrame": 60,
+        "endFrame": 90,
+        "highlight": true
+      },
+      {
+        "text": "reliable, and microservices practical.",
+        "startFrame": 90,
+        "endFrame": 120,
+        "highlight": false
+      },
+      {
+        "text": "It changed how the",
+        "startFrame": 120,
+        "endFrame": 150,
+        "highlight": true
+      },
+      {
+        "text": "entire industry ships software.",
+        "startFrame": 150,
+        "endFrame": 180,
+        "highlight": false
+      }
+    ],
+    "durationFrames": 180,
+    "componentType": "concept-reveal",
+    "visualConfig": {
+      "title": "The key insight: Docker didn't just solve deployment",
+      "text": "The key insight: Docker didn't just solve deployment. It made environments reproducible, testing reliable, and microservices practical. It changed how the entire industry ships software.",
+      "icon": "🐳",
+      "badge": "DEVOPS"
+    },
+    "animation": "spring",
+    "transition": "slide",
+    "cameraMovement": "none",
+    "assets": [
+      {
+        "id": "7fdd144b-3717-4849-8523-36ca4c1e453e",
+        "type": "svg-diagram",
+        "prompt": "Visual for: Containers are ephemeral by default — data is lost when they stop",
+        "status": "pending"
+      }
+    ],
+    "background": {
+      "type": "gradient",
+      "value": "radial-gradient(ellipse at 50% 30%, #111827 0%, #0a0a0f 70%)"
+    }
+  },
+  {
+    "id": "4bcb2b3c-4238-4203-8d61-3f31459161ae",
+    "sceneNumber": 7,
+    "narration": "That's Docker? in under a minute. Want to learn about Kubernetes? Follow for more tech explained visually.",
+    "captionPhrases": [
+      {
+        "text": "That's Docker?",
+        "startFrame": 0,
+        "endFrame": 30,
+        "highlight": true
+      },
+      {
+        "text": "in under",
+        "startFrame": 30,
+        "endFrame": 45,
+        "highlight": true
+      },
+      {
+        "text": "a minute.",
+        "startFrame": 45,
+        "endFrame": 60,
+        "highlight": false
+      },
+      {
+        "text": "Want to learn",
+        "startFrame": 60,
+        "endFrame": 75,
+        "highlight": true
+      },
+      {
+        "text": "about Kubernetes?",
+        "startFrame": 75,
+        "endFrame": 90,
+        "highlight": false
+      },
+      {
+        "text": "Follow for more",
+        "startFrame": 90,
+        "endFrame": 105,
+        "highlight": true
+      },
+      {
+        "text": "tech explained visually.",
+        "startFrame": 105,
+        "endFrame": 120,
+        "highlight": false
+      }
+    ],
+    "durationFrames": 120,
+    "componentType": "cta-end",
+    "visualConfig": {
+      "title": "That's Docker",
+      "text": "That's Docker? in under a minute. Want to learn about Kubernetes? Follow for more tech explained visually.",
+      "channelName": "CodeWithSundresh",
+      "channelHandle": "@CodeWithSundresh"
+    },
+    "animation": "fade",
+    "transition": "fade",
+    "cameraMovement": "none",
+    "assets": [],
+    "background": {
+      "type": "gradient",
+      "value": "radial-gradient(ellipse at 50% 30%, #111827 0%, #0a0a0f 70%)"
+    }
+  }
+]

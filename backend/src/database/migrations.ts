@@ -278,11 +278,43 @@ export function runMigrations(): void {
     );
   `);
 
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS video_jobs (
+      id              TEXT PRIMARY KEY,
+      topic           TEXT NOT NULL,
+      status          TEXT NOT NULL,
+      progress        REAL NOT NULL DEFAULT 0,
+      current_stage   TEXT NOT NULL DEFAULT 'queued',
+      project_id      TEXT,
+      error           TEXT,
+      created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+      updated_at      TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+  `);
+
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS video_projects (
+      id              TEXT PRIMARY KEY,
+      job_id          TEXT,
+      topic           TEXT NOT NULL,
+      title           TEXT NOT NULL,
+      status          TEXT NOT NULL,
+      version         INTEGER NOT NULL DEFAULT 1,
+      render_path     TEXT,
+      thumbnail_path  TEXT,
+      duration        REAL,
+      created_at      TEXT NOT NULL DEFAULT (datetime('now')),
+      updated_at      TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+  `);
+
   // ---- Indexes -------------------------------------------------------
 
   db.exec(`
     CREATE INDEX IF NOT EXISTS idx_scenes_project_id ON scenes(project_id);
     CREATE INDEX IF NOT EXISTS idx_exports_project_id ON exports(project_id);
+    CREATE INDEX IF NOT EXISTS idx_video_jobs_status ON video_jobs(status);
+    CREATE INDEX IF NOT EXISTS idx_video_projects_job_id ON video_projects(job_id);
     CREATE INDEX IF NOT EXISTS idx_projects_status ON projects(status);
     CREATE INDEX IF NOT EXISTS idx_projects_created_at ON projects(created_at);
     CREATE INDEX IF NOT EXISTS idx_batch_items_batch_id ON batch_items(batch_id);

@@ -1,0 +1,15 @@
+{
+  "channelName": "CodeWithSundresh",
+  "channelHandle": "@CodeWithSundresh",
+  "language": "en",
+  "defaultDuration": 45,
+  "aspectRatio": "9:16",
+  "resolution": { "width": 1080, "height": 1920 },
+  "fps": 30,
+  "style": "dark-cinematic-tech",
+  "branding": {
+    "ctaText": "Follow for more tech explained visually",
+    "logoPath": null,
+    "watermark": false
+  }
+}

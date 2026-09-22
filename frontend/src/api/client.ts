@@ -70,6 +70,18 @@ export async function createProject(input: ProjectInput): Promise<Project> {
   return unwrap(await api.post<ApiResponse<Project>>('/projects', input));
 }
 
+export async function generateFromTopic(
+  topic: string,
+  options?: { audioMode?: string; voiceModel?: string; musicFile?: string }
+): Promise<Project> {
+  return unwrap(
+    await api.post<ApiResponse<Project>>('/projects/ai-generate', {
+      topic,
+      ...options,
+    })
+  );
+}
+
 export async function updateProject(id: string, input: Partial<ProjectInput>): Promise<Project> {
   return unwrap(await api.put<ApiResponse<Project>>(`/projects/${id}`, input));
 }
@@ -311,6 +323,34 @@ export async function uploadToYoutube(data: {
 
 export async function getYoutubeUploads(): Promise<YoutubeUploadRecord[]> {
   return unwrap(await api.get<ApiResponse<YoutubeUploadRecord[]>>('/youtube/uploads'));
+}
+
+// ---- AI Video Factory Pipeline ----
+
+export async function startVideoPipeline(options: {
+  topic: string;
+  duration?: number;
+  style?: string;
+  voice?: string;
+  language?: string;
+}): Promise<{ message: string; job: any }> {
+  const response = await api.post('/videos', options);
+  return response.data;
+}
+
+export async function getJobStatus(jobId: string): Promise<{ job: any; project: any }> {
+  const response = await api.get(`/jobs/${jobId}`);
+  return response.data;
+}
+
+export async function getVideoProjectDetails(projectId: string): Promise<{ project: any; details: any }> {
+  const response = await api.get(`/videos/${projectId}`);
+  return response.data;
+}
+
+export async function listVideoJobs(limit = 50): Promise<{ jobs: any[] }> {
+  const response = await api.get(`/jobs?limit=${limit}`);
+  return response.data;
 }
 
 export default api;

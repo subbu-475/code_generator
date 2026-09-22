@@ -678,7 +678,10 @@ export function updateScene(sceneId: string, updates: Partial<SceneConfig>): Sce
     'roadmapStepNumber', 'roadmapTotalSteps', 'roadmapIcon', 'roadmapDescription',
     'summaryTitle', 'summaryPoints', 'summaryVoiceOver', 'summaryLayout', 'summaryShowSubscribe',
     'codeFontSize', 'explanationFontSize',
-    'studioPromptText', 'studioHeaderTop', 'studioHeaderBottom'
+    'studioPromptText', 'studioHeaderTop', 'studioHeaderBottom',
+    'flowNodes', 'flowActiveStep', 'packetLabel', 'telemetry',
+    'browserUrl', 'browserSimState', 'browserPageTitle', 'cinematicZoom',
+    'voiceNarration', 'voiceUrl', 'architectureSteps'
   ];
   const hasContentUpdate = contentKeys.some((k) => (updates as any)[k] !== undefined);
 
@@ -791,6 +794,17 @@ export function syncProjectSceneConfig(db: ReturnType<typeof getDb>, projectId: 
       studioPromptText: content.studioPromptText,
       studioHeaderTop: content.studioHeaderTop,
       studioHeaderBottom: content.studioHeaderBottom,
+      flowNodes: content.flowNodes,
+      flowActiveStep: content.flowActiveStep,
+      packetLabel: content.packetLabel,
+      telemetry: content.telemetry,
+      browserUrl: content.browserUrl,
+      browserSimState: content.browserSimState,
+      browserPageTitle: content.browserPageTitle,
+      cinematicZoom: content.cinematicZoom,
+      voiceNarration: content.voiceNarration,
+      voiceUrl: content.voiceUrl,
+      architectureSteps: content.architectureSteps,
     };
   });
 

@@ -1,0 +1,44 @@
+[
+  {
+    "sceneId": "58f8023c-9d81-4b2f-9254-6570c14df231",
+    "audioPath": "D:\\Code Shorts Generator\\codegen\\generated\\audio\\voice_58f8023c-9d81-4b2f-9254-6570c14df231.mp3",
+    "audioUrl": "/generated/audio/voice_58f8023c-9d81-4b2f-9254-6570c14df231.mp3",
+    "durationSeconds": 5.83
+  },
+  {
+    "sceneId": "a7a169aa-b46d-4e37-8c01-3191bc001cd4",
+    "audioPath": "D:\\Code Shorts Generator\\codegen\\generated\\audio\\voice_a7a169aa-b46d-4e37-8c01-3191bc001cd4.mp3",
+    "audioUrl": "/generated/audio/voice_a7a169aa-b46d-4e37-8c01-3191bc001cd4.mp3",
+    "durationSeconds": 9.7
+  },
+  {
+    "sceneId": "64d0118e-97f6-45d0-b07f-ae469347f4a6",
+    "audioPath": "D:\\Code Shorts Generator\\codegen\\generated\\audio\\voice_64d0118e-97f6-45d0-b07f-ae469347f4a6.mp3",
+    "audioUrl": "/generated/audio/voice_64d0118e-97f6-45d0-b07f-ae469347f4a6.mp3",
+    "durationSeconds": 5.78
+  },
+  {
+    "sceneId": "f036227a-e532-4e1f-a5f1-b923e545f368",
+    "audioPath": "D:\\Code Shorts Generator\\codegen\\generated\\audio\\voice_f036227a-e532-4e1f-a5f1-b923e545f368.mp3",
+    "audioUrl": "/generated/audio/voice_f036227a-e532-4e1f-a5f1-b923e545f368.mp3",
+    "durationSeconds": 5.62
+  },
+  {
+    "sceneId": "d4e88965-cf34-4c8c-9cb3-228325c31fa7",
+    "audioPath": "D:\\Code Shorts Generator\\codegen\\generated\\audio\\voice_d4e88965-cf34-4c8c-9cb3-228325c31fa7.mp3",
+    "audioUrl": "/generated/audio/voice_d4e88965-cf34-4c8c-9cb3-228325c31fa7.mp3",
+    "durationSeconds": 7.01
+  },
+  {
+    "sceneId": "af6af3c9-79bd-4ebb-8d74-649cf8841e1d",
+    "audioPath": "D:\\Code Shorts Generator\\codegen\\generated\\audio\\voice_af6af3c9-79bd-4ebb-8d74-649cf8841e1d.mp3",
+    "audioUrl": "/generated/audio/voice_af6af3c9-79bd-4ebb-8d74-649cf8841e1d.mp3",
+    "durationSeconds": 7.49
+  },
+  {
+    "sceneId": "a138b624-f5b8-4d53-b4e7-78839a6ff7ea",
+    "audioPath": "D:\\Code Shorts Generator\\codegen\\generated\\audio\\voice_a138b624-f5b8-4d53-b4e7-78839a6ff7ea.mp3",
+    "audioUrl": "/generated/audio/voice_a138b624-f5b8-4d53-b4e7-78839a6ff7ea.mp3",
+    "durationSeconds": 6.12
+  }
+]

@@ -1,0 +1,115 @@
+{
+  "title": "What is Docker — Explained Visually",
+  "hook": "Your app works on your machine but crashes on the server. Docker fixes this forever.",
+  "totalDurationTarget": 45,
+  "wordCount": 167,
+  "scenes": [
+    {
+      "id": "ecca9368-d4b9-4017-bb43-bf390e0a2618",
+      "sceneNumber": 1,
+      "narration": "Your app works on your machine but crashes on the server. Docker fixes this forever.",
+      "caption": "Your app works on your machine...",
+      "visualDescription": "Bold hook text with attention-grabbing animation. Topic: What is Docker?. Dark cinematic background with subtle particles.",
+      "animationDescription": "Text scales in with spring animation, subtle camera zoom",
+      "suggestedDuration": 3,
+      "sceneType": "hook",
+      "assetRequirements": []
+    },
+    {
+      "id": "ffc607af-c941-4bff-a966-6f0884a648c0",
+      "sceneNumber": 2,
+      "narration": "Imagine you build an app on your laptop. It works perfectly. You deploy it to the server, and it breaks. Different OS, different libraries, different everything. This is the 'works on my machine' problem.",
+      "caption": "Imagine you build an app on your laptop",
+      "visualDescription": "Developer laptop showing \"works on my machine\" with green checkmark. Server showing red X with error. Frustrated developer icon.",
+      "animationDescription": "Animated diagram showing the problem scenario with progressive reveals",
+      "suggestedDuration": 5,
+      "sceneType": "diagram",
+      "assetRequirements": [
+        {
+          "type": "diagram",
+          "description": "Problem visualization for What is Docker?",
+          "priority": "required"
+        }
+      ]
+    },
+    {
+      "id": "169a8892-4976-480d-adec-1b68f8fa8e75",
+      "sceneNumber": 3,
+      "narration": "Docker wraps your application, its dependencies, libraries, and runtime into a single package called a container. This container runs identically everywhere — your laptop, staging, production.",
+      "caption": "Docker wraps your application, its dependencies,...",
+      "visualDescription": "Docker container diagram: Application + Dependencies + Runtime packaged together. Ship icon on the side.",
+      "animationDescription": "Nodes appear sequentially with connecting lines drawing between them, data packets flow along paths",
+      "suggestedDuration": 6,
+      "sceneType": "diagram",
+      "assetRequirements": [
+        {
+          "type": "diagram",
+          "description": "Visual for: Docker containers share the host OS kernel, unlike VMs which need a full OS",
+          "priority": "required"
+        }
+      ]
+    },
+    {
+      "id": "05c78455-e1df-48a5-9c29-1df8befff4ab",
+      "sceneNumber": 4,
+      "narration": "Unlike virtual machines that need an entire operating system, Docker containers share the host's kernel. They start in milliseconds and use a fraction of the resources.",
+      "caption": "Unlike virtual machines that need an...",
+      "visualDescription": "Side-by-side comparison: VM with full OS layer vs Container sharing host kernel. Container is much thinner.",
+      "animationDescription": "Nodes appear sequentially with connecting lines drawing between them, data packets flow along paths",
+      "suggestedDuration": 6,
+      "sceneType": "diagram",
+      "assetRequirements": [
+        {
+          "type": "diagram",
+          "description": "Visual for: A Dockerfile is a text file with instructions to build a container image",
+          "priority": "required"
+        }
+      ]
+    },
+    {
+      "id": "cccd4bcd-c79d-4e82-a7fe-9c11acdb5664",
+      "sceneNumber": 5,
+      "narration": "You define everything in a Dockerfile. Base image, dependencies, configuration, startup command. Build it once, and the same image runs anywhere Docker is installed.",
+      "caption": "You define everything in a Dockerfile",
+      "visualDescription": "Dockerfile code flowing into a Docker image, then deploying as multiple identical containers.",
+      "animationDescription": "Nodes appear sequentially with connecting lines drawing between them, data packets flow along paths",
+      "suggestedDuration": 6,
+      "sceneType": "diagram",
+      "assetRequirements": [
+        {
+          "type": "diagram",
+          "description": "Visual for: Docker images are built in layers — each instruction creates a new layer",
+          "priority": "required"
+        }
+      ]
+    },
+    {
+      "id": "132882f1-a789-463c-84f2-0b4074e28524",
+      "sceneNumber": 6,
+      "narration": "The key insight: Docker didn't just solve deployment. It made environments reproducible, testing reliable, and microservices practical. It changed how the entire industry ships software.",
+      "caption": "The key insight: Docker didn't just solve deployment",
+      "visualDescription": "Key insight visualization: Containers are ephemeral by default — data is lost when they stop. Large centered icon with supporting text. Premium glassmorphic card.",
+      "animationDescription": "Card fades in with scale animation, icon pulses, text reveals line by line",
+      "suggestedDuration": 6,
+      "sceneType": "concept-reveal",
+      "assetRequirements": [
+        {
+          "type": "diagram",
+          "description": "Visual for: Containers are ephemeral by default — data is lost when they stop",
+          "priority": "required"
+        }
+      ]
+    },
+    {
+      "id": "d8a5cef8-7de3-432b-8339-7bfc621bf820",
+      "sceneNumber": 7,
+      "narration": "That's Docker? in under a minute. Want to learn about Kubernetes? Follow for more tech explained visually.",
+      "caption": "That's Docker",
+      "visualDescription": "Clean closing with channel branding. Key takeaway text with subscribe prompt.",
+      "animationDescription": "Smooth fade transition, text slides up, follow button pulses",
+      "suggestedDuration": 4,
+      "sceneType": "cta-end",
+      "assetRequirements": []
+    }
+  ]
+}

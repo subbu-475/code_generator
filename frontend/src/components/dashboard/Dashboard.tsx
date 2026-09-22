@@ -27,17 +27,20 @@ import {
   Cancel as CancelIcon,
   Info as InfoIcon,
   PlayArrow as PlayArrowIcon,
+  AutoAwesome as SparklesIcon,
 } from '@mui/icons-material';
 import { useProjects } from '../../hooks/useProjects.js';
 import { useTemplates } from '../../hooks/useTemplates.js';
 import * as api from '../../api/client.js';
 import AnimatedCard from '../common/AnimatedCard.js';
+import AiTopicModal from '../projects/AiTopicModal.js';
 import type { ExportRecord, HealthCheck } from '../../types/index.js';
 
 export default function Dashboard() {
   const navigate = useNavigate();
   const { projects, loading: projectsLoading } = useProjects();
   const { templates, loading: templatesLoading } = useTemplates();
+  const [aiModalOpen, setAiModalOpen] = useState(false);
   const [exportsCount, setExportsCount] = useState<number>(0);
   const [exportsLoading, setExportsLoading] = useState(true);
   const [health, setHealth] = useState<HealthCheck | null>(null);
@@ -104,20 +107,46 @@ export default function Dashboard() {
             Generate professional vertical videos from your code snippets.
           </Typography>
         </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => navigate('/projects/new')}
-          sx={{
-            px: 3,
-            py: 1.25,
-            borderRadius: 2.5,
-            fontWeight: 700,
-            boxShadow: '0 4px 14px 0 rgba(124, 58, 237, 0.4)',
-          }}
-        >
-          Create Project
-        </Button>
+        <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
+          <Button
+            variant="contained"
+            startIcon={<SparklesIcon />}
+            onClick={() => setAiModalOpen(true)}
+            sx={{
+              px: 3,
+              py: 1.25,
+              borderRadius: 2.5,
+              fontWeight: 800,
+              background: 'linear-gradient(135deg, #78E08F 0%, #38ef7d 100%)',
+              color: '#080B0A',
+              boxShadow: '0 4px 20px 0 rgba(120, 224, 143, 0.45)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #B8FF9C 0%, #78E08F 100%)',
+                boxShadow: '0 6px 28px 0 rgba(120, 224, 143, 0.65)',
+              },
+            }}
+          >
+            AI Topic Generator
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<AddIcon />}
+            onClick={() => navigate('/projects/new')}
+            sx={{
+              px: 2.5,
+              py: 1.25,
+              borderRadius: 2.5,
+              fontWeight: 600,
+              borderColor: 'rgba(255, 255, 255, 0.15)',
+              color: '#F5F2E8',
+              '&:hover': {
+                borderColor: 'rgba(255, 255, 255, 0.3)',
+              },
+            }}
+          >
+            Custom Project
+          </Button>
+        </Box>
       </Box>
 
       <Grid container spacing={3} sx={{ mb: 4 }}>
@@ -260,6 +289,9 @@ export default function Dashboard() {
           </Card>
         </Grid>
       </Grid>
+
+      {/* AI Topic Generator Dialog */}
+      <AiTopicModal open={aiModalOpen} onClose={() => setAiModalOpen(false)} />
     </Box>
   );
 }

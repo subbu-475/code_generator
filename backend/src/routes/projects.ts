@@ -9,6 +9,7 @@ import { validate } from '../middleware/validation.js';
 import * as projectService from '../services/projectService.js';
 import * as sceneService from '../services/sceneService.js';
 import * as audioService from '../services/audioService.js';
+import * as aiTopicEngine from '../services/aiTopicEngine.js';
 
 const router = Router();
 
@@ -172,6 +173,35 @@ const SceneUpdateSchema = z.object({
   // Font Size Overrides
   codeFontSize: z.number().int().min(10).max(100).nullable().optional(),
   explanationFontSize: z.number().int().min(10).max(100).nullable().optional(),
+
+  // Animated Tech Explainer Fields
+  flowNodes: z.array(z.object({
+    id: z.string(),
+    label: z.string(),
+    icon: z.string().optional(),
+    status: z.enum(['done', 'active', 'pending']).optional(),
+    detail: z.string().optional(),
+    color: z.string().optional(),
+  })).optional(),
+  flowActiveStep: z.number().int().optional(),
+  packetLabel: z.string().optional(),
+  telemetry: z.object({
+    rtt: z.string().optional(),
+    protocol: z.string().optional(),
+    payload: z.string().optional(),
+    status: z.string().optional(),
+  }).optional(),
+  browserUrl: z.string().optional(),
+  browserSimState: z.enum(['typing', 'enter', 'loading', 'rendered']).optional(),
+  browserPageTitle: z.string().optional(),
+  cinematicZoom: z.boolean().optional(),
+  voiceNarration: z.string().optional(),
+  voiceUrl: z.string().optional(),
+  architectureSteps: z.array(z.object({
+    label: z.string(),
+    icon: z.string(),
+    badge: z.string().optional(),
+  })).optional(),
 });
 
 const SceneCreateSchema = z.object({
@@ -194,12 +224,45 @@ const SceneCreateSchema = z.object({
     'comparison',
     'roadmap_step',
     'summary',
+    'studio_title',
+    'studio_slider',
+    'studio_prompt_mistake',
+    'studio_checklist',
+    'network_flow',
+    'browser_sim',
+    'cinematic_image',
+    'architecture_overview',
   ]),
   insertAfterId: z.string().optional(),
 });
 
 const SceneReorderSchema = z.object({
   sceneIds: z.array(z.string()),
+});
+
+const AiGenerateSchema = z.object({
+  topic: z.string().min(1, 'Topic is required'),
+  audioMode: z.enum(['none', 'music', 'voice_music']).default('voice_music').optional(),
+  voiceModel: z.string().optional(),
+  musicFile: z.string().optional(),
+});
+
+// POST /api/projects/ai-generate - Generate dynamic, tailored short video from any tech topic
+router.post('/ai-generate', validate(AiGenerateSchema), async (req, res, next) => {
+  try {
+    const { topic, audioMode, voiceModel, musicFile } = req.body;
+    const project = await aiTopicEngine.generateProjectFromTopic(topic, {
+      audioMode,
+      voiceModel,
+      musicFile,
+    });
+    res.status(201).json({
+      success: true,
+      data: project,
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 // GET /api/projects - List all projects

@@ -42,6 +42,7 @@ import settingsRouter from './routes/settings.js';
 import uploadRouter from './routes/upload.js';
 import batchRouter from './routes/batch.js';
 import youtubeRouter from './routes/youtube.js';
+import videosRouter from './routes/videos.js';
 import { initQueue } from './services/batchQueue.js';
 
 const app = express();
@@ -67,6 +68,7 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 // Serve static generated outputs and assets
 app.use('/generated', express.static(GENERATED_DIR));
 app.use('/assets', express.static(ASSETS_DIR));
+app.use('/storage', express.static(path.resolve('storage')));
 
 // Mount routes
 app.use('/api/projects', projectsRouter);
@@ -79,6 +81,7 @@ app.use('/api/settings', settingsRouter);
 app.use('/api/upload', uploadRouter);
 app.use('/api/batch', batchRouter);
 app.use('/api/youtube', youtubeRouter);
+app.use('/api', videosRouter);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

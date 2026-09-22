@@ -23,15 +23,18 @@ import {
   Delete as DeleteIcon,
   Edit as EditIcon,
   PlayArrow as PlayArrowIcon,
+  AutoAwesome as SparklesIcon,
 } from '@mui/icons-material';
 import { useProjects } from '../../hooks/useProjects.js';
 import AnimatedCard from '../common/AnimatedCard.js';
+import AiTopicModal from './AiTopicModal.js';
 
 export default function ProjectList() {
   const navigate = useNavigate();
   const { projects, loading, deleteProject } = useProjects();
   const [search, setSearch] = useState('');
   const [statusFilter, setStatusFilter] = useState('all');
+  const [aiModalOpen, setAiModalOpen] = useState(false);
 
   const handleDelete = async (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
@@ -65,14 +68,46 @@ export default function ProjectList() {
             Manage and generate short videos for your social channels.
           </Typography>
         </Box>
-        <Button
-          variant="contained"
-          startIcon={<AddIcon />}
-          onClick={() => navigate('/projects/new')}
-          sx={{ px: 3, py: 1.25, borderRadius: 2.5, fontWeight: 700 }}
-        >
-          Create Project
-        </Button>
+        <Box sx={{ display: 'flex', gap: 1.5, flexWrap: 'wrap' }}>
+          <Button
+            variant="contained"
+            startIcon={<SparklesIcon />}
+            onClick={() => setAiModalOpen(true)}
+            sx={{
+              px: 3,
+              py: 1.25,
+              borderRadius: 2.5,
+              fontWeight: 800,
+              background: 'linear-gradient(135deg, #78E08F 0%, #38ef7d 100%)',
+              color: '#080B0A',
+              boxShadow: '0 4px 20px 0 rgba(120, 224, 143, 0.45)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #B8FF9C 0%, #78E08F 100%)',
+                boxShadow: '0 6px 28px 0 rgba(120, 224, 143, 0.65)',
+              },
+            }}
+          >
+            AI Topic Generator
+          </Button>
+          <Button
+            variant="outlined"
+            startIcon={<AddIcon />}
+            onClick={() => navigate('/projects/new')}
+            sx={{
+              px: 2.5,
+              py: 1.25,
+              borderRadius: 2.5,
+              fontWeight: 600,
+              borderColor: 'rgba(255, 255, 255, 0.15)',
+              color: '#F5F2E8',
+              '&:hover': {
+                borderColor: 'rgba(255, 255, 255, 0.3)',
+              },
+            }}
+          >
+            Create Project
+          </Button>
+        </Box>
       </Box>
 
       {/* Filters bar */}
@@ -193,6 +228,9 @@ export default function ProjectList() {
           ))}
         </Grid>
       )}
+
+      {/* AI Topic Generator Dialog */}
+      <AiTopicModal open={aiModalOpen} onClose={() => setAiModalOpen(false)} />
     </Box>
   );
 }

@@ -1,0 +1,56 @@
+{
+  "topic": "What is Docker?",
+  "category": "devops",
+  "summary": "Docker is a platform that packages applications and their dependencies into lightweight, portable containers. Unlike virtual machines, containers share the host OS kernel, making them fast to start and efficient with resources. Docker revolutionized how we build, ship, and run software.",
+  "keyFacts": [
+    "Docker containers share the host OS kernel, unlike VMs which need a full OS",
+    "A Dockerfile is a text file with instructions to build a container image",
+    "Docker images are built in layers — each instruction creates a new layer",
+    "Containers are ephemeral by default — data is lost when they stop",
+    "Docker Hub is the largest public registry with millions of pre-built images",
+    "Docker Compose orchestrates multi-container applications with a YAML file"
+  ],
+  "analogies": [
+    "Docker is like shipping containers for software — standardized boxes that work everywhere",
+    "A Docker image is like a recipe, a container is the dish you cook from it"
+  ],
+  "visualMetaphors": [
+    "shipping_container_on_ship",
+    "box_in_box_layers",
+    "factory_assembly_line"
+  ],
+  "technicalTerms": [
+    {
+      "term": "Container",
+      "explanation": "A lightweight, standalone package that includes everything needed to run a piece of software"
+    },
+    {
+      "term": "Image",
+      "explanation": "A read-only template used to create containers — like a snapshot of an application"
+    },
+    {
+      "term": "Dockerfile",
+      "explanation": "A text document containing instructions to build a Docker image"
+    },
+    {
+      "term": "Volume",
+      "explanation": "Persistent storage that survives container restarts"
+    },
+    {
+      "term": "Registry",
+      "explanation": "A repository for storing and distributing Docker images"
+    }
+  ],
+  "commonMisconceptions": [
+    "Docker is NOT a virtual machine — containers share the host kernel",
+    "Docker doesn't replace Kubernetes — they solve different problems",
+    "Containers are not inherently more secure than VMs"
+  ],
+  "relatedTopics": [
+    "Kubernetes",
+    "Container Orchestration",
+    "Docker Compose",
+    "CI/CD Pipelines",
+    "Microservices"
+  ]
+}

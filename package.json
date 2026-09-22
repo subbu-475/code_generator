@@ -15,10 +15,12 @@
     "studio": "npm run studio --workspace=renderer",
     "build": "npm run build --workspaces",
     "build:frontend": "npm run build --workspace=frontend",
-    "build:backend": "npm run build --workspace=backend"
+    "build:backend": "npm run build --workspace=backend",
+    "short": "tsx scripts/generate-short.ts"
   },
   "devDependencies": {
     "concurrently": "^9.1.0",
+    "tsx": "^4.19.0",
     "typescript": "^5.7.0"
   }
 }

@@ -1,0 +1,59 @@
+{
+  "theme": "dark-cinematic-tech",
+  "background": {
+    "primary": "#0a0a0f",
+    "gradient": "radial-gradient(ellipse at 50% 30%, #111827 0%, #0a0a0f 70%)",
+    "particleDensity": "low",
+    "gridOpacity": 0.03
+  },
+  "colors": {
+    "accent": "#6C63FF",
+    "accentSecondary": "#00D4AA",
+    "success": "#22C55E",
+    "warning": "#F59E0B",
+    "error": "#EF4444",
+    "info": "#3B82F6",
+    "textPrimary": "#F8FAFC",
+    "textSecondary": "#94A3B8",
+    "textMuted": "#64748B",
+    "surface": "rgba(30, 30, 50, 0.8)",
+    "surfaceBorder": "rgba(108, 99, 255, 0.15)",
+    "codeBg": "#1a1b26",
+    "codeText": "#c0caf5"
+  },
+  "typography": {
+    "heading": "Inter, system-ui, sans-serif",
+    "body": "Inter, system-ui, sans-serif",
+    "code": "JetBrains Mono, Fira Code, monospace",
+    "caption": "Inter, system-ui, sans-serif",
+    "headingWeight": 800,
+    "captionWeight": 700
+  },
+  "animation": {
+    "speed": "normal",
+    "entranceDuration": 15,
+    "exitDuration": 10,
+    "sceneTransition": "fade",
+    "cameraMovement": "subtle-zoom"
+  },
+  "caption": {
+    "fontSize": 52,
+    "maxLines": 2,
+    "maxWordsPerLine": 6,
+    "position": "bottom-center",
+    "safeMargin": 80,
+    "backgroundColor": "rgba(0, 0, 0, 0.6)",
+    "highlightColor": "#6C63FF",
+    "style": "word-highlight"
+  },
+  "diagram": {
+    "nodeStyle": "glassmorphic",
+    "nodeBorderRadius": 16,
+    "connectionStyle": "curved",
+    "connectionColor": "#6C63FF",
+    "packetColor": "#00D4AA",
+    "nodeBackground": "rgba(30, 30, 50, 0.9)",
+    "nodeBorder": "rgba(108, 99, 255, 0.3)",
+    "labelFontSize": 18
+  }
+}
